@@ -554,6 +554,41 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
   border-radius:999px;padding:9px 16px;cursor:pointer;box-shadow:3px 3px 0 var(--shadowc)}
 #tut-next:active{transform:scale(.95)}
 
+/* ═══ ПРОФИЛЬ ДИРЕКТОРА ═══ */
+#profile-ov{position:fixed;inset:0;z-index:155;display:none;align-items:center;justify-content:center;background:rgba(8,18,13,.6)}
+#profile-ov.open{display:flex}
+.profile-box{width:min(92vw,420px);background:var(--card);border:3px solid var(--brand);border-radius:18px;
+  box-shadow:12px 12px 0 var(--shadowc), inset 0 -3px 6px rgba(0,0,0,.08);padding:18px;text-align:center}
+.profile-head{font-family:var(--disp);font-weight:900;font-size:15px;letter-spacing:.1em;color:var(--head);text-transform:uppercase;margin-bottom:12px}
+.profile-avatar-row{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:14px}
+.avatar-display{width:72px;height:72px;border-radius:50%;border:3px solid var(--amber2);
+  background:var(--surf2);display:grid;place-items:center;font-size:42px;overflow:hidden;
+  box-shadow:4px 4px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.08)}
+.avatar-display img{width:100%;height:100%;object-fit:cover}
+.avatar-label{font-size:11px;color:var(--mut)}
+.profile-name-row{margin-bottom:14px}
+.profile-name-row label{display:block;font-size:10px;color:var(--mut);margin-bottom:5px;text-transform:uppercase;letter-spacing:.1em;font-family:var(--disp);font-weight:700}
+.profile-name-input{width:100%;padding:9px 12px;border:2px solid var(--line2);border-radius:10px;
+  background:var(--surf2);color:var(--ink);font:400 13px/1.4 var(--body);outline:none;transition:.15s;
+  box-shadow:inset 0 2px 4px rgba(0,0,0,.08)}
+.profile-name-input:focus{border-color:var(--amber2);box-shadow:inset 0 2px 4px rgba(0,0,0,.08), 0 0 0 3px rgba(255,197,49,.15)}
+.av-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.av-cell{position:relative;width:56px;height:56px;margin:0 auto;border-radius:50%;cursor:pointer;
+  border:2px solid var(--line);background:var(--surf2);display:grid;place-items:center;font-size:26px;
+  transition:.15s;box-shadow:2px 2px 0 var(--shadowc)}
+.av-cell:hover{transform:scale(1.08);box-shadow:3px 3px 0 var(--shadowc)}
+.av-cell.sel{border-color:var(--amber2);box-shadow:0 0 0 2px var(--amber2), 3px 3px 0 var(--shadowc)}
+.av-cell.locked{opacity:.45;cursor:not-allowed;filter:grayscale(.6)}
+.av-cell.locked::after{content:'🔒';position:absolute;font-size:14px;bottom:-2px;right:-2px}
+.av-cell img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.profile-lvl-info{font-size:11px;color:var(--mut);margin-top:10px;line-height:1.45}
+.profile-lvl-info b{color:var(--head)}
+.profile-save-btn{margin-top:14px;font-family:var(--disp);font-weight:700;font-size:11px;color:#fff;
+  background:var(--amber2);border:none;border-radius:999px;padding:10px 24px;cursor:pointer;
+  box-shadow:4px 4px 0 var(--shadowc)}
+.profile-save-btn:hover{transform:translateY(-1px);box-shadow:5px 5px 0 var(--shadowc)}
+.profile-save-btn:active{transform:scale(.96)}
+
 /* ═══ ШТАМПЫ ═══ */
 #stamp{position:fixed;left:50%;top:42%;z-index:70;transform:translate(-50%,-50%) rotate(-8deg) scale(0);opacity:0;pointer-events:none;
   font-family:var(--disp);font-weight:900;font-size:clamp(18px,4.2vw,34px);letter-spacing:.06em;text-transform:uppercase;
@@ -814,6 +849,7 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
       <div class="chip gold" id="chip-coins"><span id="coin-ico">💰</span> <b id="coins">0</b></div>
       <div class="chip" id="chip-energy"><span id="energy-ico">⚡</span> <b id="energy">0</b><span id="emax">/30</span></div>
       <button class="chip shop" id="chip-energy-up" title="Увеличить максимум энергии на 5">⚡+5 · 💰200</button>
+      <button class="icobtn" id="btn-profile" title="Профиль директора">👤</button>
       <button class="icobtn" id="btn-sound" title="Звук">🔊</button>
     </div>
   </header>
@@ -867,6 +903,7 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 
 <div id="confirm-ov"></div>
 <div id="card-ov"></div>
+<div id="profile-ov"></div>
 
 <div id="tut-back"></div>
 <div id="tut-spot"></div>
@@ -956,6 +993,18 @@ var WH_PRICES=[1500,3000];
 var SKEY='ceh7.save.v4';
 var TUT_KEY='ceh7.tut.v1';
 
+// Аватарки директора (открываются по уровням)
+var AVATARS = [
+  {lvl:1, icon:'👤', name:'Новичок'},
+  {lvl:3, icon:'🧑‍🌾', name:'Фермер'},
+  {lvl:5, icon:'👨‍🍳', name:'Повар'},
+  {lvl:8, icon:'🧑‍🔬', name:'Технолог'},
+  {lvl:12, icon:'👩‍💼', name:'Менеджер'},
+  {lvl:17, icon:'🤴', name:'Директор'},
+  {lvl:23, icon:'👑', name:'Магнат'},
+  {lvl:30, icon:'🏆', name:'Легенда'}
+];
+
 function $(s){ return document.querySelector(s); }
 function def(v,d){ return (v===undefined||v===null)?d:v; }
 function irand(a,b){ return a+Math.floor(Math.random()*(b-a+1)); }
@@ -974,6 +1023,7 @@ var STEP=50, uid=0, loading=false;
 var grid=[], bubbleGrid=[];
 var items=[], cellEls=[], bubbles=[], bubUid=0;
 var coins=80, energy=24, lvl=1, xp=0, done=0, muted=false;
+var directorName='Директор', directorAvatar=0;
 var unlocked=['oil'], whOwned=[], eu=0, E_MAX=30;
 var whStage=0, prOwned=false, turboUntil=0;
 var cards={}, pending=[], pity={}, prized={};
@@ -2050,6 +2100,7 @@ function save(){
   try{
     localStorage.setItem(SKEY,JSON.stringify({
       v:4,coins:coins,energy:energy,ts:Date.now(),lvl:lvl,xp:xp,done:done,muted:muted,
+      dn:directorName,da:directorAvatar,
       un:unlocked,wh:whOwned,eu:eu,ws:whStage,pr:prOwned,tb:turboUntil,cols:COLS,rows:ROWS,
       cd:cards,pd:pending,py:pity,pz:prized,
       items:items.map(function(it){ return {i:it.idx,c:it.chain,t:it.tier}; }),
@@ -2067,6 +2118,7 @@ function load(){
     coins=def(s.coins,80);
     eu=clamp(def(s.eu,0),0,EU_COSTS.length); E_MAX=30+eu*5;
     whStage=clamp(def(s.ws,0),0,2); prOwned=!!s.pr; turboUntil=def(s.tb,0);
+    directorName=def(s.dn,'Директор'); directorAvatar=def(s.da,0);
     cards=s.cd||{}; pending=s.pd||[]; pity=s.py||{}; prized=s.pz||{};
     var un=(s.un&&s.un.length)?s.un.slice():['oil'];
     if(un.indexOf('oil')<0) un.push('oil');
@@ -2156,6 +2208,7 @@ function init(){
   if(!lsGet(TUT_KEY)) setTimeout(startTutorial,700);
   window.__CEH_READY=true;
 }
+$('#btn-profile').onclick=openProfile;
 $('#btn-bureau').onclick=openBureau;
 $('#btn-bureau-m').onclick=openBureau;
 $('#btn-orders-icon').onclick=function(){ openSheet('stats','Статистика заказов',renderStats); };
