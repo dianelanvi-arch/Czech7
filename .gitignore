@@ -1,5 +1,102 @@
-(index.html is a source file, so no need to add anything to .gitignore)
+```
+# Logs and temp files
+*.log
+*.tmp
+*.swp
 
-```gitignore
+# Environment
+.env
+.env.local
+*.env.*
 
+# Editors
+.vscode/
+.idea/
+
+# Dependencies
+node_modules/
+.venv/
+venv/
+__pycache__/
+.mypy_cache/
+.pytest_cache/
+pip-log.txt
+pip-selfcheck.json
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+.coverage
+coverage/
+htmlcov/
+.pytest_cache/
+.tox/
+.coverage.*
+.nox/
+dist/
+build/
+*.egg-info/
+.eggs/
+.installed.cfg
+*.egg
+
+# Build results
+*.min.js
+*.min.css
+*.bundle.js
+*.bundle.css
+
+# Compressed files
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
+
+# IDE and editor files
+*.swp
+*.swo
+*.tmp
+*~
+.project
+.classpath
+.settings/
+nbproject/
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
 ```
