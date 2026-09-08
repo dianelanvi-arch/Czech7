@@ -986,12 +986,20 @@ function findTier(key){
 }
 function orderName(t){ return t.oname||t.name; }
 
+/* картинки ищутся сначала в art/, затем рядом с index.html, затем эмодзи-запаска */
 function fillArt(holder,key,emoji){
   holder.innerHTML='';
   var src=ART[key];
-  if(src){ var im=new Image(); im.src=src; im.alt=''; im.draggable=false;
-    im.onerror=function(){ holder.textContent=emoji; }; holder.appendChild(im);
-  } else holder.textContent=emoji;
+  if(!src){ holder.textContent=emoji; return; }
+  var im=new Image(); im.alt=''; im.draggable=false;
+  im.onload=function(){ holder.innerHTML=''; holder.appendChild(im); };
+  im.onerror=function(){
+    var im2=new Image(); im2.alt=''; im2.draggable=false;
+    im2.onload=function(){ holder.innerHTML=''; holder.appendChild(im2); };
+    im2.onerror=function(){ holder.textContent=emoji; };
+    im2.src=src.replace(/^.*\//,'');
+  };
+  im.src=src;
 }
 function fillCardArt(holder,key,emoji){
   if(ART['card_'+key]) fillArt(holder,'card_'+key,emoji);
@@ -1000,8 +1008,9 @@ function fillCardArt(holder,key,emoji){
 function icoHTML(key,fb){
   var s=ART[key];
   if(!s) return fb;
+  var root=s.replace(/^.*\//,'');
   var safe=String(fb).replace(/['"<>&]/g,'');
-  return '<img class="ico-inline" src="'+s+'" alt="" onerror="var p=this.parentNode;if(p)p.replaceChild(document.createTextNode(\''+safe+'\'),this)">';
+  return '<img class="ico-inline" src="'+s+'" alt="" onerror="this.onerror=function(){var p=this.parentNode;if(p)p.replaceChild(document.createTextNode(\''+safe+'\'),this)};this.src=\''+root+'\'">';
 }
 function checkArt(){
   var missing=[];
@@ -1856,7 +1865,7 @@ function renderShop(){
     toast('⚡ +10 энергии'); sfx('buy'); save(); renderShop();
   });
   if(eu>=EU_COSTS.length) row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' ⚡','MAX',null,'owned');
-  else row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' → '+(E_MAX+5)+' ⚡','💰'+EU_COSTS[eu],buyEnergy);
+  else row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' → '+(E_MAX+5)+' ⚡',''+EU_COSTS[eu],buyEnergy);
   if(turboActive()) row(icoHTML('icon_turbo','⚡'),'Турбо-смена','пузыри можно лопать бесплатно','⚡ '+fmtTime(turboUntil-Date.now()),null,'owned');
   else row(icoHTML('icon_turbo','⚡'),'Турбо-смена','5 мин: пузыри с предметами можно лопать бесплатно','💰'+TURBO_COST,function(){
     if(coins<TURBO_COST){ toast('Нужно 💰 '+TURBO_COST,true); sfx('err'); return; }
