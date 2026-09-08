@@ -1003,6 +1003,7 @@ var SPAWN_COST=2, WH_COST=3, E_REGEN=1400, RARE_CHANCE=0.22, SLOTS=3;
 var EU_COSTS=[200,450,800,1250];
 var DONE_HOLD=2000, DONE_FADE=700, NEW_PAUSE=1400;
 var BUBBLE_CHANCE=0.12, BUBBLE_LIFE=12000;
+function getBubbleChance(){ return currentEvent==='bubble_rate' ? BUBBLE_CHANCE*(1+currentEventBubbleRate) : BUBBLE_CHANCE; }
 var TURBO_TIME=300000, TURBO_COST=150, BATT_COST=60, REROLL_COST=50, PR_COST=900;
 var WH_PRICES=[1500,3000];
 var SKEY='ceh7.save.v4';
@@ -1052,6 +1053,24 @@ var currentEventLine=null;
 var musicOn=true, sfxOn=true, volMusic=.5, volSfx=1;
 var BGM=null, bgmOk=false;
 
+repository-code-reconstruction-f62ef
+function pickNewEvent(){
+  var now=Date.now();
+  currentEvent=EVENT_TYPES[Math.floor(Math.random()*EVENT_TYPES.length)];
+  eventEnd=now+EVENT_DURATION;
+  if(currentEvent==='line_bonus'){
+    var lines=Object.keys(LINES);
+    currentEventLine=lines[Math.floor(Math.random()*lines.length)];
+    currentEventBubbleRate=0;
+  } else if(currentEvent==='bubble_rate'){
+    currentEventLine=null;
+    currentEventBubbleRate=0.7; // +70% шанс появления
+  } else {
+    currentEventLine=null;
+    currentEventBubbleRate=0;
+  }
+  save();
+}
 function eventName(ev){
   if(ev==='line_bonus') return '🎉 Бонус линии +10% к награде';
   if(ev==='express_rate') return '⚡ Экспрессы приходят чаще';
@@ -1220,7 +1239,7 @@ function checkCatPrize(line){
   if(ownedIn(line)===L.tiers.length&&!prized[line]){
     prized[line]=1; coins+=150; $('#coins').textContent=coins;
     showStamp('Коллекция собрана!','«'+L.catName+'» · +150💰');
-    sfx('order'); save();
+    sfx('order'); startFireworks(); save();
   }
 }
 function askBuyCard(t){
@@ -1263,6 +1282,37 @@ function closeCard(){
   $('#card-ov').classList.remove('open'); $('#card-ov').innerHTML='';
   var cb=cardOnClose; cardOnClose=null;
   if(cb) cb();
+}
+
+// Анимация салюта
+function startFireworks(){
+  var c=document.createElement('canvas');
+  c.id='fw-canvas';
+  c.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999';
+  document.body.appendChild(c);
+  var ctx=c.getContext('2d');
+  c.width=window.innerWidth; c.height=window.innerHeight;
+  var particles=[];
+  function burst(x,y){
+    for(var i=0;i<60;i++){
+      var angle=Math.random()*Math.PI*2, speed=3+Math.random()*5;
+      particles.push({x:x,y:y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,
+        life:1,color:'hsl('+Math.floor(Math.random()*360)+',100%,60%)'});
+    }
+  }
+  for(var i=0;i<5;i++) setTimeout(function(){ burst(Math.random()*c.width,Math.random()*c.height*.6); },i*400);
+  function render(){
+    ctx.clearRect(0,0,c.width,c.height);
+    for(var i=particles.length-1;i>=0;i--){
+      var p=particles[i]; p.x+=p.vx; p.y+=p.vy; p.vy+=.15; p.life-=.02;
+      if(p.life<=0){ particles.splice(i,1); continue; }
+      ctx.globalAlpha=p.life; ctx.fillStyle=p.color;
+      ctx.beginPath(); ctx.arc(p.x,p.y,3,0,Math.PI*2); ctx.fill();
+    }
+    if(particles.length) requestAnimationFrame(render);
+    else c.parentNode.removeChild(c);
+  }
+  render();
 }
 function openBureau(){
   $('#bureau-back').classList.add('open');
@@ -1656,6 +1706,8 @@ function doMerge(src,dst){
   floaty(cx,r.top+p.y,'+'+gain+' 💰','#ff6a13');
   if(nt===MAXT) floaty(cx,r.top+p.y-16,'ГОТОВО!',c.color);
   sfx('merge',nt);
+repository-code-reconstruction-f62ef
+  if(Math.random()<getBubbleChance()) spawnBubble(freeAt,ch,nt);
   var ch2=(currentEvent==='bubble_rate')?0.08:0;
   if(Math.random()<(BUBBLE_CHANCE+ch2)) spawnBubble(freeAt,ch,nt);
   save();
@@ -2293,6 +2345,7 @@ function init(){
     else lastRegen=Date.now();
   },1000);
   setInterval(updateTimers,500);
+  if(!currentEvent) pickNewEvent();
   setInterval(save,6000);
   addEventListener('beforeunload',save);
   if('ResizeObserver' in window) new ResizeObserver(function(){ requestAnimationFrame(sizeBoard); }).observe(wrap);
