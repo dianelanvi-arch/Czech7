@@ -1029,7 +1029,18 @@ var currentEventLine=null, currentEventBubbleRate=0;
 /* звук */
 var musicOn=true, sfxOn=true, volMusic=.5, volSfx=1;
 var BGM=null, bgmOk=false, bgmTried=false;
-var MUSIC_CANDIDATES=['art/audio/music_main.mp3','art/music_main.mp3','music_main.mp3'];
+var MUSIC_TRACKS=['music_main.mp3','music_main2.mp3','music_main3.mp3'];
+var MUSIC_BASE_PATHS=['art/audio/','art/',''];
+function getMusicCandidates(){
+  var result=[];
+  for(var t=0;t<MUSIC_TRACKS.length;t++){
+    for(var p=0;p<MUSIC_BASE_PATHS.length;p++){
+      result.push(MUSIC_BASE_PATHS[p]+MUSIC_TRACKS[t]);
+    }
+  }
+  return result;
+}
+var MUSIC_CANDIDATES=getMusicCandidates();
 function pickNewEvent(){
   if(Math.random()<0.35){
     currentEvent=pick(EVENT_TYPES); eventEnd=Date.now()+EVENT_DURATION;
@@ -1163,7 +1174,7 @@ function initMusic(){
   try{
     if(BGM){ BGM.pause(); BGM=null; }
     BGM=new Audio();
-    BGM.preload='auto'; BGM.loop=false; BGM.volume=volMusic;
+    BGM.preload='auto'; BGM.loop=true; BGM.volume=volMusic;
     BGM.addEventListener('ended',handleTrackEnd);
     BGM.addEventListener('playing',function(){ bgmOk=true; });
     var ci=0;
@@ -1177,25 +1188,10 @@ function initMusic(){
   }catch(e){ BGM=null; bgmOk=false; }
 }
 function handleTrackEnd(){
-  if(isFading||!BGM||!MUSIC_TRACKS_LEN()) return;
-  isFading=true;
-  var v=volMusic, step=Math.max(volMusic/20,0.001);
-  fadeInterval=setInterval(function(){
-    v-=step;
-    if(BGM&&!BGM.paused) BGM.volume=Math.max(0,v);
-    if(v<=0){
-      clearInterval(fadeInterval); fadeInterval=null;
-      setTimeout(function(){
-        currentTrackIndex=(currentTrackIndex+1)%MUSIC_CANDIDATES.length;
-        BGM.src=MUSIC_CANDIDATES[currentTrackIndex];
-        BGM.volume=volMusic;
-        if(musicOn) BGM.play().catch(function(){});
-        isFading=false;
-      },800);
-    }
-  },50);
+  // При зацикленном воспроизведении (loop=true) это событие не сработает
+  // Функция оставлена для совместимости, но теперь не нужна
 }
-function MUSIC_TRACKS_LEN(){ return MUSIC_CANDIDATES.length; }
+function MUSIC_TRACKS_LEN(){ return MUSIC_TRACKS.length; }
 function tryPlayMusic(){
   if(!musicOn||!BGM) return;
   if(!BGM.paused) return;
