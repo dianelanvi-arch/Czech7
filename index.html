@@ -962,6 +962,7 @@ var ART = {
   icon_shop:'art/img/icon_shop.png', icon_energy:'art/img/icon_energy.png', icon_coin:'art/img/icon_coin.png',
   icon_battery:'art/img/icon_battery.png', icon_turbo:'art/img/icon_turbo.png',
   icon_reroll:'art/img/icon_reroll.png', icon_pr:'art/img/icon_pr.png',
+  icon_box:'art/img/icon_box.png', icon_warehouse:'art/img/icon_warehouse.png', icon_expand:'art/img/icon_expand.png',
   cat_oil:'art/img/cat_oil.png', cat_mayo:'art/img/cat_mayo.png', cat_ketchup:'art/img/cat_ketchup.png', cat_milk:'art/img/cat_milk.png',
   card_oil_1:'art/img/card_oil_1.png', card_oil_2:'art/img/card_oil_2.png', card_oil_3:'art/img/card_oil_3.png', card_oil_4:'art/img/card_oil_4.png', card_oil_5:'art/img/card_oil_5.png',
   card_mayo_1:'art/img/card_mayo_1.png', card_mayo_2:'art/img/card_mayo_2.png', card_mayo_3:'art/img/card_mayo_3.png', card_mayo_4:'art/img/card_mayo_4.png', card_mayo_5:'art/img/card_mayo_5.png',
@@ -1949,7 +1950,7 @@ function renderOrders(){
     var side=document.createElement('div'); side.className='o-side';
     var ex2=document.createElement('button'); ex2.className='o-exp2'; ex2.title='Подробнее о заказе';
     var h2=document.createElement('span'); h2.className='exp-ico'; ex2.appendChild(h2);
-    h2.textContent='⌃⌃';
+    fillArt(h2,'icon_expand','⌃⌃');
     ex2.addEventListener('click',function(e){ e.stopPropagation(); openOrderSheet(i); });
     var qw2=document.createElement('span'); qw2.className='o-qwrap';
     var q3=document.createElement('span'); q3.className='o-qty2'; q3.textContent=o.done?'✓':'×'+o.need;
@@ -1968,7 +1969,7 @@ function renderOrders(){
     var foot=document.createElement('div'); foot.className='o-foot';
     var ex=document.createElement('button'); ex.className='o-expand'; ex.title='Подробнее о заказе';
     var h3=document.createElement('span'); h3.className='exp-ico'; ex.appendChild(h3);
-    h3.textContent='⌃⌃';
+    fillArt(h3,'icon_expand','⌃⌃');
     ex.addEventListener('click',function(e){ e.stopPropagation(); openOrderSheet(i); });
     var rew=document.createElement('span'); rew.className='o-reward';
     rew.innerHTML=icoHTML('icon_coin','💰')+' '+o.reward;
@@ -2152,7 +2153,8 @@ function renderShop(){
   pop.appendChild(h);
   function row(ico,name,desc,btn,cb,cls,mute){
     var r=document.createElement('div'); r.className='sh-row'+(mute?' mute':'');
-    r.innerHTML='<span class="sh-ico">'+ico+'</span><span class="sh-txt"><b>'+name+'</b>'+desc+'</span>';
+    var icoHTML_content = (ico && ART[ico]) ? icoHTML(ico,'📦') : ico;
+    r.innerHTML='<span class="sh-ico">'+icoHTML_content+'</span><span class="sh-txt"><b>'+name+'</b>'+desc+'</span>';
     var b=document.createElement('button'); b.className='sh-buy'+(cls?' '+cls:''); b.textContent=btn;
     if(cb) b.addEventListener('click',cb); else b.disabled=true;
     r.appendChild(b); pop.appendChild(r);
@@ -2196,7 +2198,7 @@ function renderShop(){
   if(orders.some(function(o){ return o&&!o.done&&!o.express; }))
     row('🌀','Заменить заказ','','💰'+REROLL_COST,function(){ shopMode='reroll'; renderShop(); });
   if(whStage>=2) row('🏭','Склад','максимальный размер','MAX',null,'owned');
-  else row('🏭','Склад','+6 ячеек игрового поля','💰'+WH_PRICES[whStage],function(){
+  else row('icon_warehouse','Склад','+6 ячеек игрового поля','💰'+WH_PRICES[whStage],function(){
     var cost=WH_PRICES[whStage];
     if(coins<cost){ toast('Нужно 💰 '+cost,true); sfx('err'); return; }
     coins-=cost; $('#coins').textContent=coins; bump('#chip-coins');
