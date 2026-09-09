@@ -78,7 +78,6 @@ button{touch-action:manipulation;font-family:var(--body)}
 .sh-ico .ico-inline{width:20px;height:20px}
 #coin-ico,#energy-ico{display:inline-grid;place-items:center;width:16px;height:16px}
 #coin-ico img,#energy-ico img{width:16px;height:16px;object-fit:contain;display:block}
-
 body.lowfx .glow{display:none}
 body.lowfx .gear,body.lowfx .brand .bg-gear,body.lowfx .ln-gear{animation:none}
 body.lowfx .hazard{animation:none}
@@ -87,7 +86,6 @@ body.lowfx .order-card,body.lowfx .order-card.fresh,body.lowfx .order-card.expre
 body.lowfx .item.pop .in,body.lowfx .item.dropin .in{animation:none}
 body.lowfx .chip.bump{animation:none}
 body.lowfx #factory-svg .smk,body.lowfx #factory-svg .win,body.lowfx #factory-svg .cloud,body.lowfx #factory-svg .truck{animation:none}
-
 #bg{position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;overflow:hidden}
 #bg .tex{position:absolute;top:0;left:0;right:0;bottom:0;background:
   repeating-linear-gradient(45deg, rgba(1,80,61,.04) 0 2px, transparent 2px 26px),
@@ -111,7 +109,6 @@ html[data-theme="night"] .hazard{opacity:.55}
 .gr1{top:-46px;left:-54px;font-size:200px}
 .gr2{bottom:-64px;right:-46px;font-size:260px;animation-duration:58s;animation-direction:reverse}
 @keyframes spin{to{transform:rotate(360deg)}}
-
 #factory-svg{position:absolute;inset:0;width:100%;height:100%;display:none;--tx:1150px}
 body.prized-all #factory-svg{display:block}
 #factory-svg .sky{fill:url(#skyDay)}
@@ -152,7 +149,6 @@ html[data-theme="night"] #factory-svg .truck{filter:drop-shadow(0 0 6px rgba(12,
   96%{transform:translateX(0) scaleX(1)}
   100%{transform:translateX(0) scaleX(1)}
 }
-
 #app{position:relative;z-index:1;height:100vh;height:100dvh;display:flex;flex-direction:column}
 #topbar{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:8px 12px;
   background:var(--card);border-bottom:2px solid var(--brand);
@@ -190,8 +186,6 @@ html[data-theme="night"] #factory-svg .truck{filter:drop-shadow(0 0 6px rgba(12,
   font-size:15px;cursor:pointer;transition:.15s;
   box-shadow:4px 4px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.08)}
 .icobtn:hover{border-color:var(--amber2);transform:translateY(-2px);box-shadow:5px 5px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.08)}
-
-/* окошко настроек звука */
 #sound-pop{position:fixed;top:56px;right:12px;z-index:95;width:230px;background:var(--card);
   border:2px solid var(--brand);border-radius:12px;padding:10px 12px;display:none;
   box-shadow:6px 6px 0 var(--shadowc)}
@@ -201,13 +195,11 @@ html[data-theme="night"] #factory-svg .truck{filter:drop-shadow(0 0 6px rgba(12,
 .snd-row input[type=checkbox]{width:16px;height:16px;flex:0 0 auto;accent-color:var(--brand2)}
 .snd-row input[type=range]{flex:1;accent-color:var(--amber2)}
 .snd-row .snd-lab{flex:0 0 52px}
-
 .fly-card{position:fixed;width:56px;height:56px;z-index:160;pointer-events:none;
   background:var(--card);border:2px solid var(--amber);border-radius:12px;
   display:grid;place-items:center;font-size:30px;box-shadow:0 8px 18px rgba(0,0,0,.35);
   transition:left .7s cubic-bezier(.3,.7,.4,1), top .7s cubic-bezier(.3,.7,.4,1), transform .7s, opacity .7s}
 .fly-card img{width:80%;height:80%;object-fit:contain}
-
 .shift-wrap{display:flex;flex-direction:row;gap:10px;align-items:center;justify-content:center;padding:2px 0}
 .shift-label{font-family:var(--disp);font-weight:700;font-size:9px;letter-spacing:.16em;color:var(--mut);text-transform:uppercase}
 .tool-btn{display:none}
@@ -244,7 +236,6 @@ html[data-theme="night"] .knob{transform:translateX(var(--tr));
   background:radial-gradient(circle at 35% 32%, #ffffff, #dfe6f5 60%, #b9c4dd);
   box-shadow:0 0 10px rgba(220,230,255,.55), 0 2px 4px rgba(0,0,0,.4)}
 html[data-theme="night"] .knob::before{opacity:1}
-
 .lvl-badge{position:relative;width:42px;height:42px;border-radius:50%;flex:0 0 auto;cursor:help;
   background:conic-gradient(var(--amber2) var(--xp,0%), rgba(128,128,128,.18) 0);
   box-shadow:4px 4px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.08);
@@ -262,7 +253,6 @@ html[data-theme="night"] .knob::before{opacity:1}
 .tip-row:first-child{margin-top:0}
 .tip-row b{display:inline-block;min-width:74px;margin-right:5px;color:var(--head);
   font-family:var(--disp);font-weight:700;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase}
-
 #layout{flex:1;display:flex;flex-direction:column;min-height:0;gap:10px;padding:10px}
 #gamezone{order:1;flex:1 1 auto;min-height:0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:9px;overflow:hidden}
 #lines{order:2;flex:0 0 auto;display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;padding:2px}
@@ -270,7 +260,6 @@ html[data-theme="night"] .knob::before{opacity:1}
 .lines-head{display:none}
 .orders-side{display:none}
 #board-wrap{flex:1;width:100%;min-height:0;display:grid;place-items:center;overflow:hidden}
-
 .line{display:flex;align-items:center;gap:8px;min-width:200px;min-height:60px;background:var(--surf);
   border:2px solid var(--line2);border-left:6px solid var(--acc);border-radius:12px;padding:8px 9px;
   box-shadow:5px 5px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.06)}
@@ -290,7 +279,6 @@ html[data-theme="night"] .knob::before{opacity:1}
   align-self:flex-start;margin:6px 0 2px}
 .tut-btn-m{align-self:flex-start;font-family:var(--disp);font-weight:700;font-size:10px;color:#fff;background:var(--amber2);
   border:none;border-radius:999px;padding:7px 14px;cursor:pointer;box-shadow:3px 3px 0 var(--shadowc)}
-
 #board{position:relative;border-radius:20px;touch-action:none;
   background:var(--surf);border:2px solid var(--brand);
   box-shadow:10px 10px 0 var(--shadowc), inset 0 -3px 6px rgba(0,0,0,.08)}
@@ -304,7 +292,6 @@ html[data-theme="night"] .knob::before{opacity:1}
   box-shadow:inset 0 2px 5px var(--cellsh), 2px 2px 0 rgba(0,0,0,.04);transition:box-shadow .15s,background .15s}
 .cell.hl{background:var(--hlbg);box-shadow:inset 0 0 0 2px var(--amber), 2px 2px 0 rgba(0,0,0,.04)}
 .cell.hl.good{background:var(--hlgood);box-shadow:inset 0 0 0 2px var(--green), 2px 2px 0 rgba(0,0,0,.04)}
-
 .item{position:absolute;left:0;top:0;touch-action:none;cursor:grab;will-change:transform;transition:transform .17s cubic-bezier(.22,.9,.3,1.25)}
 .item.drag{transition:none;z-index:30;cursor:grabbing}
 .item .in{position:absolute;top:5%;left:5%;right:5%;bottom:5%;display:grid;place-items:center;border-radius:12px;
@@ -320,7 +307,6 @@ html[data-theme="night"] .knob::before{opacity:1}
 @keyframes dropin{0%{transform:scale(.2) translateY(-18px);opacity:0}100%{transform:scale(1) translateY(0);opacity:1}}
 .item.bye{transition:opacity .15s;opacity:0}
 .item.bye .in{transform:scale(.3)}
-
 .bubble{position:absolute;left:0;top:0;z-index:6;cursor:pointer;will-change:transform}
 .bubble .b-in{position:absolute;top:4%;left:4%;right:4%;bottom:4%;border-radius:50%;
   background:radial-gradient(circle at 32% 28%, rgba(255,255,255,.7), rgba(47,159,214,.18) 45%, rgba(47,159,214,.10) 72%);
@@ -333,7 +319,6 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
   color:var(--blue);background:var(--bg2);border:2px solid var(--blue);border-radius:999px;padding:1px 6px;white-space:nowrap}
 .bubble.bye{opacity:0;transition:opacity .4s}
 @keyframes bob{0%,100%{transform:translateY(-3%)}50%{transform:translateY(3%)}}
-
 #plants{flex:0 0 auto;display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap}
 .pwrap{position:relative}
 .plant{position:relative;width:64px;height:64px;border-radius:50%;cursor:pointer;
@@ -363,7 +348,6 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
   .p-art{width:54px;height:54px;font-size:36px}
   .p-lock{font-size:15px}
 }
-
 .shop-pop{position:absolute;bottom:calc(100% + 6px);right:-12px;width:300px;max-width:88vw;
   background:var(--card);border:2px solid var(--brand);border-radius:14px;padding:10px;display:none;z-index:90;
   box-shadow:10px 10px 0 var(--shadowc), inset 0 -3px 6px rgba(0,0,0,.08);max-height:60vh;overflow-y:auto;overflow-x:hidden}
@@ -382,7 +366,6 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 .sh-buy:hover{transform:translateY(-1px);box-shadow:3px 3px 0 var(--shadowc)}
 .sh-buy:disabled{opacity:.55;cursor:default}
 .sh-buy.owned{background:var(--brand2);border-color:var(--brand2);color:#fff}
-
 .sheet-back{position:fixed;inset:0;background:rgba(8,18,13,.45);z-index:110;opacity:0;pointer-events:none;transition:.25s}
 .sheet-back.open{opacity:1;pointer-events:auto}
 .sheet{position:fixed;left:0;right:0;bottom:0;max-height:72vh;background:var(--card);border:2px solid var(--brand);border-bottom:none;
@@ -391,13 +374,12 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 .sheet.open{transform:none}
 .sheet-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 14px;border-bottom:1px dashed var(--line)}
 .sheet-head b{font-family:var(--disp);font-weight:700;font-size:11px;letter-spacing:.12em;color:var(--head);text-transform:uppercase}
-.sheet-body{overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;max-height:calc(72vh - 50px);}
+.sheet-body{overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;max-height:calc(72vh - 50px)}
 .od-row{display:flex;align-items:center;gap:10px}
 .od-row .o-art{width:48px;height:48px;font-size:32px}
 .od-row b{display:block;font-family:var(--disp);font-weight:700;font-size:12px;color:var(--ink)}
 .od-row span{font-size:11px;color:var(--mut)}
 .od-hint{font-size:10.5px;color:var(--dim);line-height:1.45}
-
 #bureau-back{position:fixed;inset:0;background:rgba(8,18,13,.55);z-index:140;opacity:0;pointer-events:none;transition:.25s}
 #bureau-back.open{opacity:1;pointer-events:auto}
 #bureau{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.94);z-index:145;
@@ -433,7 +415,6 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 .cc-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:start}
 .bur-back-btn{align-self:flex-start;font-family:var(--disp);font-size:10px;color:var(--brand2);background:none;
   border:2px solid var(--line2);border-radius:999px;padding:5px 12px;cursor:pointer}
-
 #confirm-ov{position:fixed;inset:0;z-index:160;display:none;align-items:center;justify-content:center;background:rgba(8,18,13,.6)}
 #confirm-ov.open{display:flex}
 .confirm-box{width:min(86vw,320px);background:var(--card);border:3px solid var(--brand);border-radius:16px;padding:16px;
@@ -444,7 +425,6 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 .cf-yes:hover{transform:translateY(-1px);box-shadow:4px 4px 0 var(--shadowc)}
 .cf-no{font-family:var(--disp);font-weight:700;font-size:10px;color:var(--mut);background:none;border:2px solid var(--line2);border-radius:999px;padding:8px 14px;cursor:pointer;box-shadow:2px 2px 0 var(--shadowc)}
 .cf-no:hover{transform:translateY(-1px);box-shadow:3px 3px 0 var(--shadowc)}
-
 #card-ov{position:fixed;inset:0;z-index:150;display:none;align-items:center;justify-content:center;background:rgba(8,18,13,.66)}
 #card-ov.open{display:flex}
 .coll-card{width:min(86vw,340px);background:var(--card);border:3px solid var(--amber);border-radius:18px;
@@ -463,7 +443,6 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 .coll-btn{margin-top:12px;font-family:var(--disp);font-weight:700;font-size:11px;color:#fff;background:var(--amber2);
   border:none;border-radius:999px;padding:9px 18px;cursor:pointer;box-shadow:4px 4px 0 var(--shadowc)}
 .coll-btn:hover{transform:translateY(-1px);box-shadow:5px 5px 0 var(--shadowc)}
-
 #orders{flex:0 0 auto;display:flex;flex-direction:column;gap:9px;min-height:0;
   background:var(--surf);border:2px solid var(--brand);border-radius:16px;
   padding:12px;box-shadow:10px 10px 0 var(--shadowc), inset 0 -3px 6px rgba(0,0,0,.08);max-height:37vh;max-height:37dvh;overflow-y:auto;overflow-x:hidden}
@@ -520,7 +499,6 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 .mini{width:20px;height:20px;display:grid;place-items:center;font-size:15px}
 .ch-arrow{color:var(--dim);font-size:9px;margin:0 1px}
 .hint{font-size:10.5px;line-height:1.45;color:var(--mut)}
-
 #tut-back{position:fixed;inset:0;background:rgba(8,18,13,.62);z-index:130;opacity:0;pointer-events:none;transition:.3s}
 #tut-back.open{opacity:1;pointer-events:auto}
 #tut-spot{position:fixed;z-index:131;pointer-events:none;display:none;
@@ -548,7 +526,6 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 #tut-next{font-family:var(--disp);font-weight:700;font-size:11px;color:#fff;background:var(--amber2);border:none;
   border-radius:999px;padding:9px 16px;cursor:pointer;box-shadow:3px 3px 0 var(--shadowc)}
 #tut-next:active{transform:scale(.95)}
-
 #profile-ov{position:fixed;inset:0;z-index:155;display:none;align-items:center;justify-content:center;background:rgba(8,18,13,.6)}
 #profile-ov.open{display:flex}
 .profile-box{position:relative;width:min(92vw,420px);max-height:86vh;overflow-y:auto;background:var(--card);border:3px solid var(--brand);border-radius:18px;
@@ -583,7 +560,6 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 .profile-save-btn:hover{transform:translateY(-1px);box-shadow:5px 5px 0 var(--shadowc)}
 .profile-save-btn:active{transform:scale(.96)}
 .profile-close{position:absolute;top:10px;right:10px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--mut)}
-
 #stamp{position:fixed;left:50%;top:42%;z-index:70;transform:translate(-50%,-50%) rotate(-8deg) scale(0);opacity:0;pointer-events:none;
   font-family:var(--disp);font-weight:900;font-size:clamp(18px,4.2vw,34px);letter-spacing:.06em;text-transform:uppercase;
   color:var(--brand2);border:4px solid var(--brand2);border-radius:14px;padding:12px 26px;background:var(--card);
@@ -594,7 +570,6 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 @keyframes stampin{0%{opacity:0;transform:translate(-50%,-50%) rotate(-16deg) scale(2.6)}
   12%{opacity:1;transform:translate(-50%,-50%) rotate(-8deg) scale(1)}
   86%{opacity:1}100%{opacity:0;transform:translate(-50%,-58%) rotate(-8deg) scale(1)}}
-
 @media (orientation:landscape),(min-width:820px){
   #layout{flex-direction:row;padding:12px}
   #lines{order:0;flex:0 0 230px;flex-direction:column;overflow:visible;padding-bottom:110px}
@@ -681,7 +656,6 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
   html[data-theme="night"] body.prized-all #topbar{background:rgba(16,29,22,.62)}
 }
 @media (max-width:560px){.chip{padding:3px 7px;font-size:11px}}
-
 #fx{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:55}
 .particle{position:absolute;width:8px;height:8px;border-radius:2px;left:0;top:0}
 .ring{position:absolute;width:64px;height:64px;border:3px solid var(--amber2);border-radius:50%;left:0;top:0}
@@ -828,13 +802,10 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
   </svg>
   <div class="hazard hz-t"></div><div class="hazard hz-b"></div>
   <div class="gear gr1">⚙</div><div class="gear gr2">⚙</div>
-  
-  <!-- Экран загрузки -->
-  <div id="loading-screen" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);" onclick="tryPlayMusic();">
+  <!-- Экран загрузки (кликабелен: первый тап запускает музыку) -->
+  <div id="loading-screen" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);pointer-events:auto;" onclick="tryPlayMusic();">
     <div style="position:relative;width:280px;height:280px;margin-bottom:30px;">
-      <div class="gear" style="top:-46px;left:-54px;font-size:200px;animation:spin 42s linear infinite;color:var(--line2);opacity:var(--gearop);">⚙</div>
-      <div class="gear" style="bottom:-64px;right:-46px;font-size:260px;animation-duration:58s;animation-direction:reverse;color:var(--line2);opacity:var(--gearop);">⚙</div>
-      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:80px;animation:truckride 3s linear infinite;">🚚</div>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:80px;">🏭</div>
     </div>
     <div style="width:280px;height:24px;background:var(--panel);border:3px solid var(--brand2);border-radius:999px;overflow:hidden;box-shadow:4px 4px 0 var(--shadowc);">
       <div id="loading-bar" style="width:0%;height:100%;background:linear-gradient(90deg,var(--amber),var(--amber2));transition:width .3s ease-out;"></div>
@@ -894,28 +865,23 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
     </aside>
   </main>
 </div>
-
 <div id="sound-pop">
   <h4>🔊 Звук</h4>
   <label class="snd-row"><input type="checkbox" id="snd-music-on" checked><span class="snd-lab">Музыка</span><input type="range" id="snd-music-vol" min="0" max="100" value="50"></label>
   <label class="snd-row"><input type="checkbox" id="snd-sfx-on" checked><span class="snd-lab">Эффекты</span><input type="range" id="snd-sfx-vol" min="0" max="100" value="100"></label>
 </div>
-
 <div class="sheet-back" id="sheet-back"></div>
 <div class="sheet" id="sheet">
   <div class="sheet-head"><b id="sheet-title"></b><button class="icobtn" id="sheet-close" title="Закрыть">✕</button></div>
   <div class="sheet-body" id="sheet-body"></div>
 </div>
-
 <div id="bureau-back"></div>
 <div id="bureau">
   <div class="bur-head"><b id="bur-title">🎴 Коллекционное бюро</b><button class="icobtn" id="bur-close" title="Закрыть">✕</button></div>
   <div class="bur-body" id="bur-body"></div>
 </div>
-
 <div id="confirm-ov"></div>
 <div id="card-ov"></div>
-
 <div id="profile-ov">
   <div class="profile-box">
     <button class="profile-close" id="profile-close" title="Закрыть">✕</button>
@@ -933,7 +899,6 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
     <button class="profile-save-btn" id="profile-save">Сохранить</button>
   </div>
 </div>
-
 <div id="tut-back"></div>
 <div id="tut-spot"></div>
 <div id="tut-card">
@@ -945,7 +910,6 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
     <button id="tut-next">Далее ➜</button>
   </div>
 </div>
-
 <div id="fx"></div>
 <div id="stamp"></div>
 <div id="toast"></div>
@@ -953,21 +917,21 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 <script>
 'use strict';
 var ART = {
-  mayo_1:'art/img/mayo_1.png', mayo_2:'art/img/mayo_2.png', mayo_3:'art/img/mayo_3.png', mayo_4:'art/img/mayo_4.png', mayo_5:'art/img/mayo_5.png',
-  ketchup_1:'art/img/ketchup_1.png', ketchup_2:'art/img/ketchup_2.png', ketchup_3:'art/img/ketchup_3.png', ketchup_4:'art/img/ketchup_4.png', ketchup_5:'art/img/ketchup_5.png',
-  milk_1:'art/img/milk_1.png', milk_2:'art/img/milk_2.png', milk_3:'art/img/milk_3.png', milk_4:'art/img/milk_4.png', milk_5:'art/img/milk_5.png',
-  oil_1:'art/img/oil_1.png', oil_2:'art/img/oil_2.png', oil_3:'art/img/oil_3.png', oil_4:'art/img/oil_4.png', oil_5:'art/img/oil_5.png',
-  sp_mayo:'art/img/sp_mayo.png', sp_ketchup:'art/img/sp_ketchup.png', sp_milk:'art/img/sp_milk.png', sp_oil:'art/img/sp_oil.png',
-  shop:'art/img/shop.png', bureau:'art/img/bureau.png',
-  icon_shop:'art/img/icon_shop.png', icon_energy:'art/img/icon_energy.png', icon_coin:'art/img/icon_coin.png',
-  icon_battery:'art/img/icon_battery.png', icon_turbo:'art/img/icon_turbo.png',
-  icon_reroll:'art/img/icon_reroll.png', icon_pr:'art/img/icon_pr.png',
-  icon_box:'art/img/icon_box.png', icon_warehouse:'art/img/icon_warehouse.png', icon_expand:'art/img/icon_expand.png',
-  cat_oil:'art/img/cat_oil.png', cat_mayo:'art/img/cat_mayo.png', cat_ketchup:'art/img/cat_ketchup.png', cat_milk:'art/img/cat_milk.png',
-  card_oil_1:'art/img/card_oil_1.png', card_oil_2:'art/img/card_oil_2.png', card_oil_3:'art/img/card_oil_3.png', card_oil_4:'art/img/card_oil_4.png', card_oil_5:'art/img/card_oil_5.png',
-  card_mayo_1:'art/img/card_mayo_1.png', card_mayo_2:'art/img/card_mayo_2.png', card_mayo_3:'art/img/card_mayo_3.png', card_mayo_4:'art/img/card_mayo_4.png', card_mayo_5:'art/img/card_mayo_5.png',
-  card_ketchup_1:'art/img/card_ketchup_1.png', card_ketchup_2:'art/img/card_ketchup_2.png', card_ketchup_3:'art/img/card_ketchup_3.png', card_ketchup_4:'art/img/card_ketchup_4.png', card_ketchup_5:'art/img/card_ketchup_5.png',
-  card_milk_1:'art/img/card_milk_1.png', card_milk_2:'art/img/card_milk_2.png', card_milk_3:'art/img/card_milk_3.png', card_milk_4:'art/img/card_milk_4.png', card_milk_5:'art/img/card_milk_5.png',
+  mayo_1:'art/mayo_1.png', mayo_2:'art/mayo_2.png', mayo_3:'art/mayo_3.png', mayo_4:'art/mayo_4.png', mayo_5:'art/mayo_5.png',
+  ketchup_1:'art/ketchup_1.png', ketchup_2:'art/ketchup_2.png', ketchup_3:'art/ketchup_3.png', ketchup_4:'art/ketchup_4.png', ketchup_5:'art/ketchup_5.png',
+  milk_1:'art/milk_1.png', milk_2:'art/milk_2.png', milk_3:'art/milk_3.png', milk_4:'art/milk_4.png', milk_5:'art/milk_5.png',
+  oil_1:'art/oil_1.png', oil_2:'art/oil_2.png', oil_3:'art/oil_3.png', oil_4:'art/oil_4.png', oil_5:'art/oil_5.png',
+  sp_mayo:'art/sp_mayo.png', sp_ketchup:'art/sp_ketchup.png', sp_milk:'art/sp_milk.png', sp_oil:'art/sp_oil.png',
+  shop:'art/shop.png', bureau:'art/bureau.png',
+  icon_shop:'art/icon_shop.png', icon_energy:'art/icon_energy.png', icon_coin:'art/icon_coin.png',
+  icon_battery:'art/icon_battery.png', icon_turbo:'art/icon_turbo.png',
+  icon_reroll:'art/icon_reroll.png', icon_pr:'art/icon_pr.png',
+  icon_box:'art/icon_box.png', icon_warehouse:'art/icon_warehouse.png', icon_expand:'art/icon_expand.png',
+  cat_oil:'art/cat_oil.png', cat_mayo:'art/cat_mayo.png', cat_ketchup:'art/cat_ketchup.png', cat_milk:'art/cat_milk.png',
+  card_oil_1:'art/card_oil_1.png', card_oil_2:'art/card_oil_2.png', card_oil_3:'art/card_oil_3.png', card_oil_4:'art/card_oil_4.png', card_oil_5:'art/card_oil_5.png',
+  card_mayo_1:'art/card_mayo_1.png', card_mayo_2:'art/card_mayo_2.png', card_mayo_3:'art/card_mayo_3.png', card_mayo_4:'art/card_mayo_4.png', card_mayo_5:'art/card_mayo_5.png',
+  card_ketchup_1:'art/card_ketchup_1.png', card_ketchup_2:'art/card_ketchup_2.png', card_ketchup_3:'art/card_ketchup_3.png', card_ketchup_4:'art/card_ketchup_4.png', card_ketchup_5:'art/card_ketchup_5.png',
+  card_milk_1:'art/card_milk_1.png', card_milk_2:'art/card_milk_2.png', card_milk_3:'art/card_milk_3.png', card_milk_4:'art/card_milk_4.png', card_milk_5:'art/card_milk_5.png',
 };
 var CLIENTS_RETAIL=['Супермаркет «Ромашка»','Сеть ресторанов «Вилка и Ложка»','Кафе «Уют»','Гипермаркет «Полюс»','Бистро «Быстро»','Сеть пекарен «Колос»','Ресторан «Астория»','Маркет «У дома»','Суши-бар «Киото»','Пиццерия «Томато»','Кофейня «Бодрое утро»','Столовая «Домашняя»'];
 var CLIENTS_FACTORY=['Кондитерская фабрика «Медовая»','Хлебозавод №3','Фабрика мороженого «Пломбир»','Завод снеков «Хруст»','Молочный комбинат «Заря»','Комбинат питания «Школьный»','Пекарня «Тёплый хлеб»','Завод соусов «Южный»','Фабрика чипсов «Хрум»','Консервный завод «Лето»'];
@@ -1010,24 +974,22 @@ var CHAINS = [
       {key:'milk_5', emoji:'🧃', name:'Овсяное молоко', fact:'Овсяное молоко было изобретено в 1990-х в Швеции, на его производство уходит в 15 раз меньше воды, а остатки жмыха после фильтрации можно использовать в производстве гранолы и корма для животных.'} ]},
 ];
 CHAINS.forEach(function(c){ c.tiers.forEach(function(t,i){ t.tier=i+1; }); });
-
 var COLS=6, ROWS=6, MAXT=5, PAD=10, GAP=6;
 var SPAWN_COST=2, WH_COST=3, E_REGEN=1400, RARE_CHANCE=0.22, SLOTS=3;
 var EU_COSTS=[200,450,800,1250];
 var DONE_HOLD=2000, DONE_FADE=700, NEW_PAUSE=1400;
 var BUBBLE_CHANCE=0.12, BUBBLE_LIFE=12000;
-function getBubbleChance(){ return currentEvent==='bubble_rate' ? BUBBLE_CHANCE*(1+currentEventBubbleRate) : BUBBLE_CHANCE; }
+function getBubbleChance(){ return currentEvent==='bubble_rate' ? BUBBLE_CHANCE*(1+(currentEventBubbleRate||0)) : BUBBLE_CHANCE; }
 var TURBO_TIME=300000, TURBO_COST=150, BATT_COST=60, REROLL_COST=50, PR_COST=900;
 var WH_PRICES=[1500,3000];
 var SKEY='ceh7.save.v4';
 var TUT_KEY='ceh7.tut.v1';
-/* Аватары директора: каждые 5 уровней, последний на 35 */
 var AVATARS = [
   {lvl:1, icon:'👤', name:'Новичок'},
   {lvl:5, icon:'🧑‍🌾', name:'Фермер'},
-  {lvl:10, icon:'👨‍🍳', name:'Повар'},
+  {lvl:10, icon:'👨‍', name:'Повар'},
   {lvl:15, icon:'🧑‍🔬', name:'Технолог'},
-  {lvl:20, icon:'👩‍💼', name:'Менеджер'},
+  {lvl:20, icon:'👩‍', name:'Менеджер'},
   {lvl:25, icon:'🤴', name:'Директор'},
   {lvl:30, icon:'👑', name:'Магнат'},
   {lvl:35, icon:'🏆', name:'Легенда'}
@@ -1041,7 +1003,6 @@ function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=irand(0,i),t=a[i];a[i]
 function showDebug(m){ var d=$('#debug'); if(d){ d.textContent='⛔ '+m; d.className='on'; } }
 function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
 function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
-
 var board=$('#board'), wrap=$('#board-wrap'), fx=$('#fx'), cardsBox=$('#order-cards');
 var CHAIN={}; CHAINS.forEach(function(c){ CHAIN[c.id]=c; });
 var TOTAL_CARDS=CHAINS.reduce(function(n,c){ return n+c.tiers.length; },0);
@@ -1061,28 +1022,64 @@ var sheetType=null;
 var bureauView='home';
 var EVENT_TYPES=['line_bonus','express_rate','bubble_rate'];
 var currentEvent=null, eventEnd=0, EVENT_DURATION=48*60*60*1000;
-var currentEventLine=null;
-/* звук */
+var currentEventLine=null, currentEventBubbleRate=0;
+/* ═══ ЗВУК: музыка + эффекты ═══ */
 var musicOn=true, sfxOn=true, volMusic=.5, volSfx=1;
 var BGM=null, bgmOk=false;
-
-function pickNewEvent(){
-  var now=Date.now();
-  currentEvent=EVENT_TYPES[Math.floor(Math.random()*EVENT_TYPES.length)];
-  eventEnd=now+EVENT_DURATION;
-  if(currentEvent==='line_bonus'){
-    var lines=Object.keys(LINES);
-    currentEventLine=lines[Math.floor(Math.random()*lines.length)];
-    currentEventBubbleRate=0;
-  } else if(currentEvent==='bubble_rate'){
-    currentEventLine=null;
-    currentEventBubbleRate=0.7; // +70% шанс появления
-  } else {
-    currentEventLine=null;
-    currentEventBubbleRate=0;
-  }
-  save();
+var MUSIC_CANDIDATES=['art/audio/music_main.mp3','art/music_main.mp3','art/audio/music_main2.mp3','art/audio/music_main3.mp3'];
+var MUSIC_TRACKS=[];
+var currentTrackIndex=0, fadeInterval=null, isFading=false;
+function setupBGM(){
+  if(BGM||!MUSIC_TRACKS.length) return;
+  try{
+    BGM=new Audio(MUSIC_TRACKS[0]);
+    BGM.loop=false; BGM.volume=volMusic;
+    BGM.addEventListener('ended',handleTrackEnd);
+    BGM.addEventListener('error',function(){ bgmOk=false; });
+    BGM.addEventListener('canplay',function(){ bgmOk=true; });
+    bgmOk=true;
+  }catch(e){ BGM=null; bgmOk=false; }
 }
+function initMusic(){
+  MUSIC_TRACKS.length=0;
+  var queue=MUSIC_CANDIDATES.slice();
+  function next(){
+    if(!queue.length){ setupBGM(); return; }
+    var src=queue.shift();
+    var a=new Audio(); var done=false;
+    var ok=function(){ if(done)return; done=true; MUSIC_TRACKS.push(src); next(); };
+    var bad=function(){ if(done)return; done=true; next(); };
+    a.addEventListener('loadedmetadata',ok,{once:true});
+    a.addEventListener('error',bad,{once:true});
+    a.preload='metadata';
+    a.src=src;
+    setTimeout(bad,4000);
+  }
+  next();
+}
+function handleTrackEnd(){
+  if(isFading||!BGM||!MUSIC_TRACKS.length) return;
+  isFading=true;
+  var v=volMusic, step=Math.max(volMusic/20,0.001);
+  fadeInterval=setInterval(function(){
+    v-=step;
+    if(BGM&&!BGM.paused) BGM.volume=Math.max(0,v);
+    if(v<=0){
+      clearInterval(fadeInterval); fadeInterval=null;
+      setTimeout(function(){
+        currentTrackIndex=(currentTrackIndex+1)%MUSIC_TRACKS.length;
+        BGM.src=MUSIC_TRACKS[currentTrackIndex];
+        BGM.volume=volMusic;
+        if(musicOn) BGM.play().catch(function(){});
+        isFading=false;
+      },800);
+    }
+  },50);
+}
+function tryPlayMusic(){
+  if(musicOn&&BGM&&bgmOk&&BGM.paused){ BGM.play().catch(function(){}); }
+}
+function updSoundIcon(){ $('#btn-sound').textContent=(musicOn||sfxOn)?'🔊':'🔇'; }
 function eventName(ev){
   if(ev==='line_bonus') return '🎉 Бонус линии +10% к награде';
   if(ev==='express_rate') return '⚡ Экспрессы приходят чаще';
@@ -1092,9 +1089,11 @@ function eventName(ev){
 function pickNewEvent(){
   if(Math.random()<0.35){
     currentEvent=pick(EVENT_TYPES); eventEnd=Date.now()+EVENT_DURATION;
-    if(currentEvent==='line_bonus'){ var uc=unlockedChains(); currentEventLine=uc.length?pick(uc).id:null; }
+    if(currentEvent==='line_bonus'){ var uc=unlockedChains(); currentEventLine=uc.length?pick(uc).id:null; currentEventBubbleRate=0; }
+    else if(currentEvent==='bubble_rate'){ currentEventLine=null; currentEventBubbleRate=0.7; }
+    else { currentEventLine=null; currentEventBubbleRate=0; }
     toast(eventName(currentEvent));
-  } else { currentEvent=null; eventEnd=0; }
+  } else { currentEvent=null; eventEnd=0; currentEventBubbleRate=0; }
 }
 function isUnlocked(id){ return unlocked.indexOf(id)>=0; }
 function hasWh(id){ return whOwned.indexOf(id)>=0; }
@@ -1144,41 +1143,23 @@ function checkArt(){
 }
 function preloadAllAssets(callback){
   var items=[];
-  Object.keys(ART).forEach(function(k){
-    if(ART[k]) items.push(ART[k]);
-  });
-  // Добавляем все музыкальные треки для предзагрузки
-  items.push('art/audio/music_main.mp3');
-  items.push('art/audio/music_main2.mp3');
-  items.push('art/audio/music_main3.mp3');
-  
-  var loaded=0, total=items.length;
+  Object.keys(ART).forEach(function(k){ if(ART[k]) items.push(ART[k]); });
+  var loaded=0,total=items.length,finished=false;
+  function finish(){ if(finished)return; finished=true; if(callback) callback(); }
   function upd(){
-    var pct=Math.floor((loaded/total)*100);
-    $('#loading-bar').style.width=pct+'%';
-    $('#loading-percent').textContent=pct+'%';
-    if(pct>=100 && callback) callback();
+    var pct=total?Math.floor((loaded/total)*100):100;
+    var bar=$('#loading-bar'), pc=$('#loading-percent');
+    if(bar) bar.style.width=pct+'%';
+    if(pc) pc.textContent=pct+'%';
+    if(pct>=100) setTimeout(finish,300);
   }
-  
+  if(!total){ finish(); return; }
   items.forEach(function(src){
-    var isAudio=/\.mp3$/i.test(src);
-    var el=isAudio?new Audio():new Image();
-    function done(){
-      loaded++;
-      upd();
-    }
-    if(isAudio){
-      el.addEventListener('canplaythrough',done,{once:true});
-      el.addEventListener('error',done,{once:true});
-      el.src=src;
-    }else{
-      el.onload=done;
-      el.onerror=done;
-      el.src=src;
-    }
+    var el=new Image();
+    function done(){ loaded++; upd(); }
+    el.onload=done; el.onerror=done; el.src=src;
   });
-  
-  if(total===0) upd();
+  setTimeout(finish,8000);
 }
 function checkPrizeBg(){
   document.body.classList.toggle('prized-all', cardsCount()>=TOTAL_CARDS);
@@ -1211,90 +1192,6 @@ var lowFX=false;
     measure(function(avg){ if(avg==null) return; if(lowFX&&avg>45) apply(false); else if(!lowFX&&avg<30) apply(true); });
   },60000);
 })();
-
-/* ═══ ЗВУК: музыка + эффекты ═══ */
-var MUSIC_TRACKS = ['art/audio/music_main.mp3'];
-
-// Проверяем наличие дополнительных треков при загрузке страницы
-(function checkAdditionalTracks(){
-  var tracksToCheck = ['art/audio/music_main2.mp3', 'art/audio/music_main3.mp3'];
-  var checked = 0;
-  
-  tracksToCheck.forEach(function(trackSrc){
-    var testAudio = new Audio();
-    testAudio.addEventListener('canplaythrough', function() { 
-      MUSIC_TRACKS.push(trackSrc);
-    }, {once:true});
-    testAudio.addEventListener('error', function() { 
-      // Файл не найден - это нормально, просто не добавляем его
-    }, {once:true});
-    testAudio.src = trackSrc;
-  });
-})();
-
-var currentTrackIndex = 0;
-var fadeInterval = null;
-var isFading = false;
-
-function initMusic(){
-  try{
-    BGM=new Audio(MUSIC_TRACKS[0]);
-    BGM.loop=false; // Отключаем стандартный loop, будем управлять вручную
-    BGM.volume=volMusic;
-    BGM.addEventListener('error',function(){ bgmOk=false; });
-    BGM.addEventListener('canplay',function(){ bgmOk=true; });
-    BGM.addEventListener('ended', handleTrackEnd);
-  }catch(e){ BGM=null; bgmOk=false; }
-}
-
-function handleTrackEnd(){
-  // Угасание музыки перед переключением
-  if(isFading) return;
-  isFading = true;
-  
-  var fadeVolume = volMusic;
-  var fadeStep = volMusic / 20; // 20 шагов для плавного угасания
-  
-  fadeInterval = setInterval(function(){
-    fadeVolume -= fadeStep;
-    if(BGM && !BGM.paused){
-      BGM.volume = Math.max(0, fadeVolume);
-    }
-    if(fadeVolume <= 0){
-      clearInterval(fadeInterval);
-      fadeInterval = null;
-      
-      // Небольшая пауза перед следующим треком
-      setTimeout(function(){
-        // Переключаем трек
-        currentTrackIndex = (currentTrackIndex + 1) % MUSIC_TRACKS.length;
-        BGM.src = MUSIC_TRACKS[currentTrackIndex];
-        BGM.volume = volMusic;
-        if(musicOn){
-          BGM.play().catch(function(){});
-        }
-        isFading = false;
-      }, 800); // Пауза 800мс между треками
-    }
-  }, 50); // Шаг угасания каждые 50мс
-}
-
-function tryPlayMusic(){
-  if(musicOn&&BGM&&bgmOk&&BGM.paused){ 
-    BGM.play().catch(function(e){ 
-      // Если автовоспроизведение заблокировано, ждём первого взаимодействия
-      console.log('Музыка ожидает взаимодействия:', e);
-    }); 
-  }
-}
-
-// Попытка запустить музыку сразу после инициализации
-function startMusicAfterInit(){
-  setTimeout(function(){
-    tryPlayMusic();
-  }, 1000);
-}
-function updSoundIcon(){ $('#btn-sound').textContent=(musicOn||sfxOn)?'🔊':'🔇'; }
 function updBureauButton(){
   var n=cardsCount()+'/'+TOTAL_CARDS;
   document.querySelectorAll('.cards-count').forEach(function(el){ el.textContent=n; });
@@ -1403,8 +1300,6 @@ function closeCard(){
   var cb=cardOnClose; cardOnClose=null;
   if(cb) cb();
 }
-
-// Анимация салюта
 function startFireworks(){
   var c=document.createElement('canvas');
   c.id='fw-canvas';
@@ -1430,7 +1325,7 @@ function startFireworks(){
       ctx.beginPath(); ctx.arc(p.x,p.y,3,0,Math.PI*2); ctx.fill();
     }
     if(particles.length) requestAnimationFrame(render);
-    else c.parentNode.removeChild(c);
+    else if(c.parentNode) c.parentNode.removeChild(c);
   }
   render();
 }
@@ -1444,7 +1339,6 @@ function closeBureau(){
   $('#bureau-back').classList.remove('open');
   $('#bureau').classList.remove('open');
 }
-/* ═══ ПРОФИЛЬ ═══ */
 function avatarFallbackSVG(){
   return 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23ddd%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2268%22 font-size=%2252%22 text-anchor=%22middle%22>👤</text></svg>';
 }
@@ -1561,7 +1455,6 @@ function renderBureau(){
     }
   }
 }
-
 var tutStep=0, tutActive=false;
 var TUT_STEPS=[
   {t:'Привет! Это ЦЕХ·7', x:'Здесь из простых ингредиентов рождаются вкусные продукты. Покажу, как идёт смена, – это быстро!', target:null},
@@ -1620,7 +1513,6 @@ function endTutorial(){
   toast('Смена началась! Удачи! 🏭');
 }
 addEventListener('resize',function(){ if(tutActive) showTutStep(); });
-
 function openSheet(type,title,fill){
   sheetType=type;
   $('#sheet-title').textContent=title;
@@ -1793,7 +1685,7 @@ function dragEnd(ev){
       }
     }
   }catch(err){ showDebug('dragEnd: '+err.message); }
-  rebuildGrid(); if(d.it) layoutItem(d.it);
+  rebuildGrid(); layoutItem(it);
 }
 window.addEventListener('blur',function(){
   if(!drag) return;
@@ -1802,7 +1694,7 @@ window.addEventListener('blur',function(){
   window.removeEventListener('pointerup',dragEnd);
   window.removeEventListener('pointercancel',dragEnd);
   setHL(d.hl,null); d.cardRects.forEach(function(cr){ cr.el.classList.remove('hover'); });
-  var it=d.it; it.el.classList.remove('drag'); layoutItem(it);
+  layoutItem(d.it);
 });
 function tryAutoShip(it){
   var best=-1;
@@ -1828,8 +1720,6 @@ function doMerge(src,dst){
   if(nt===MAXT) floaty(cx,r.top+p.y-16,'ГОТОВО!',c.color);
   sfx('merge',nt);
   if(Math.random()<getBubbleChance()) spawnBubble(freeAt,ch,nt);
-  var ch2=(currentEvent==='bubble_rate')?0.08:0;
-  if(Math.random()<(BUBBLE_CHANCE+ch2)) spawnBubble(freeAt,ch,nt);
   save();
 }
 function activeChains(exceptSlot){
@@ -1882,7 +1772,7 @@ function updateTimers(){
   }
   var tb=$('#turbo-badge');
   if(tb){ if(turboActive()){ tb.style.display=''; tb.textContent='⚡'+fmtTime(turboUntil-Date.now()); } else tb.style.display='none'; }
-  if(currentEvent&&Date.now()>eventEnd){ currentEvent=null; eventEnd=0; pickNewEvent(); }
+  if(currentEvent&&Date.now()>eventEnd){ currentEvent=null; eventEnd=0; currentEventBubbleRate=0; }
 }
 function showStamp(txt,sub,mode,hold){
   var s=$('#stamp');
@@ -2153,8 +2043,7 @@ function renderShop(){
   pop.appendChild(h);
   function row(ico,name,desc,btn,cb,cls,mute){
     var r=document.createElement('div'); r.className='sh-row'+(mute?' mute':'');
-    var icoHTML_content = (ico && ART[ico]) ? icoHTML(ico,'📦') : ico;
-    r.innerHTML='<span class="sh-ico">'+icoHTML_content+'</span><span class="sh-txt"><b>'+name+'</b>'+desc+'</span>';
+    r.innerHTML='<span class="sh-ico">'+ico+'</span><span class="sh-txt"><b>'+name+'</b>'+desc+'</span>';
     var b=document.createElement('button'); b.className='sh-buy'+(cls?' '+cls:''); b.textContent=btn;
     if(cb) b.addEventListener('click',cb); else b.disabled=true;
     r.appendChild(b); pop.appendChild(r);
@@ -2186,7 +2075,7 @@ function renderShop(){
   });
   if(eu>=EU_COSTS.length) row('⚡','Энергия +5','максимум: '+E_MAX+' ⚡','MAX',null,'owned');
   else row('⚡','Энергия +5','максимум: '+E_MAX+' → '+(E_MAX+5)+' ⚡','💰'+EU_COSTS[eu],buyEnergy);
-  if(turboActive()) row('⚡','Турбо-смена','пузыри можно лопать бесплатно','⚡ '+fmtTime(turboUntil-Date.now()),null,'owned');
+  if(turboActive()) row('','Турбо-смена','пузыри можно лопать бесплатно','⚡ '+fmtTime(turboUntil-Date.now()),null,'owned');
   else row('⚡','Турбо-смена','5 мин: пузыри с предметами можно лопать бесплатно','💰'+TURBO_COST,function(){
     if(coins<TURBO_COST){ toast('Нужно 💰 '+TURBO_COST,true); sfx('err'); return; }
     coins-=TURBO_COST; turboUntil=Date.now()+TURBO_TIME;
@@ -2194,11 +2083,11 @@ function renderShop(){
     toast('Турбо-смена! Ломай пузыри бесплатно ⚡ (5 мин)'); sfx('buy'); save(); renderShop();
   });
   if(CHAINS.some(function(c){ return isUnlocked(c.id)&&!hasWh(c.id); }))
-    row('icon_box','Оптовая поставка','больше сырья за меньшую стоимость','выбрать',function(){ shopMode='wh'; renderShop(); });
+    row('📦','Оптовая поставка','больше сырья за меньшую стоимость','выбрать',function(){ shopMode='wh'; renderShop(); });
   if(orders.some(function(o){ return o&&!o.done&&!o.express; }))
     row('🌀','Заменить заказ','','💰'+REROLL_COST,function(){ shopMode='reroll'; renderShop(); });
   if(whStage>=2) row('🏭','Склад','максимальный размер','MAX',null,'owned');
-  else row('icon_warehouse','Склад','+6 ячеек игрового поля','💰'+WH_PRICES[whStage],function(){
+  else row('🏭','Склад','+6 ячеек игрового поля','💰'+WH_PRICES[whStage],function(){
     var cost=WH_PRICES[whStage];
     if(coins<cost){ toast('Нужно 💰 '+cost,true); sfx('err'); return; }
     coins-=cost; $('#coins').textContent=coins; bump('#chip-coins');
@@ -2423,7 +2312,9 @@ if(mqMobile){
   if(mqMobile.addEventListener) mqMobile.addEventListener('change',placeControls);
   else if(mqMobile.addListener) mqMobile.addListener(placeControls);
 }
+var initDone=false;
 function init(){
+  if(initDone) return; initDone=true;
   try{ var ps=JSON.parse(localStorage.getItem(SKEY)||'null');
     if(ps&&ps.v===4){ COLS=ps.cols||6; ROWS=ps.rows||6;
       musicOn=def(ps.mon,true); sfxOn=def(ps.son,true); volMusic=clamp(def(ps.vm,.5),0,1); volSfx=clamp(def(ps.vs,1),0,1);
@@ -2449,8 +2340,6 @@ function init(){
   fillArt($('#coin-ico'),'icon_coin','💰');
   fillArt($('#energy-ico'),'icon_energy','⚡');
   updEnergyShop();
-  // Запускаем музыку после инициализации с небольшой задержкой
-  startMusicAfterInit();
   if(!had){
     var starters=[['oil',1],['oil',1],['oil',2]];
     var cells=shuffle(Array.from({length:COLS*ROWS},function(_,i){ return i; }));
@@ -2480,20 +2369,12 @@ function init(){
   if(!lsGet(TUT_KEY)) setTimeout(startTutorial,700);
   window.__CEH_READY=true;
 }
-
-// Запуск с экраном загрузки
 preloadAllAssets(function(){
-  // Небольшая задержка перед скрытием экрана загрузки для плавности
-  // Для сильных машин загрузка будет быстрой, но экран всё равно покажется
   setTimeout(function(){
     var ls=document.getElementById('loading-screen');
-    if(ls){
-      ls.style.transition='opacity .5s ease';
-      ls.style.opacity='0';
-      setTimeout(function(){ ls.style.display='none'; },500);
-    }
-    try{ init(); }catch(err){ showDebug('Ошибка при запуске: '+(err&&err.message?err.message:err)+(err&&err.stack?'\\n'+err.stack:'')); }
-  },1500); // Минимальная задержка 1.5 сек чтобы экран загрузки всегда был виден
+    if(ls){ ls.style.transition='opacity .5s ease'; ls.style.opacity='0'; setTimeout(function(){ ls.style.display='none'; },500); }
+    try{ init(); }catch(err){ showDebug('Ошибка при запуске: '+(err&&err.message?err.message:err)); }
+  },800);
 });
 $('#btn-profile').onclick=function(e){ e.stopPropagation(); openProfile(); };
 $('#profile-close').onclick=closeProfile;
@@ -2529,7 +2410,6 @@ $('#sheet-close').onclick=closeSheet;
 $('#sheet-back').onclick=closeSheet;
 $('#chip-energy-up').onclick=buyEnergy;
 board.addEventListener('contextmenu',function(e){ e.preventDefault(); });
-try{ init(); }catch(err){ showDebug('Ошибка при запуске: '+(err&&err.message?err.message:err)+(err&&err.stack?'\n'+err.stack:'')); }
 </script>
 </body>
 </html>
