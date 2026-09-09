@@ -274,6 +274,7 @@ html[data-theme="night"] .knob::before{opacity:1}
   filter:drop-shadow(0 1px 1px rgba(0,0,0,.25));cursor:help}
 .ln-btn{flex:0 0 auto;font-family:var(--disp);font-weight:700;font-size:9px;color:#fff;background:var(--amber2);
   border:none;border-radius:999px;padding:5px 9px;cursor:pointer;box-shadow:3px 3px 0 var(--shadowc)}
+.ln-btn .ico-inline{width:11px;height:11px}
 .tut-btn{display:none;font-family:var(--disp);font-weight:700;font-size:10px;color:#fff;background:var(--amber2);
   border:none;border-radius:999px;padding:7px 14px;cursor:pointer;box-shadow:3px 3px 0 var(--shadowc);
   align-self:flex-start;margin:6px 0 2px}
@@ -363,6 +364,7 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 .sh-txt b{display:block;color:var(--ink);font-size:11.5px}
 .sh-buy{flex:0 0 auto;font-family:var(--disp);font-weight:700;font-size:9px;color:var(--brand2);background:var(--card);
   border:2px solid var(--line2);border-radius:999px;padding:4px 9px;cursor:pointer;white-space:nowrap;box-shadow:2px 2px 0 var(--shadowc)}
+.sh-buy .ico-inline{width:11px;height:11px}
 .sh-buy:hover{transform:translateY(-1px);box-shadow:3px 3px 0 var(--shadowc)}
 .sh-buy:disabled{opacity:.55;cursor:default}
 .sh-buy.owned{background:var(--brand2);border-color:var(--brand2);color:#fff}
@@ -802,7 +804,6 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
   </svg>
   <div class="hazard hz-t"></div><div class="hazard hz-b"></div>
   <div class="gear gr1">⚙</div><div class="gear gr2">⚙</div>
-  <!-- Экран загрузки -->
   <div id="loading-screen" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);" onclick="tryPlayMusic();">
     <div style="position:relative;width:280px;height:280px;margin-bottom:30px;">
       <div class="gear" style="top:-46px;left:-54px;font-size:200px;animation:spin 42s linear infinite;color:var(--line2);opacity:var(--gearop);">⚙</div>
@@ -820,7 +821,7 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
     <button class="icobtn" id="btn-profile" title="Профиль директора">👤</button>
     <div class="tb-right">
       <div class="tb-row1">
-        <div class="brand"><span class="bg-gear">⚙</span><span><b>ЦЕХ·7</b><i>фабрика соусов и молока</i></span></div>
+        <div class="brand"><span class="bg-gear"></span><span><b>ЦЕХ·7</b><i>фабрика соусов и молока</i></span></div>
         <button class="icobtn mob-factory" id="btn-factory" title="Линии производства">🏭</button>
         <button class="icobtn" id="btn-sound" title="Настройки звука">🔊</button>
       </div>
@@ -966,7 +967,7 @@ var CHAINS = [
       {key:'ketchup_3', emoji:'🍲', name:'Термическая обработка', fact:'Уваривание происходит в вакууме. За счёт низкого давления вода испаряется быстрее, и кетчуп сохраняет яркий красный цвет и натуральный вкус.'},
       {key:'ketchup_4', emoji:'❄️', name:'Охлаждение', oname:'Томатная паста', fact:'После пастеризации кетчуп выходит из пастеризатора ещё горячим – с температурой около 115–120 °C. Прежде чем он попадёт в фасовочную машину, продукт должен быть охлаждён до 43 °C.'},
       {key:'ketchup_5', emoji:'🍾', name:'Кетчуп томатный', fact:'В XVII веке в Китае делали ферментированный соус «кэ-цап» из рыбы, моллюсков и соевых бобов. В Британии позже появились грибной, ореховый и даже устричный кетчупы. Томаты вошли в рецепт намного позже.'} ]},
-  { id:'milk', color:'#2f9fd6', soft:'rgba(47,159,214,.15)', lineName:'Овсяное молоко', unlock:1000, wholesale:650,
+  { id:'milk', color:'#2f9fd6', soft:'rgba(47,159,214,.15)', lineName:'Овяное молоко', unlock:1000, wholesale:650,
     catName:'Молоко из растений?', catEmoji:'🌾',
     spawner:{key:'sp_milk', emoji:'🌾', name:'Овсяное поле'},
     tiers:[
@@ -1025,18 +1026,16 @@ var bureauView='home';
 var EVENT_TYPES=['line_bonus','express_rate','bubble_rate'];
 var currentEvent=null, eventEnd=0, EVENT_DURATION=48*60*60*1000;
 var currentEventLine=null, currentEventBubbleRate=0;
-/* ═══ ЗВУК ═══ */
+/* звук */
 var musicOn=true, sfxOn=true, volMusic=.5, volSfx=1;
 var BGM=null, bgmOk=false, bgmTried=false;
-var MUSIC_TRACKS=['art/audio/music_main.mp3'];
-var currentTrackIndex=0, fadeInterval=null, isFading=false;
+var MUSIC_CANDIDATES=['art/audio/music_main.mp3','art/music_main.mp3','music_main.mp3'];
 function pickNewEvent(){
   if(Math.random()<0.35){
     currentEvent=pick(EVENT_TYPES); eventEnd=Date.now()+EVENT_DURATION;
     if(currentEvent==='line_bonus'){ var uc=unlockedChains(); currentEventLine=uc.length?pick(uc).id:null; currentEventBubbleRate=0; }
     else if(currentEvent==='bubble_rate'){ currentEventLine=null; currentEventBubbleRate=0.7; }
     else { currentEventLine=null; currentEventBubbleRate=0; }
-    toast(eventName(currentEvent));
   } else { currentEvent=null; eventEnd=0; currentEventBubbleRate=0; }
 }
 function eventName(ev){
@@ -1061,20 +1060,25 @@ function findTier(key){
   return null;
 }
 function orderName(t){ return t.oname||t.name; }
+/* картинки: пробуем art/img/ → art/ → корень → эмодзи */
+function artCandidates(src){
+  var base=src.split('/').pop();
+  return [src,'art/'+base,base];
+}
 function fillArt(holder,key,emoji){
   if(!holder) return;
   holder.innerHTML='';
   var src=ART[key];
   if(!src){ holder.textContent=emoji; return; }
-  var im=new Image(); im.alt=''; im.draggable=false;
-  im.onload=function(){ holder.innerHTML=''; holder.appendChild(im); };
-  im.onerror=function(){
-    var im2=new Image(); im2.alt=''; im2.draggable=false;
-    im2.onload=function(){ holder.innerHTML=''; holder.appendChild(im2); };
-    im2.onerror=function(){ holder.textContent=emoji; };
-    im2.src=src.replace(/^.*\//,'');
-  };
-  im.src=src;
+  var cands=artCandidates(src), ci=0;
+  (function next(){
+    if(ci>=cands.length){ holder.textContent=emoji; return; }
+    var im=new Image(); im.alt=''; im.draggable=false;
+    var s=cands[ci++];
+    im.onload=function(){ holder.innerHTML=''; holder.appendChild(im); };
+    im.onerror=next;
+    im.src=s;
+  })();
 }
 function fillCardArt(holder,key,emoji){
   if(ART['card_'+key]) fillArt(holder,'card_'+key,emoji);
@@ -1083,10 +1087,12 @@ function fillCardArt(holder,key,emoji){
 function icoHTML(key,fb){
   var s=ART[key];
   if(!s) return fb;
-  var root=s.replace(/^.*\//,'');
+  var base=s.split('/').pop();
   var safe=String(fb).replace(/['"<>&]/g,'');
-  return '<img class="ico-inline" src="'+s+'" alt="" onerror="this.onerror=function(){var p=this.parentNode;if(p)p.replaceChild(document.createTextNode(\''+safe+'\'),this)};this.src=\''+root+'\'">';
+  return '<img class="ico-inline" src="'+s+'" alt="" '+
+    'onerror="this.onerror=function(){this.onerror=function(){var p=this.parentNode;if(p)p.replaceChild(document.createTextNode(\''+safe+'\'),this)};this.src=\''+base+'\'};this.src=\'art/'+base+'\'">';
 }
+function coinHTML(n){ return icoHTML('icon_coin','💰')+n; }
 function checkArt(){
   Object.keys(ART).forEach(function(k){
     if(!ART[k]) return;
@@ -1096,7 +1102,7 @@ function checkArt(){
 function preloadAllAssets(callback){
   var items=[];
   Object.keys(ART).forEach(function(k){ if(ART[k]) items.push(ART[k]); });
-  items.push('art/audio/music_main.mp3');
+  items.push(MUSIC_CANDIDATES[0]);
   var loaded=0, total=items.length, finished=false;
   function finish(){ if(finished)return; finished=true; if(callback) callback(); }
   function upd(){
@@ -1151,32 +1157,27 @@ var lowFX=false;
     measure(function(avg){ if(avg==null) return; if(lowFX&&avg>45) apply(false); else if(!lowFX&&avg<30) apply(true); });
   },60000);
 })();
-/* ═══ МУЗЫКА: надёжный запуск ═══ */
-(function probeExtraTracks(){
-  ['art/audio/music_main2.mp3','art/audio/music_main3.mp3'].forEach(function(src){
-    var a=new Audio();
-    a.addEventListener('canplaythrough',function(){ if(MUSIC_TRACKS.indexOf(src)<0) MUSIC_TRACKS.push(src); },{once:true});
-    a.addEventListener('error',function(){},{once:true});
-    a.preload='metadata';
-    a.src=src;
-  });
-})();
+/* ═══ МУЗЫКА: перебор путей + запуск от жеста ═══ */
+var currentTrackIndex=0, fadeInterval=null, isFading=false;
 function initMusic(){
   try{
     if(BGM){ BGM.pause(); BGM=null; }
-    BGM=new Audio(MUSIC_TRACKS[0]);
-    BGM.preload='auto';
-    BGM.loop=false;
-    BGM.volume=volMusic;
-    BGM.addEventListener('error',function(){ bgmOk=false; });
-    BGM.addEventListener('canplay',function(){ bgmOk=true; });
-    BGM.addEventListener('playing',function(){ bgmOk=true; });
+    BGM=new Audio();
+    BGM.preload='auto'; BGM.loop=false; BGM.volume=volMusic;
     BGM.addEventListener('ended',handleTrackEnd);
-    BGM.load();
+    BGM.addEventListener('playing',function(){ bgmOk=true; });
+    var ci=0;
+    function trySrc(){
+      if(ci>=MUSIC_CANDIDATES.length){ bgmOk=false; return; }
+      BGM.src=MUSIC_CANDIDATES[ci++];
+      BGM.load();
+    }
+    BGM.addEventListener('error',trySrc);
+    trySrc();
   }catch(e){ BGM=null; bgmOk=false; }
 }
 function handleTrackEnd(){
-  if(isFading||!BGM||!MUSIC_TRACKS.length) return;
+  if(isFading||!BGM||!MUSIC_TRACKS_LEN()) return;
   isFading=true;
   var v=volMusic, step=Math.max(volMusic/20,0.001);
   fadeInterval=setInterval(function(){
@@ -1185,8 +1186,8 @@ function handleTrackEnd(){
     if(v<=0){
       clearInterval(fadeInterval); fadeInterval=null;
       setTimeout(function(){
-        currentTrackIndex=(currentTrackIndex+1)%MUSIC_TRACKS.length;
-        BGM.src=MUSIC_TRACKS[currentTrackIndex];
+        currentTrackIndex=(currentTrackIndex+1)%MUSIC_CANDIDATES.length;
+        BGM.src=MUSIC_CANDIDATES[currentTrackIndex];
         BGM.volume=volMusic;
         if(musicOn) BGM.play().catch(function(){});
         isFading=false;
@@ -1194,6 +1195,7 @@ function handleTrackEnd(){
     }
   },50);
 }
+function MUSIC_TRACKS_LEN(){ return MUSIC_CANDIDATES.length; }
 function tryPlayMusic(){
   if(!musicOn||!BGM) return;
   if(!BGM.paused) return;
@@ -1201,7 +1203,7 @@ function tryPlayMusic(){
   try{ p=BGM.play(); }catch(e){}
   if(p&&p.catch) p.catch(function(){});
 }
-function updSoundIcon(){ var b=$('#btn-sound'); if(b) b.textContent=(musicOn||sfxOn)?'🔊':''; }
+function updSoundIcon(){ var b=$('#btn-sound'); if(b) b.textContent=(musicOn||sfxOn)?'🔊':'🔇'; }
 function updBureauButton(){
   var n=cardsCount()+'/'+TOTAL_CARDS;
   document.querySelectorAll('.cards-count').forEach(function(el){ el.textContent=n; });
@@ -1275,11 +1277,11 @@ function askBuyCard(t){
   ov.innerHTML='<div class="confirm-box">'+
     '<p>Карточки выпадают в процессе игры.</p>'+
     '<p>Приобрести «'+t.name+'» за монеты?</p>'+
-    '<div class="cf-btns"><button class="cf-yes">Приобрести · 💰'+price+'</button><button class="cf-no">Отмена</button></div></div>';
+    '<div class="cf-btns"><button class="cf-yes">Приобрести · '+coinHTML(price)+'</button><button class="cf-no">Отмена</button></div></div>';
   ov.classList.add('open');
   ov.querySelector('.cf-yes').onclick=function(){
     ov.classList.remove('open');
-    if(coins<price){ toast('Не хватает 💰'+price,true); sfx('err'); return; }
+    if(coins<price){ toast('Не хватает '+price+'💰',true); sfx('err'); return; }
     coins-=price; $('#coins').textContent=coins; bump('#chip-coins');
     cards[t.key]=1; updBureauButton(); sfx('buy'); save();
     showCard(t.key,true,function(){ renderBureau(); });
@@ -1320,7 +1322,8 @@ function startFireworks(){
   function burst(x,y){
     for(var i=0;i<60;i++){
       var angle=Math.random()*Math.PI*2, speed=3+Math.random()*5;
-      particles.push({x:x,y:y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,life:1,color:'hsl('+Math.floor(Math.random()*360)+',100%,60%)'});
+      particles.push({x:x,y:y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,
+        life:1,color:'hsl('+Math.floor(Math.random()*360)+',100%,60%)'});
     }
   }
   for(var i=0;i<5;i++) setTimeout(function(){ burst(Math.random()*c.width,Math.random()*c.height*.6); },i*400);
@@ -1449,7 +1452,7 @@ function renderBureau(){
       cellw.appendChild(tile);
       if(!un){
         var bb=document.createElement('button'); bb.className='ct-buy';
-        bb.textContent='💰'+(120*t.tier);
+        bb.innerHTML=coinHTML(120*t.tier);
         bb.addEventListener('click',function(){ askBuyCard(t); });
         cellw.appendChild(bb);
       }
@@ -1856,7 +1859,7 @@ function renderOrders(){
     for(var k2=0;k2<o.qty;k2++){ var pp=document.createElement('i'); if(k2<o.qty-o.need||o.done) pp.className='f'; pips2.appendChild(pp); }
     qw2.appendChild(q3); qw2.appendChild(pips2);
     var pr2=document.createElement('span'); pr2.className='o-side-price';
-    pr2.innerHTML=icoHTML('icon_coin','💰')+o.reward;
+    pr2.innerHTML=coinHTML(o.reward);
     side.appendChild(ex2); side.appendChild(qw2); side.appendChild(pr2);
     if(o.express&&!o.done){
       var tm2=document.createElement('span'); tm2.className='o-timer o-timer-m';
@@ -1870,7 +1873,7 @@ function renderOrders(){
     fillArt(h3,'icon_expand','⌃⌃');
     ex.addEventListener('click',function(e){ e.stopPropagation(); openOrderSheet(i); });
     var rew=document.createElement('span'); rew.className='o-reward';
-    rew.innerHTML=icoHTML('icon_coin','💰')+' '+o.reward;
+    rew.innerHTML=coinHTML(o.reward);
     foot.appendChild(ex); foot.appendChild(rew);
     if(o.express&&!o.done){
       var tm=document.createElement('span'); tm.className='o-timer';
@@ -1894,7 +1897,7 @@ function openOrderSheet(i){
       '<div class="od-row"><span class="o-art"></span>'+
       '<div style="flex:1;min-width:0"><b>'+orderName(t)+'</b><span>'+(o.express?'⚡ экспресс · ':'')+'Заказчик: '+o.client+'</span></div>'+
       '<div class="o-qty">'+(o.done?'✓':'×'+o.need)+'</div></div>'+
-      '<div class="od-row"><span class="o-reward" style="display:inline">'+icoHTML('icon_coin','💰')+' '+o.reward+'</span><span class="o-pips"></span>'+
+      '<div class="od-row"><span class="o-reward" style="display:inline">'+coinHTML(o.reward)+'</span><span class="o-pips"></span>'+
       (o.express&&!o.done?'<span class="o-timer">⏱ '+fmtTime(o.deadline-Date.now())+'</span>':'')+'</div>'+
       '<p class="od-hint">Перетащи готовый продукт на карточку заказа на доске – или нажми на продукт дважды.</p>';
     body.appendChild(w);
@@ -1924,7 +1927,8 @@ function renderLines(host){
       row.appendChild(g);
     } else {
       var btn=document.createElement('button'); btn.className='ln-btn';
-      btn.textContent='🔒 '+c.unlock+'💰';
+      btn.innerHTML='🔒 '+c.unlock+coinHTML(0).replace('0','');
+      btn.innerHTML='🔒 '+c.unlock+'<span class="ico-inline-wrap">'+icoHTML('icon_coin','💰')+'</span>';
       btn.addEventListener('click',function(){ tryUnlock(c); });
       row.appendChild(btn);
     }
@@ -2034,6 +2038,7 @@ document.addEventListener('pointerdown',function(e){
   if(sp&&sp.classList.contains('open')&&!e.target.closest('#sound-pop')&&!e.target.closest('#btn-sound')) sp.classList.remove('open');
   ac(); tryPlayMusic();
 });
+document.addEventListener('click',function(){ tryPlayMusic(); },true);
 function buyEnergy(){
   if(eu>=EU_COSTS.length){ toast('Энергия уже прокачана до максимума ⚡'); return; }
   var cost=EU_COSTS[eu];
@@ -2047,21 +2052,21 @@ function renderShop(){
   var pop=$('#shop-pop'); if(!pop) return;
   pop.innerHTML='';
   var h=document.createElement('h4');
-  h.innerHTML=(shopMode==='wh'?'📦 Оптовая поставка':(shopMode==='reroll'?'🌀 Какой заказ заменить?':icoHTML('icon_shop','🛒')+' Магазин фабрики'));
+  h.innerHTML=icoHTML('icon_shop','🛒')+' Магазин фабрики';
   pop.appendChild(h);
   function row(ico,name,desc,btn,cb,cls,mute){
     var r=document.createElement('div'); r.className='sh-row'+(mute?' mute':'');
     r.innerHTML='<span class="sh-ico">'+ico+'</span><span class="sh-txt"><b>'+name+'</b>'+desc+'</span>';
-    var b=document.createElement('button'); b.className='sh-buy'+(cls?' '+cls:''); b.textContent=btn;
+    var b=document.createElement('button'); b.className='sh-buy'+(cls?' '+cls:''); b.innerHTML=btn;
     if(cb) b.addEventListener('click',cb); else b.disabled=true;
     r.appendChild(b); pop.appendChild(r);
   }
   function back(){ row('←','Назад','','в магазин',function(){ shopMode='main'; renderShop(); }); }
   if(shopMode==='wh'){
     CHAINS.forEach(function(c){
-      if(hasWh(c.id)) row('📦',c.lineName,'опт активен: 2 сырья за ⚡'+WH_COST,'✓',null,'owned');
+      if(hasWh(c.id)) row(icoHTML('icon_box','📦'),c.lineName,'опт активен: 2 сырья за ⚡'+WH_COST,'✓',null,'owned');
       else if(!isUnlocked(c.id)) row('🔒',c.lineName,'сначала открой линию','—',null,null,true);
-      else row('📦',c.lineName,'2 сырья за ⚡'+WH_COST+' вместо 1 за ⚡'+SPAWN_COST,'💰'+c.wholesale,function(){
+      else row(icoHTML('icon_box','📦'),c.lineName,'2 сырья за ⚡'+WH_COST+' вместо 1 за ⚡'+SPAWN_COST,coinHTML(c.wholesale),function(){
         tryWh(c); shopMode='main'; renderShop();
       });
     });
@@ -2069,40 +2074,40 @@ function renderShop(){
   }
   if(shopMode==='reroll'){
     orders.forEach(function(o,i){
-      if(o&&!o.done&&!o.express) row('🌀',orderName(CHAIN[o.chain].tiers[MAXT-1]),'Заказчик: '+o.client,'💰'+REROLL_COST,function(){
+      if(o&&!o.done&&!o.express) row(icoHTML('icon_reroll','🌀'),orderName(CHAIN[o.chain].tiers[MAXT-1]),'Заказчик: '+o.client,coinHTML(REROLL_COST),function(){
         replaceOrder(i);
       });
     });
     back(); return;
   }
-  row('🔋','Батарея','+10 ⚡ сразу','💰'+BATT_COST,function(){
+  row(icoHTML('icon_battery','🔋'),'Батарея','+10 ⚡ сразу',coinHTML(BATT_COST),function(){
     if(coins<BATT_COST){ toast('Нужно 💰 '+BATT_COST,true); sfx('err'); return; }
     coins-=BATT_COST; energy=Math.min(E_MAX,energy+10);
     $('#coins').textContent=coins; updEnergy(); bump('#chip-coins');
     toast('⚡ +10 энергии'); sfx('buy'); save(); renderShop();
   });
-  if(eu>=EU_COSTS.length) row('⚡','Энергия +5','максимум: '+E_MAX+' ⚡','MAX',null,'owned');
-  else row('⚡','Энергия +5','максимум: '+E_MAX+' → '+(E_MAX+5)+' ⚡','💰'+EU_COSTS[eu],buyEnergy);
-  if(turboActive()) row('⚡','Турбо-смена','пузыри можно лопать бесплатно','⚡ '+fmtTime(turboUntil-Date.now()),null,'owned');
-  else row('⚡','Турбо-смена','5 мин: пузыри с предметами можно лопать бесплатно','💰'+TURBO_COST,function(){
+  if(eu>=EU_COSTS.length) row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' ⚡','MAX',null,'owned');
+  else row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' → '+(E_MAX+5)+' ⚡',coinHTML(EU_COSTS[eu]),buyEnergy);
+  if(turboActive()) row(icoHTML('icon_turbo','⚡'),'Турбо-смена','пузыри можно лопать бесплатно','⚡ '+fmtTime(turboUntil-Date.now()),null,'owned');
+  else row(icoHTML('icon_turbo','⚡'),'Турбо-смена','5 мин: пузыри с предметами можно лопать бесплатно',coinHTML(TURBO_COST),function(){
     if(coins<TURBO_COST){ toast('Нужно 💰 '+TURBO_COST,true); sfx('err'); return; }
     coins-=TURBO_COST; turboUntil=Date.now()+TURBO_TIME;
     $('#coins').textContent=coins; bump('#chip-coins');
     toast('Турбо-смена! Ломай пузыри бесплатно ⚡ (5 мин)'); sfx('buy'); save(); renderShop();
   });
   if(CHAINS.some(function(c){ return isUnlocked(c.id)&&!hasWh(c.id); }))
-    row('📦','Оптовая поставка','больше сырья за меньшую стоимость','выбрать',function(){ shopMode='wh'; renderShop(); });
+    row(icoHTML('icon_box','📦'),'Оптовая поставка','больше сырья за меньшую стоимость','выбрать',function(){ shopMode='wh'; renderShop(); });
   if(orders.some(function(o){ return o&&!o.done&&!o.express; }))
-    row('🌀','Заменить заказ','','💰'+REROLL_COST,function(){ shopMode='reroll'; renderShop(); });
-  if(whStage>=2) row('🏭','Склад','максимальный размер','MAX',null,'owned');
-  else row('🏭','Склад','+6 ячеек игрового поля','💰'+WH_PRICES[whStage],function(){
+    row(icoHTML('icon_reroll','🌀'),'Заменить заказ','',coinHTML(REROLL_COST),function(){ shopMode='reroll'; renderShop(); });
+  if(whStage>=2) row(icoHTML('icon_warehouse','🏭'),'Склад','максимальный размер','MAX',null,'owned');
+  else row(icoHTML('icon_warehouse','🏭'),'Склад','+6 ячеек игрового поля',coinHTML(WH_PRICES[whStage]),function(){
     var cost=WH_PRICES[whStage];
     if(coins<cost){ toast('Нужно 💰 '+cost,true); sfx('err'); return; }
     coins-=cost; $('#coins').textContent=coins; bump('#chip-coins');
     expandWarehouse(); sfx('buy'); save(); renderShop();
   });
-  if(prOwned) row('📣','PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них','✓',null,'owned');
-  else row('📣','PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них','💰'+PR_COST,function(){
+  if(prOwned) row(icoHTML('icon_pr','📣'),'PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них','✓',null,'owned');
+  else row(icoHTML('icon_pr','📣'),'PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них',coinHTML(PR_COST),function(){
     if(coins<PR_COST){ toast('Нужно 💰 '+PR_COST,true); sfx('err'); return; }
     coins-=PR_COST; prOwned=true; $('#coins').textContent=coins; bump('#chip-coins');
     toast('📣 PR-менеджер нанят: экспрессы чаще и щедрее!'); sfx('buy'); save(); renderShop();
@@ -2335,7 +2340,6 @@ function init(){
   placeControls();
   checkArt();
   fitFactory();
-  fillArt($('#loading-factory'),'loading_factory','🏭');
   initMusic();
   var mo=$('#snd-music-on'); if(mo) mo.checked=musicOn;
   var so=$('#snd-sfx-on'); if(so) so.checked=sfxOn;
@@ -2348,6 +2352,7 @@ function init(){
   fillArt($('#bur-ico-m'),'bureau','🎴');
   fillArt($('#coin-ico'),'icon_coin','💰');
   fillArt($('#energy-ico'),'icon_energy','⚡');
+  fillArt($('#loading-factory'),'loading_factory','🏭');
   updEnergyShop();
   if(!had){
     var starters=[['oil',1],['oil',1],['oil',2]];
@@ -2386,7 +2391,7 @@ preloadAllAssets(function(){
       ls.style.opacity='0';
       setTimeout(function(){ ls.style.display='none'; },500);
     }
-    try{ init(); }catch(err){ showDebug('Ошибка при запуске: '+(err&&err.message?err.message:err)+(err&&err.stack?'\n'+err.stack:'')); }
+    try{ init(); }catch(err){ showDebug('Ошибка при запуске: '+(err&&err.message?err.message:err)); }
   },800);
 });
 $('#btn-profile').onclick=function(e){ e.stopPropagation(); openProfile(); };
