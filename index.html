@@ -960,9 +960,8 @@ var ART = {
   sp_mayo:'art/img/sp_mayo.png', sp_ketchup:'art/img/sp_ketchup.png', sp_milk:'art/img/sp_milk.png', sp_oil:'art/img/sp_oil.png',
   shop:'art/img/shop.png', bureau:'art/img/bureau.png',
   icon_shop:'art/img/icon_shop.png', icon_energy:'art/img/icon_energy.png', icon_coin:'art/img/icon_coin.png',
-  icon_battery:'art/img/icon_battery.png', icon_turbo:'art/img/icon_turbo.png', icon_box:'art/img/icon_box.png',
-  icon_reroll:'art/img/icon_reroll.png', icon_warehouse:'art/img/icon_warehouse.png', icon_pr:'art/img/icon_pr.png',
-  icon_expand:'art/img/icon_expand.png',
+  icon_battery:'art/img/icon_battery.png', icon_turbo:'art/img/icon_turbo.png',
+  icon_reroll:'art/img/icon_reroll.png', icon_pr:'art/img/icon_pr.png',
   cat_oil:'art/img/cat_oil.png', cat_mayo:'art/img/cat_mayo.png', cat_ketchup:'art/img/cat_ketchup.png', cat_milk:'art/img/cat_milk.png',
   card_oil_1:'art/img/card_oil_1.png', card_oil_2:'art/img/card_oil_2.png', card_oil_3:'art/img/card_oil_3.png', card_oil_4:'art/img/card_oil_4.png', card_oil_5:'art/img/card_oil_5.png',
   card_mayo_1:'art/img/card_mayo_1.png', card_mayo_2:'art/img/card_mayo_2.png', card_mayo_3:'art/img/card_mayo_3.png', card_mayo_4:'art/img/card_mayo_4.png', card_mayo_5:'art/img/card_mayo_5.png',
@@ -1147,7 +1146,10 @@ function preloadAllAssets(callback){
   Object.keys(ART).forEach(function(k){
     if(ART[k]) items.push(ART[k]);
   });
+  // Добавляем все музыкальные треки для предзагрузки
   items.push('art/audio/music_main.mp3');
+  items.push('art/audio/music_main2.mp3');
+  items.push('art/audio/music_main3.mp3');
   
   var loaded=0, total=items.length;
   function upd(){
@@ -1210,16 +1212,86 @@ var lowFX=false;
 })();
 
 /* ═══ ЗВУК: музыка + эффекты ═══ */
+var MUSIC_TRACKS = ['art/audio/music_main.mp3'];
+
+// Проверяем наличие дополнительных треков при загрузке страницы
+(function checkAdditionalTracks(){
+  var tracksToCheck = ['art/audio/music_main2.mp3', 'art/audio/music_main3.mp3'];
+  var checked = 0;
+  
+  tracksToCheck.forEach(function(trackSrc){
+    var testAudio = new Audio();
+    testAudio.addEventListener('canplaythrough', function() { 
+      MUSIC_TRACKS.push(trackSrc);
+    }, {once:true});
+    testAudio.addEventListener('error', function() { 
+      // Файл не найден - это нормально, просто не добавляем его
+    }, {once:true});
+    testAudio.src = trackSrc;
+  });
+})();
+
+var currentTrackIndex = 0;
+var fadeInterval = null;
+var isFading = false;
+
 function initMusic(){
   try{
-    BGM=new Audio('art/audio/music_main.mp3');
-    BGM.loop=true; BGM.volume=volMusic;
+    BGM=new Audio(MUSIC_TRACKS[0]);
+    BGM.loop=false; // Отключаем стандартный loop, будем управлять вручную
+    BGM.volume=volMusic;
     BGM.addEventListener('error',function(){ bgmOk=false; });
     BGM.addEventListener('canplay',function(){ bgmOk=true; });
+    BGM.addEventListener('ended', handleTrackEnd);
   }catch(e){ BGM=null; bgmOk=false; }
 }
+
+function handleTrackEnd(){
+  // Угасание музыки перед переключением
+  if(isFading) return;
+  isFading = true;
+  
+  var fadeVolume = volMusic;
+  var fadeStep = volMusic / 20; // 20 шагов для плавного угасания
+  
+  fadeInterval = setInterval(function(){
+    fadeVolume -= fadeStep;
+    if(BGM && !BGM.paused){
+      BGM.volume = Math.max(0, fadeVolume);
+    }
+    if(fadeVolume <= 0){
+      clearInterval(fadeInterval);
+      fadeInterval = null;
+      
+      // Небольшая пауза перед следующим треком
+      setTimeout(function(){
+        // Переключаем трек
+        currentTrackIndex = (currentTrackIndex + 1) % MUSIC_TRACKS.length;
+        BGM.src = MUSIC_TRACKS[currentTrackIndex];
+        BGM.volume = volMusic;
+        if(musicOn){
+          BGM.play().catch(function(){});
+        }
+        isFading = false;
+      }, 800); // Пауза 800мс между треками
+    }
+  }, 50); // Шаг угасания каждые 50мс
+}
+
 function tryPlayMusic(){
-  if(musicOn&&BGM&&bgmOk&&BGM.paused){ BGM.play().catch(function(){}); }
+  if(musicOn&&BGM&&bgmOk&&BGM.paused){ 
+    BGM.play().catch(function(e){ 
+      // Если автовоспроизведение заблокировано, ждём первого взаимодействия
+      console.log('Музыка ожидает взаимодействия:', e);
+    }); 
+  }
+}
+
+// Попытка запустить музыку сразу после инициализации
+function startMusicAfterInit(){
+  setTimeout(function(){
+    tryPlayMusic();
+  }, 1000);
 }
 function updSoundIcon(){ $('#btn-sound').textContent=(musicOn||sfxOn)?'🔊':'🔇'; }
 function updBureauButton(){
@@ -1877,7 +1949,7 @@ function renderOrders(){
     var side=document.createElement('div'); side.className='o-side';
     var ex2=document.createElement('button'); ex2.className='o-exp2'; ex2.title='Подробнее о заказе';
     var h2=document.createElement('span'); h2.className='exp-ico'; ex2.appendChild(h2);
-    fillArt(h2,'icon_expand','⌃⌃');
+    h2.textContent='⌃⌃';
     ex2.addEventListener('click',function(e){ e.stopPropagation(); openOrderSheet(i); });
     var qw2=document.createElement('span'); qw2.className='o-qwrap';
     var q3=document.createElement('span'); q3.className='o-qty2'; q3.textContent=o.done?'✓':'×'+o.need;
@@ -1896,7 +1968,7 @@ function renderOrders(){
     var foot=document.createElement('div'); foot.className='o-foot';
     var ex=document.createElement('button'); ex.className='o-expand'; ex.title='Подробнее о заказе';
     var h3=document.createElement('span'); h3.className='exp-ico'; ex.appendChild(h3);
-    fillArt(h3,'icon_expand','⌃⌃');
+    h3.textContent='⌃⌃';
     ex.addEventListener('click',function(e){ e.stopPropagation(); openOrderSheet(i); });
     var rew=document.createElement('span'); rew.className='o-reward';
     rew.innerHTML=icoHTML('icon_coin','💰')+' '+o.reward;
@@ -2088,9 +2160,9 @@ function renderShop(){
   function back(){ row('←','Назад','','в магазин',function(){ shopMode='main'; renderShop(); }); }
   if(shopMode==='wh'){
     CHAINS.forEach(function(c){
-      if(hasWh(c.id)) row(icoHTML('icon_box','📦'),c.lineName,'опт активен: 2 сырья за ⚡'+WH_COST,'✓',null,'owned');
+      if(hasWh(c.id)) row('📦',c.lineName,'опт активен: 2 сырья за ⚡'+WH_COST,'✓',null,'owned');
       else if(!isUnlocked(c.id)) row('🔒',c.lineName,'сначала открой линию','—',null,null,true);
-      else row(icoHTML('icon_box','📦'),c.lineName,'2 сырья за ⚡'+WH_COST+' вместо 1 за ⚡'+SPAWN_COST,'💰'+c.wholesale,function(){
+      else row('📦',c.lineName,'2 сырья за ⚡'+WH_COST+' вместо 1 за ⚡'+SPAWN_COST,'💰'+c.wholesale,function(){
         tryWh(c); shopMode='main'; renderShop();
       });
     });
@@ -2098,40 +2170,40 @@ function renderShop(){
   }
   if(shopMode==='reroll'){
     orders.forEach(function(o,i){
-      if(o&&!o.done&&!o.express) row(icoHTML('icon_reroll','🌀'),orderName(CHAIN[o.chain].tiers[MAXT-1]),'Заказчик: '+o.client,'💰'+REROLL_COST,function(){
+      if(o&&!o.done&&!o.express) row('🌀',orderName(CHAIN[o.chain].tiers[MAXT-1]),'Заказчик: '+o.client,'💰'+REROLL_COST,function(){
         replaceOrder(i);
       });
     });
     back(); return;
   }
-  row(icoHTML('icon_battery','🔋'),'Батарея','+10 ⚡ сразу','💰'+BATT_COST,function(){
+  row('🔋','Батарея','+10 ⚡ сразу','💰'+BATT_COST,function(){
     if(coins<BATT_COST){ toast('Нужно 💰 '+BATT_COST,true); sfx('err'); return; }
     coins-=BATT_COST; energy=Math.min(E_MAX,energy+10);
     $('#coins').textContent=coins; updEnergy(); bump('#chip-coins');
     toast('⚡ +10 энергии'); sfx('buy'); save(); renderShop();
   });
-  if(eu>=EU_COSTS.length) row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' ⚡','MAX',null,'owned');
-  else row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' → '+(E_MAX+5)+' ⚡','💰'+EU_COSTS[eu],buyEnergy);
-  if(turboActive()) row(icoHTML('icon_turbo','⚡'),'Турбо-смена','пузыри можно лопать бесплатно','⚡ '+fmtTime(turboUntil-Date.now()),null,'owned');
-  else row(icoHTML('icon_turbo','⚡'),'Турбо-смена','5 мин: пузыри с предметами можно лопать бесплатно','💰'+TURBO_COST,function(){
+  if(eu>=EU_COSTS.length) row('⚡','Энергия +5','максимум: '+E_MAX+' ⚡','MAX',null,'owned');
+  else row('⚡','Энергия +5','максимум: '+E_MAX+' → '+(E_MAX+5)+' ⚡','💰'+EU_COSTS[eu],buyEnergy);
+  if(turboActive()) row('⚡','Турбо-смена','пузыри можно лопать бесплатно','⚡ '+fmtTime(turboUntil-Date.now()),null,'owned');
+  else row('⚡','Турбо-смена','5 мин: пузыри с предметами можно лопать бесплатно','💰'+TURBO_COST,function(){
     if(coins<TURBO_COST){ toast('Нужно 💰 '+TURBO_COST,true); sfx('err'); return; }
     coins-=TURBO_COST; turboUntil=Date.now()+TURBO_TIME;
     $('#coins').textContent=coins; bump('#chip-coins');
     toast('Турбо-смена! Ломай пузыри бесплатно ⚡ (5 мин)'); sfx('buy'); save(); renderShop();
   });
   if(CHAINS.some(function(c){ return isUnlocked(c.id)&&!hasWh(c.id); }))
-    row(icoHTML('icon_box','📦'),'Оптовая поставка','больше сырья за меньшую стоимость','выбрать',function(){ shopMode='wh'; renderShop(); });
+    row('📦','Оптовая поставка','больше сырья за меньшую стоимость','выбрать',function(){ shopMode='wh'; renderShop(); });
   if(orders.some(function(o){ return o&&!o.done&&!o.express; }))
-    row(icoHTML('icon_reroll','🌀'),'Заменить заказ','','💰'+REROLL_COST,function(){ shopMode='reroll'; renderShop(); });
-  if(whStage>=2) row(icoHTML('icon_warehouse','🏭'),'Склад','максимальный размер','MAX',null,'owned');
-  else row(icoHTML('icon_warehouse','🏭'),'Склад','+6 ячеек игрового поля','💰'+WH_PRICES[whStage],function(){
+    row('🌀','Заменить заказ','','💰'+REROLL_COST,function(){ shopMode='reroll'; renderShop(); });
+  if(whStage>=2) row('🏭','Склад','максимальный размер','MAX',null,'owned');
+  else row('🏭','Склад','+6 ячеек игрового поля','💰'+WH_PRICES[whStage],function(){
     var cost=WH_PRICES[whStage];
     if(coins<cost){ toast('Нужно 💰 '+cost,true); sfx('err'); return; }
     coins-=cost; $('#coins').textContent=coins; bump('#chip-coins');
     expandWarehouse(); sfx('buy'); save(); renderShop();
   });
-  if(prOwned) row(icoHTML('icon_pr','📣'),'PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них','✓',null,'owned');
-  else row(icoHTML('icon_pr','📣'),'PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них','💰'+PR_COST,function(){
+  if(prOwned) row('📣','PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них','✓',null,'owned');
+  else row('📣','PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них','💰'+PR_COST,function(){
     if(coins<PR_COST){ toast('Нужно 💰 '+PR_COST,true); sfx('err'); return; }
     coins-=PR_COST; prOwned=true; $('#coins').textContent=coins; bump('#chip-coins');
     toast('📣 PR-менеджер нанят: экспрессы чаще и щедрее!'); sfx('buy'); save(); renderShop();
@@ -2375,6 +2447,8 @@ function init(){
   fillArt($('#coin-ico'),'icon_coin','💰');
   fillArt($('#energy-ico'),'icon_energy','⚡');
   updEnergyShop();
+  // Запускаем музыку после инициализации с небольшой задержкой
+  startMusicAfterInit();
   if(!had){
     var starters=[['oil',1],['oil',1],['oil',2]];
     var cells=shuffle(Array.from({length:COLS*ROWS},function(_,i){ return i; }));
@@ -2408,6 +2482,7 @@ function init(){
 // Запуск с экраном загрузки
 preloadAllAssets(function(){
   // Небольшая задержка перед скрытием экрана загрузки для плавности
+  // Для сильных машин загрузка будет быстрой, но экран всё равно покажется
   setTimeout(function(){
     var ls=document.getElementById('loading-screen');
     if(ls){
@@ -2416,7 +2491,7 @@ preloadAllAssets(function(){
       setTimeout(function(){ ls.style.display='none'; },500);
     }
     try{ init(); }catch(err){ showDebug('Ошибка при запуске: '+(err&&err.message?err.message:err)+(err&&err.stack?'\\n'+err.stack:'')); }
-  },300);
+  },800); // Минимальная задержка 800мс чтобы экран загрузки всегда был виден
 });
 $('#btn-profile').onclick=function(e){ e.stopPropagation(); openProfile(); };
 $('#profile-close').onclick=closeProfile;
