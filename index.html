@@ -828,6 +828,19 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
   </svg>
   <div class="hazard hz-t"></div><div class="hazard hz-b"></div>
   <div class="gear gr1">⚙</div><div class="gear gr2">⚙</div>
+  
+  <!-- Экран загрузки -->
+  <div id="loading-screen" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);">
+    <div style="position:relative;width:280px;height:280px;margin-bottom:30px;">
+      <div class="gear" style="top:-46px;left:-54px;font-size:200px;animation:spin 42s linear infinite;color:var(--line2);opacity:var(--gearop);">⚙</div>
+      <div class="gear" style="bottom:-64px;right:-46px;font-size:260px;animation-duration:58s;animation-direction:reverse;color:var(--line2);opacity:var(--gearop);">⚙</div>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:80px;animation:truckride 3s linear infinite;">🚚</div>
+    </div>
+    <div style="width:280px;height:24px;background:var(--panel);border:3px solid var(--brand2);border-radius:999px;overflow:hidden;box-shadow:4px 4px 0 var(--shadowc);">
+      <div id="loading-bar" style="width:0%;height:100%;background:linear-gradient(90deg,var(--amber),var(--amber2));transition:width .3s ease-out;"></div>
+    </div>
+    <div id="loading-percent" style="margin-top:12px;font-family:var(--disp);font-weight:700;font-size:18px;color:var(--head);">0%</div>
+  </div>
 </div>
 <div id="app">
   <header id="topbar">
@@ -940,21 +953,21 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 <script>
 'use strict';
 var ART = {
-  mayo_1:'art/mayo_1.png', mayo_2:'art/mayo_2.png', mayo_3:'art/mayo_3.png', mayo_4:'art/mayo_4.png', mayo_5:'art/mayo_5.png',
-  ketchup_1:'art/ketchup_1.png', ketchup_2:'art/ketchup_2.png', ketchup_3:'art/ketchup_3.png', ketchup_4:'art/ketchup_4.png', ketchup_5:'art/ketchup_5.png',
-  milk_1:'art/milk_1.png', milk_2:'art/milk_2.png', milk_3:'art/milk_3.png', milk_4:'art/milk_4.png', milk_5:'art/milk_5.png',
-  oil_1:'art/oil_1.png', oil_2:'art/oil_2.png', oil_3:'art/oil_3.png', oil_4:'art/oil_4.png', oil_5:'art/oil_5.png',
-  sp_mayo:'art/sp_mayo.png', sp_ketchup:'art/sp_ketchup.png', sp_milk:'art/sp_milk.png', sp_oil:'art/sp_oil.png',
-  shop:'art/shop.png', bureau:'art/bureau.png',
-  icon_shop:'art/icon_shop.png', icon_energy:'art/icon_energy.png', icon_coin:'art/icon_coin.png',
-  icon_battery:'art/icon_battery.png', icon_turbo:'art/icon_turbo.png', icon_box:'art/icon_box.png',
-  icon_reroll:'art/icon_reroll.png', icon_warehouse:'art/icon_warehouse.png', icon_pr:'art/icon_pr.png',
-  icon_expand:'art/icon_expand.png',
-  cat_oil:'art/cat_oil.png', cat_mayo:'art/cat_mayo.png', cat_ketchup:'art/cat_ketchup.png', cat_milk:'art/cat_milk.png',
-  card_oil_1:'art/card_oil_1.png', card_oil_2:'art/card_oil_2.png', card_oil_3:'art/card_oil_3.png', card_oil_4:'art/card_oil_4.png', card_oil_5:'art/card_oil_5.png',
-  card_mayo_1:'art/card_mayo_1.png', card_mayo_2:'art/card_mayo_2.png', card_mayo_3:'art/card_mayo_3.png', card_mayo_4:'art/card_mayo_4.png', card_mayo_5:'art/card_mayo_5.png',
-  card_ketchup_1:'art/card_ketchup_1.png', card_ketchup_2:'art/card_ketchup_2.png', card_ketchup_3:'art/card_ketchup_3.png', card_ketchup_4:'art/card_ketchup_4.png', card_ketchup_5:'art/card_ketchup_5.png',
-  card_milk_1:'art/card_milk_1.png', card_milk_2:'art/card_milk_2.png', card_milk_3:'art/card_milk_3.png', card_milk_4:'art/card_milk_4.png', card_milk_5:'art/card_milk_5.png',
+  mayo_1:'art/img/mayo_1.png', mayo_2:'art/img/mayo_2.png', mayo_3:'art/img/mayo_3.png', mayo_4:'art/img/mayo_4.png', mayo_5:'art/img/mayo_5.png',
+  ketchup_1:'art/img/ketchup_1.png', ketchup_2:'art/img/ketchup_2.png', ketchup_3:'art/img/ketchup_3.png', ketchup_4:'art/img/ketchup_4.png', ketchup_5:'art/img/ketchup_5.png',
+  milk_1:'art/img/milk_1.png', milk_2:'art/img/milk_2.png', milk_3:'art/img/milk_3.png', milk_4:'art/img/milk_4.png', milk_5:'art/img/milk_5.png',
+  oil_1:'art/img/oil_1.png', oil_2:'art/img/oil_2.png', oil_3:'art/img/oil_3.png', oil_4:'art/img/oil_4.png', oil_5:'art/img/oil_5.png',
+  sp_mayo:'art/img/sp_mayo.png', sp_ketchup:'art/img/sp_ketchup.png', sp_milk:'art/img/sp_milk.png', sp_oil:'art/img/sp_oil.png',
+  shop:'art/img/shop.png', bureau:'art/img/bureau.png',
+  icon_shop:'art/img/icon_shop.png', icon_energy:'art/img/icon_energy.png', icon_coin:'art/img/icon_coin.png',
+  icon_battery:'art/img/icon_battery.png', icon_turbo:'art/img/icon_turbo.png', icon_box:'art/img/icon_box.png',
+  icon_reroll:'art/img/icon_reroll.png', icon_warehouse:'art/img/icon_warehouse.png', icon_pr:'art/img/icon_pr.png',
+  icon_expand:'art/img/icon_expand.png',
+  cat_oil:'art/img/cat_oil.png', cat_mayo:'art/img/cat_mayo.png', cat_ketchup:'art/img/cat_ketchup.png', cat_milk:'art/img/cat_milk.png',
+  card_oil_1:'art/img/card_oil_1.png', card_oil_2:'art/img/card_oil_2.png', card_oil_3:'art/img/card_oil_3.png', card_oil_4:'art/img/card_oil_4.png', card_oil_5:'art/img/card_oil_5.png',
+  card_mayo_1:'art/img/card_mayo_1.png', card_mayo_2:'art/img/card_mayo_2.png', card_mayo_3:'art/img/card_mayo_3.png', card_mayo_4:'art/img/card_mayo_4.png', card_mayo_5:'art/img/card_mayo_5.png',
+  card_ketchup_1:'art/img/card_ketchup_1.png', card_ketchup_2:'art/img/card_ketchup_2.png', card_ketchup_3:'art/img/card_ketchup_3.png', card_ketchup_4:'art/img/card_ketchup_4.png', card_ketchup_5:'art/img/card_ketchup_5.png',
+  card_milk_1:'art/img/card_milk_1.png', card_milk_2:'art/img/card_milk_2.png', card_milk_3:'art/img/card_milk_3.png', card_milk_4:'art/img/card_milk_4.png', card_milk_5:'art/img/card_milk_5.png',
 };
 var CLIENTS_RETAIL=['Супермаркет «Ромашка»','Сеть ресторанов «Вилка и Ложка»','Кафе «Уют»','Гипермаркет «Полюс»','Бистро «Быстро»','Сеть пекарен «Колос»','Ресторан «Астория»','Маркет «У дома»','Суши-бар «Киото»','Пиццерия «Томато»','Кофейня «Бодрое утро»','Столовая «Домашняя»'];
 var CLIENTS_FACTORY=['Кондитерская фабрика «Медовая»','Хлебозавод №3','Фабрика мороженого «Пломбир»','Завод снеков «Хруст»','Молочный комбинат «Заря»','Комбинат питания «Школьный»','Пекарня «Тёплый хлеб»','Завод соусов «Южный»','Фабрика чипсов «Хрум»','Консервный завод «Лето»'];
@@ -1129,6 +1142,41 @@ function checkArt(){
     var im=new Image(); im.src=ART[k];
   });
 }
+function preloadAllAssets(callback){
+  var items=[];
+  Object.keys(ART).forEach(function(k){
+    if(ART[k]) items.push(ART[k]);
+  });
+  items.push('art/audio/music_main.mp3');
+  
+  var loaded=0, total=items.length;
+  function upd(){
+    var pct=Math.floor((loaded/total)*100);
+    $('#loading-bar').style.width=pct+'%';
+    $('#loading-percent').textContent=pct+'%';
+    if(pct>=100 && callback) callback();
+  }
+  
+  items.forEach(function(src){
+    var isAudio=/\.mp3$/i.test(src);
+    var el=isAudio?new Audio():new Image();
+    function done(){
+      loaded++;
+      upd();
+    }
+    if(isAudio){
+      el.addEventListener('canplaythrough',done,{once:true});
+      el.addEventListener('error',done,{once:true});
+      el.src=src;
+    }else{
+      el.onload=done;
+      el.onerror=done;
+      el.src=src;
+    }
+  });
+  
+  if(total===0) upd();
+}
 function checkPrizeBg(){
   document.body.classList.toggle('prized-all', cardsCount()>=TOTAL_CARDS);
 }
@@ -1164,7 +1212,7 @@ var lowFX=false;
 /* ═══ ЗВУК: музыка + эффекты ═══ */
 function initMusic(){
   try{
-    BGM=new Audio('art/music_main.mp3');
+    BGM=new Audio('art/audio/music_main.mp3');
     BGM.loop=true; BGM.volume=volMusic;
     BGM.addEventListener('error',function(){ bgmOk=false; });
     BGM.addEventListener('canplay',function(){ bgmOk=true; });
@@ -2356,6 +2404,20 @@ function init(){
   if(!lsGet(TUT_KEY)) setTimeout(startTutorial,700);
   window.__CEH_READY=true;
 }
+
+// Запуск с экраном загрузки
+preloadAllAssets(function(){
+  // Небольшая задержка перед скрытием экрана загрузки для плавности
+  setTimeout(function(){
+    var ls=document.getElementById('loading-screen');
+    if(ls){
+      ls.style.transition='opacity .5s ease';
+      ls.style.opacity='0';
+      setTimeout(function(){ ls.style.display='none'; },500);
+    }
+    try{ init(); }catch(err){ showDebug('Ошибка при запуске: '+(err&&err.message?err.message:err)+(err&&err.stack?'\\n'+err.stack:'')); }
+  },300);
+});
 $('#btn-profile').onclick=function(e){ e.stopPropagation(); openProfile(); };
 $('#profile-close').onclick=closeProfile;
 $('#profile-save').onclick=saveDirectorName;
