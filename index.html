@@ -2194,7 +2194,7 @@ function renderShop(){
     toast('Турбо-смена! Ломай пузыри бесплатно ⚡ (5 мин)'); sfx('buy'); save(); renderShop();
   });
   if(CHAINS.some(function(c){ return isUnlocked(c.id)&&!hasWh(c.id); }))
-    row('📦','Оптовая поставка','больше сырья за меньшую стоимость','выбрать',function(){ shopMode='wh'; renderShop(); });
+    row('icon_box','Оптовая поставка','больше сырья за меньшую стоимость','выбрать',function(){ shopMode='wh'; renderShop(); });
   if(orders.some(function(o){ return o&&!o.done&&!o.express; }))
     row('🌀','Заменить заказ','','💰'+REROLL_COST,function(){ shopMode='reroll'; renderShop(); });
   if(whStage>=2) row('🏭','Склад','максимальный размер','MAX',null,'owned');
