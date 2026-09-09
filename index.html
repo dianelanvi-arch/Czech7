@@ -1793,7 +1793,7 @@ function dragEnd(ev){
       }
     }
   }catch(err){ showDebug('dragEnd: '+err.message); }
-  rebuildGrid(); layoutItem(it);
+  rebuildGrid(); if(d.it) layoutItem(d.it);
 }
 window.addEventListener('blur',function(){
   if(!drag) return;
