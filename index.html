@@ -154,23 +154,20 @@ html[data-theme="night"] #factory-svg .truck{filter:drop-shadow(0 0 6px rgba(12,
 #topbar{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:8px 12px;
   background:var(--card);border-bottom:2px solid var(--brand);
   box-shadow:0 4px 16px var(--shadowc), 0 2px 4px var(--shadowc2)}
+.tb-right{display:contents}
+.tb-row1{display:contents}
 #btn-profile{order:0;width:40px;height:40px;padding:0;overflow:hidden;font-size:22px;flex:0 0 auto}
 #btn-profile img{width:100%;height:100%;object-fit:cover;border-radius:8px}
-.dir-name{order:1;font-family:var(--disp);font-weight:700;font-size:12px;color:var(--head);
-  max-width:170px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;
-  line-height:1.2;overflow-wrap:break-word}
-.brand{order:2;display:flex;align-items:center;gap:9px;min-width:0}
+.brand{order:1;display:flex;align-items:center;gap:9px;min-width:0}
 .brand .bg-gear{font-size:26px;display:inline-block;color:var(--brand);animation:spin 9s linear infinite}
 .brand b{font-family:var(--disp);font-weight:900;font-size:16px;letter-spacing:.04em;color:var(--head);display:block;line-height:1}
 .brand i{font-style:normal;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--mut)}
-.tb-mid{order:4;display:flex;align-items:center;gap:7px}
 .mob-factory{display:none;position:relative}
 #factory-ev-badge{position:absolute;top:-6px;right:-6px;background:var(--violet);color:#fff;
   font-family:var(--disp);font-weight:700;font-size:8px;border-radius:999px;padding:2px 6px;display:none;
   box-shadow:1px 1px 0 rgba(0,0,0,.25);z-index:2}
-.stats{order:3;margin-left:auto;display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
-.tb-tools{order:5;display:flex;align-items:center}
-.tool-btn{display:none}
+.stats{order:2;margin-left:auto;display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+#btn-sound{order:3}
 .chip{display:flex;align-items:center;gap:5px;border:2px solid var(--line2);border-radius:999px;
   padding:4px 11px;font-size:13px;color:var(--mut);white-space:nowrap;
   box-shadow:4px 4px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.08);
@@ -193,7 +190,7 @@ html[data-theme="night"] #factory-svg .truck{filter:drop-shadow(0 0 6px rgba(12,
   font-size:15px;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;justify-content:center;
   box-shadow:4px 4px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.08)}
 .icobtn:hover{border-color:var(--amber2);transform:translateY(-2px);box-shadow:5px 5px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.08)}
-#sound-pop{position:fixed;top:56px;right:12px;z-index:95;width:min(230px,calc(100vw - 24px));background:var(--card);
+#sound-pop{position:fixed;top:56px;right:12px;z-index:95;width:230px;background:var(--card);
   border:2px solid var(--brand);border-radius:12px;padding:10px 12px;display:none;
   box-shadow:6px 6px 0 var(--shadowc)}
 #sound-pop.open{display:block;animation:popin .18s cubic-bezier(.2,1.2,.4,1)}
@@ -209,6 +206,7 @@ html[data-theme="night"] #factory-svg .truck{filter:drop-shadow(0 0 6px rgba(12,
 .fly-card img{width:80%;height:80%;object-fit:contain}
 .shift-wrap{display:flex;flex-direction:row;gap:10px;align-items:center;justify-content:center;padding:2px 0}
 .shift-label{font-family:var(--disp);font-weight:700;font-size:9px;letter-spacing:.16em;color:var(--mut);text-transform:uppercase}
+.tool-btn{display:none}
 .shift-btn{position:relative;width:96px;height:46px;border-radius:999px;cursor:pointer;padding:0;
   border:3px solid var(--line2);overflow:hidden;transition:background .35s;
   box-shadow:5px 5px 0 var(--shadowc), inset 0 2px 6px rgba(0,0,0,.25), inset 0 -2px 4px rgba(0,0,0,.08);
@@ -262,7 +260,7 @@ html[data-theme="night"] .knob::before{opacity:1}
   font-family:var(--disp);font-weight:700;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase}
 #layout{flex:1;display:flex;flex-direction:column;min-height:0;gap:10px;padding:10px}
 #gamezone{order:1;flex:1 1 auto;min-height:0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:9px;overflow:hidden}
-#lines{order:2;flex:0 0 auto;display:flex;flex-direction:column;gap:8px;overflow-x:auto;overflow-y:hidden;padding:2px}
+#lines{order:2;flex:0 0 auto;display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;padding:2px}
 #orders{order:3;position:relative}
 .lines-head{display:none}
 .orders-side{display:none}
@@ -281,17 +279,7 @@ html[data-theme="night"] .knob::before{opacity:1}
   filter:drop-shadow(0 1px 1px rgba(0,0,0,.25));cursor:help}
 .ln-btn{flex:0 0 auto;font-family:var(--disp);font-weight:700;font-size:9px;color:#fff;background:var(--amber2);
   border:none;border-radius:999px;padding:5px 9px;cursor:pointer;box-shadow:3px 3px 0 var(--shadowc)}
-.ln-btn .ico-inline{width:11px;height:11px}
-.ev-card{display:flex;gap:8px;align-items:center;background:var(--surf);border:2px solid var(--line2);
-  border-radius:12px;padding:8px;box-shadow:4px 4px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.06)}
-.ev-img{position:relative;width:52px;height:52px;flex:0 0 auto;border-radius:10px;overflow:hidden;
-  background:var(--surf2);border:1px solid var(--line);font-size:26px;display:grid;place-items:center}
-.ev-img img{width:100%;height:100%;object-fit:contain;display:block}
-.ev-cd{position:absolute;top:2px;right:2px;background:var(--violet);color:#fff;font-family:var(--disp);
-  font-weight:700;font-size:8px;border-radius:999px;padding:2px 6px;box-shadow:1px 1px 0 rgba(0,0,0,.25)}
-.ev-info{flex:1;min-width:0}
-.ev-info b{display:block;font-size:11px;color:var(--ink);line-height:1.25}
-.ev-info span{font-size:10px;color:var(--mut)}
+.ln-btn .coin{display:inline-flex;align-items:center;gap:3px}
 .tut-btn{display:none;font-family:var(--disp);font-weight:700;font-size:10px;color:#fff;background:var(--amber2);
   border:none;border-radius:999px;padding:7px 14px;cursor:pointer;box-shadow:3px 3px 0 var(--shadowc);
   align-self:flex-start;margin:6px 0 2px}
@@ -382,7 +370,7 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 .sh-txt b{display:block;color:var(--ink);font-size:11.5px}
 .sh-buy{flex:0 0 auto;font-family:var(--disp);font-weight:700;font-size:9px;color:var(--brand2);background:var(--card);
   border:2px solid var(--line2);border-radius:999px;padding:4px 9px;cursor:pointer;white-space:nowrap;box-shadow:2px 2px 0 var(--shadowc)}
-.sh-buy .ico-inline{width:11px;height:11px}
+.sh-buy .coin{display:inline-flex;align-items:center;gap:3px}
 .sh-buy:hover{transform:translateY(-1px);box-shadow:3px 3px 0 var(--shadowc)}
 .sh-buy:disabled{opacity:.55;cursor:default}
 .sh-buy.owned{background:var(--brand2);border-color:var(--brand2);color:#fff}
@@ -399,6 +387,9 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 .od-row .o-art{width:48px;height:48px;font-size:32px}
 .od-row b{display:block;font-family:var(--disp);font-weight:700;font-size:12px;color:var(--ink)}
 .od-row span{font-size:11px;color:var(--mut)}
+.od-row.ev-row{background:var(--surf2);border-radius:10px;padding:8px 10px}
+.od-row .ev-time{flex:0 0 auto;font-family:var(--disp);font-weight:700;font-size:11px;color:var(--violet);background:var(--hlbg);padding:4px 9px;border-radius:999px}
+.od-row .ev-ico{width:22px;height:22px;object-fit:contain;display:block}
 .od-hint{font-size:10.5px;color:var(--dim);line-height:1.45}
 #bureau-back{position:fixed;inset:0;background:rgba(8,18,13,.55);z-index:140;opacity:0;pointer-events:none;transition:.25s}
 #bureau-back.open{opacity:1;pointer-events:auto}
@@ -430,6 +421,7 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 .cc-cell{display:flex;flex-direction:column;gap:4px}
 .ct-buy{align-self:center;font-family:var(--disp);font-weight:700;font-size:9px;color:var(--amber2);background:var(--card);
   border:1.5px solid var(--amber2);border-radius:999px;padding:3px 8px;cursor:pointer;box-shadow:2px 2px 0 var(--shadowc)}
+.ct-buy .coin{display:inline-flex;align-items:center;gap:3px}
 .ct-buy:active{transform:scale(.94)}
 .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .cc-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;align-items:start}
@@ -442,6 +434,7 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 .confirm-box p{font-size:12px;color:var(--mut);margin-bottom:6px}
 .cf-btns{display:flex;gap:8px;justify-content:center;margin-top:10px}
 .cf-yes{font-family:var(--disp);font-weight:700;font-size:10px;color:#fff;background:var(--amber2);border:none;border-radius:999px;padding:8px 14px;cursor:pointer;box-shadow:3px 3px 0 var(--shadowc)}
+.cf-yes .coin{display:inline-flex;align-items:center;gap:3px}
 .cf-yes:hover{transform:translateY(-1px);box-shadow:4px 4px 0 var(--shadowc)}
 .cf-no{font-family:var(--disp);font-weight:700;font-size:10px;color:var(--mut);background:none;border:2px solid var(--line2);border-radius:999px;padding:8px 14px;cursor:pointer;box-shadow:2px 2px 0 var(--shadowc)}
 .cf-no:hover{transform:translateY(-1px);box-shadow:3px 3px 0 var(--shadowc)}
@@ -528,15 +521,14 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 #tut-spot.open{display:block}
 @keyframes spotpulse{50%{box-shadow:0 0 0 9999px rgba(8,18,13,.62), 0 0 36px rgba(255,197,49,.85)}}
 #tut-card{position:fixed;left:50%;bottom:8%;transform:translateX(-50%) scale(.9);z-index:132;width:min(92vw,430px);
-  max-width:calc(100vw - 16px);
   background:var(--card);border:3px solid var(--brand);border-radius:16px;box-shadow:8px 8px 0 var(--shadowc);
   padding:16px 16px 12px;opacity:0;pointer-events:none;transition:.25s cubic-bezier(.2,1.2,.4,1)}
 #tut-card.open{opacity:1;pointer-events:auto;transform:translateX(-50%) scale(1)}
 #tut-card::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;border-radius:13px 13px 0 0;
   background:repeating-linear-gradient(-45deg,var(--amber2) 0 10px,transparent 10px 20px);opacity:.7}
-.tut-img{width:120px;height:120px;margin:0 auto 8px;border-radius:12px;overflow:hidden;
-  border:2px solid var(--line);background:var(--surf2);display:grid;place-items:center;font-size:48px}
-.tut-img img{width:100%;height:100%;object-fit:contain}
+.tut-img{width:100%;aspect-ratio:2/1;border-radius:12px;overflow:hidden;border:2px solid var(--line);
+  background:var(--surf2);margin:0 0 8px;display:none}
+.tut-img img{width:100%;height:100%;object-fit:cover;display:block}
 .tut-head{display:flex;align-items:center;gap:8px;margin:4px 0 6px}
 .tut-head .tut-gear{font-size:20px;color:var(--brand);animation:spin 6s linear infinite}
 .tut-head b{font-family:var(--disp);font-weight:700;font-size:14px;color:var(--head)}
@@ -584,14 +576,6 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 .profile-save-btn:hover{transform:translateY(-1px);box-shadow:5px 5px 0 var(--shadowc)}
 .profile-save-btn:active{transform:scale(.96)}
 .profile-close{position:absolute;top:10px;right:10px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--mut)}
-#alldone-ov{position:fixed;inset:0;z-index:170;display:none;align-items:center;justify-content:center;background:rgba(8,18,13,.6)}
-#alldone-ov.open{display:flex}
-.alldone-box{position:relative;width:min(86vw,360px);background:var(--card);border:3px solid var(--amber);border-radius:18px;
-  padding:22px 18px;text-align:center;box-shadow:12px 12px 0 var(--shadowc)}
-.alldone-box .ad-emoji{font-size:56px;display:block;margin-bottom:8px}
-.alldone-box b{font-family:var(--disp);font-weight:900;font-size:16px;color:var(--head);display:block;margin-bottom:6px}
-.alldone-box p{font-size:12px;color:var(--mut);line-height:1.5}
-.alldone-box .ad-close{position:absolute;top:10px;right:10px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--mut)}
 #stamp{position:fixed;left:50%;top:42%;z-index:70;transform:translate(-50%,-50%) rotate(-8deg) scale(0);opacity:0;pointer-events:none;
   font-family:var(--disp);font-weight:900;font-size:clamp(18px,4.2vw,34px);letter-spacing:.06em;text-transform:uppercase;
   color:var(--brand2);border:4px solid var(--brand2);border-radius:14px;padding:12px 26px;background:var(--card);
@@ -604,7 +588,7 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
   86%{opacity:1}100%{opacity:0;transform:translate(-50%,-58%) rotate(-8deg) scale(1)}}
 @media (orientation:landscape),(min-width:820px){
   #layout{flex-direction:row;padding:12px}
-  #lines{order:0;flex:0 0 230px;overflow:visible;padding-bottom:8px}
+  #lines{order:0;flex:0 0 230px;flex-direction:column;overflow:visible;padding-bottom:110px}
   .lines-head{display:block}
   .lines-head h3{font-family:var(--disp);font-weight:900;font-size:10px;letter-spacing:.12em;color:var(--head);text-transform:uppercase;margin:0 0 2px 2px}
   .line{min-width:0}
@@ -620,23 +604,25 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
   .o-foot .o-pips{position:absolute;right:8px;bottom:8px}
 }
 @media (max-width:640px){
-  #topbar{flex-wrap:wrap;gap:6px 8px;padding:6px 8px}
-  #btn-profile{order:0;width:44px;height:44px;font-size:24px;align-self:center}
-  .dir-name{order:1;flex:0 1 auto;max-width:32vw;font-size:11px}
-  .brand{order:2;flex:1 1 auto;justify-content:center}
-  .tb-mid{order:3;margin-left:0}
-  .mob-factory{display:block;width:44px;height:44px;font-size:20px}
+  #topbar{display:grid;grid-template-columns:auto 1fr auto auto;grid-template-rows:auto auto;gap:4px 8px;padding:6px 8px}
+  #btn-profile{grid-column:1;grid-row:1/3;width:48px;height:48px;font-size:26px;align-self:center}
+  .tb-right{grid-column:2;grid-row:1/3;display:flex;flex-direction:column;gap:4px;justify-content:center}
+  .tb-row1{display:flex;align-items:center;gap:6px}
+  .tb-row1 .brand{flex:1;min-width:0}
+  .tb-row1 .brand i{display:none}
+  .tb-row1 .brand b{font-size:14px}
+  .tb-row1 .bg-gear{font-size:18px}
+  .mob-factory{display:block;grid-column:3;grid-row:1/3;width:48px;height:48px;font-size:22px;align-self:center}
+  .tb-col{grid-column:4;grid-row:1/3;display:flex;flex-direction:column;gap:4px;align-self:center}
   #btn-sound{width:30px;height:30px;font-size:13px}
-  .stats{order:4;margin-left:0;flex:1 1 auto;justify-content:flex-start;gap:5px}
-  .tb-tools{order:5;margin-left:auto}
-  .tool-btn{display:inline-flex;width:30px;height:30px;font-size:14px}
+  .tool-btn{display:block;width:30px;height:30px;font-size:12px}
+  .stats{grid-column:2;grid-row:2;margin-left:0;justify-content:flex-start;gap:5px}
   #chip-energy-up{display:none}
   #emax{display:none}
   .chip{padding:3px 8px;font-size:11px;box-shadow:3px 3px 0 var(--shadowc), inset 0 -1px 3px rgba(0,0,0,.08)}
   .chip b{font-size:11px}
   .lvl-badge{width:32px;height:32px}
   .lvl-num{font-size:11px}
-  .lvl-tip{left:0;transform:none;top:calc(100% + 6px)}
   .shift-wrap{gap:5px;padding:0}
   .shift-label{display:none}
   .shift-btn{width:52px;height:26px;border-width:2px}
@@ -648,13 +634,12 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
   .hint{display:none}
   #layout{gap:6px;padding:6px}
   #gamezone{gap:6px}
-  #plants{gap:6px;margin-bottom:10px}
+  #plants{gap:6px}
   .plant{width:46px;height:46px;border-width:2px;box-shadow:4px 4px 0 var(--shadowc), inset 0 -1px 3px rgba(0,0,0,.08)}
   .p-art{width:32px;height:32px;font-size:20px}
   .p-lock{font-size:10px;bottom:-3px;right:-3px}
   .p-wh{top:-6px;left:-6px;font-size:7px;padding:2px 5px}
   .p-badge{top:-6px;right:-6px;font-size:7px;padding:2px 5px}
-  .p-tip{position:fixed;left:50%;transform:translateX(-50%);bottom:110px;top:auto;width:min(320px,90vw)}
   #orders{flex-direction:row;align-items:stretch;gap:6px;padding:6px;max-height:none;box-shadow:4px 4px 0 var(--shadowc), inset 0 -1px 3px rgba(0,0,0,.06)}
   .orders-side{display:flex;flex-direction:column;gap:6px;align-items:center;flex:0 0 auto}
   #btn-orders-icon{display:block;width:40px;height:40px;font-size:17px;border-radius:12px}
@@ -675,6 +660,7 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
   .o-side .o-qwrap{gap:3px}
   .o-qty2{display:block;font-family:var(--disp);font-weight:900;font-size:11px;color:var(--acc,var(--brand))}
   .o-side-price{display:block;font-family:var(--disp);font-weight:700;font-size:9px;color:var(--amber2);white-space:nowrap}
+  .o-side-price .coin{display:inline-flex;align-items:center;gap:2px}
   .o-timer-m{font-size:8px}
   .o-side .o-pips i{width:6px;height:6px}
   .o-foot{display:none}
@@ -730,15 +716,29 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
     </defs>
     <rect class="sky" x="0" y="0" width="1440" height="560"/>
     <g class="neonwrap">
-      <g class="cloud c1"><path d="M150,170 q22,-16 44,0 q22,16 44,0 q22,-16 44,0"/><path d="M210,196 q22,-14 44,0 q22,14 44,0"/></g>
-      <g class="cloud c2"><path d="M520,140 q24,-16 48,0 q24,16 48,0 q24,-16 48,0"/><path d="M600,168 q24,-14 48,0 q24,14 48,0"/></g>
-      <g class="cloud c3"><path d="M980,160 q24,-16 48,0 q24,16 48,0 q24,-16 48,0"/><path d="M1060,188 q24,-14 48,0 q24,14 48,0"/></g>
+      <g class="cloud c1">
+        <path d="M150,170 q22,-16 44,0 q22,16 44,0 q22,-16 44,0"/>
+        <path d="M210,196 q22,-14 44,0 q22,14 44,0"/>
+      </g>
+      <g class="cloud c2">
+        <path d="M520,140 q24,-16 48,0 q24,16 48,0 q24,-16 48,0"/>
+        <path d="M600,168 q24,-14 48,0 q24,14 48,0"/>
+      </g>
+      <g class="cloud c3">
+        <path d="M980,160 q24,-16 48,0 q24,16 48,0 q24,-16 48,0"/>
+        <path d="M1060,188 q24,-14 48,0 q24,14 48,0"/>
+      </g>
       <g class="neon">
-        <path d="M200,350 V250 h26 V350"/><line x1="200" y1="280" x2="226" y2="280"/><line x1="200" y1="310" x2="226" y2="310"/>
-        <path d="M350,330 V270 h22 V330"/><line x1="350" y1="300" x2="372" y2="300"/>
-        <path d="M730,310 V230 h30 V310"/><line x1="730" y1="260" x2="760" y2="260"/><line x1="730" y1="290" x2="760" y2="290"/>
-        <path d="M884,390 V255 h24 V390"/><line x1="884" y1="285" x2="908" y2="285"/><line x1="884" y1="315" x2="908" y2="315"/><line x1="884" y1="345" x2="908" y2="345"/>
-        <path d="M1180,430 V300 h28 V430"/><line x1="1180" y1="330" x2="1208" y2="330"/><line x1="1180" y1="360" x2="1208" y2="360"/><line x1="1180" y1="390" x2="1208" y2="390"/>
+        <path d="M200,350 V250 h26 V350"/>
+        <line x1="200" y1="280" x2="226" y2="280"/><line x1="200" y1="310" x2="226" y2="310"/>
+        <path d="M350,330 V270 h22 V330"/>
+        <line x1="350" y1="300" x2="372" y2="300"/>
+        <path d="M730,310 V230 h30 V310"/>
+        <line x1="730" y1="260" x2="760" y2="260"/><line x1="730" y1="290" x2="760" y2="290"/>
+        <path d="M884,390 V255 h24 V390"/>
+        <line x1="884" y1="285" x2="908" y2="285"/><line x1="884" y1="315" x2="908" y2="315"/><line x1="884" y1="345" x2="908" y2="345"/>
+        <path d="M1180,430 V300 h28 V430"/>
+        <line x1="1180" y1="330" x2="1208" y2="330"/><line x1="1180" y1="360" x2="1208" y2="360"/><line x1="1180" y1="390" x2="1208" y2="390"/>
       </g>
       <g class="smokeg" transform="translate(213,250)"><circle class="smk" r="8"/><circle class="smk s2" r="10"/><circle class="smk s3" r="12"/></g>
       <g class="smokeg" transform="translate(361,270)"><circle class="smk" r="7"/><circle class="smk s2" r="9"/><circle class="smk s3" r="11"/></g>
@@ -746,24 +746,66 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
       <g class="smokeg" transform="translate(896,255)"><circle class="smk" r="8"/><circle class="smk s2" r="10"/><circle class="smk s3" r="12"/></g>
       <g class="smokeg" transform="translate(1194,300)"><circle class="smk" r="8"/><circle class="smk s2" r="10"/><circle class="smk s3" r="12"/></g>
       <g class="neon">
-        <path d="M430,320 V240 q0,-34 65,-34 q65,0 65,34 V320"/><line x1="430" y1="262" x2="560" y2="262"/><line x1="430" y1="290" x2="560" y2="290"/>
+        <path d="M430,320 V240 q0,-34 65,-34 q65,0 65,34 V320"/>
+        <line x1="430" y1="262" x2="560" y2="262"/><line x1="430" y1="290" x2="560" y2="290"/>
         <line x1="445" y1="320" x2="445" y2="520"/><line x1="545" y1="320" x2="545" y2="520"/>
-        <path d="M90,470 V400 q0,-16 15,-16 q15,0 15,16 V470"/><line x1="120" y1="430" x2="140" y2="430"/>
-        <path d="M140,520 V350 h150 V520"/><path d="M205,520 v-34 h20 v34"/>
       </g>
-      <g class="wins"><rect class="win" x="158" y="368" width="26" height="20"/><rect class="win" x="234" y="368" width="26" height="20"/><rect class="win" x="158" y="402" width="26" height="20"/><rect class="win" x="234" y="402" width="26" height="20"/></g>
-      <g class="neon"><path d="M320,520 V330 h150 V520"/><path d="M385,520 v-34 h20 v34"/></g>
-      <g class="wins"><rect class="win" x="338" y="350" width="24" height="18"/><rect class="win" x="376" y="350" width="24" height="18"/><rect class="win" x="414" y="350" width="24" height="18"/><rect class="win" x="338" y="384" width="24" height="18"/><rect class="win" x="414" y="384" width="24" height="18"/></g>
-      <g class="neon"><path d="M500,520 V350 h160 V520"/><path d="M570,520 v-36 h20 v36"/></g>
-      <g class="wins"><rect class="win" x="530" y="370" width="24" height="18"/><rect class="win" x="620" y="370" width="24" height="18"/></g>
-      <g class="neon"><path d="M700,520 V310 h100 V520"/><path d="M740,520 v-34 h20 v34"/></g>
-      <g class="wins"><rect class="win" x="716" y="330" width="18" height="16"/><rect class="win" x="748" y="330" width="18" height="16"/><rect class="win" x="716" y="362" width="18" height="16"/><rect class="win" x="748" y="362" width="18" height="16"/><rect class="win" x="716" y="394" width="18" height="16"/><rect class="win" x="748" y="394" width="18" height="16"/></g>
-      <g class="neon"><path d="M840,520 V390 h140 V520"/><path d="M900,520 v-32 h20 v32"/></g>
-      <g class="wins"><rect class="win" x="858" y="408" width="24" height="18"/><rect class="win" x="934" y="408" width="24" height="18"/></g>
-      <g class="neon"><path d="M1000,340 h70 v90 l-35,40 l-35,-40 Z"/><line x1="1000" y1="368" x2="1070" y2="368"/><line x1="1012" y1="470" x2="1012" y2="520"/><line x1="1058" y1="470" x2="1058" y2="520"/></g>
-      <g class="neon"><path d="M1100,520 V430 h220 V520"/><path d="M1200,520 v-34 h20 v34"/></g>
-      <g class="wins"><rect class="win" x="1120" y="448" width="26" height="18"/><rect class="win" x="1160" y="448" width="26" height="18"/><rect class="win" x="1240" y="448" width="26" height="18"/><rect class="win" x="1280" y="448" width="26" height="18"/></g>
-      <g class="neon"><path d="M470,520 v-26 h18 v26"/><path d="M494,520 v-26 h18 v26"/><path d="M518,520 v-26 h18 v26"/></g>
+      <g class="neon">
+        <path d="M90,470 V400 q0,-16 15,-16 q15,0 15,16 V470"/>
+        <line x1="120" y1="430" x2="140" y2="430"/>
+        <path d="M140,520 V350 h150 V520"/>
+        <path d="M205,520 v-34 h20 v34"/>
+      </g>
+      <g class="wins">
+        <rect class="win" x="158" y="368" width="26" height="20"/><rect class="win" x="234" y="368" width="26" height="20"/>
+        <rect class="win" x="158" y="402" width="26" height="20"/><rect class="win" x="234" y="402" width="26" height="20"/>
+      </g>
+      <g class="neon">
+        <path d="M320,520 V330 h150 V520"/>
+        <path d="M385,520 v-34 h20 v34"/>
+      </g>
+      <g class="wins">
+        <rect class="win" x="338" y="350" width="24" height="18"/><rect class="win" x="376" y="350" width="24" height="18"/><rect class="win" x="414" y="350" width="24" height="18"/>
+        <rect class="win" x="338" y="384" width="24" height="18"/><rect class="win" x="414" y="384" width="24" height="18"/>
+      </g>
+      <g class="neon">
+        <path d="M500,520 V350 h160 V520"/>
+        <path d="M570,520 v-36 h20 v36"/>
+      </g>
+      <g class="wins">
+        <rect class="win" x="530" y="370" width="24" height="18"/><rect class="win" x="620" y="370" width="24" height="18"/>
+      </g>
+      <g class="neon">
+        <path d="M700,520 V310 h100 V520"/>
+        <path d="M740,520 v-34 h20 v34"/>
+      </g>
+      <g class="wins">
+        <rect class="win" x="716" y="330" width="18" height="16"/><rect class="win" x="748" y="330" width="18" height="16"/>
+        <rect class="win" x="716" y="362" width="18" height="16"/><rect class="win" x="748" y="362" width="18" height="16"/>
+        <rect class="win" x="716" y="394" width="18" height="16"/><rect class="win" x="748" y="394" width="18" height="16"/>
+      </g>
+      <g class="neon">
+        <path d="M840,520 V390 h140 V520"/>
+        <path d="M900,520 v-32 h20 v32"/>
+      </g>
+      <g class="wins">
+        <rect class="win" x="858" y="408" width="24" height="18"/><rect class="win" x="934" y="408" width="24" height="18"/>
+      </g>
+      <g class="neon">
+        <path d="M1000,340 h70 v90 l-35,40 l-35,-40 Z"/>
+        <line x1="1000" y1="368" x2="1070" y2="368"/>
+        <line x1="1012" y1="470" x2="1012" y2="520"/><line x1="1058" y1="470" x2="1058" y2="520"/>
+      </g>
+      <g class="neon">
+        <path d="M1100,520 V430 h220 V520"/>
+        <path d="M1200,520 v-34 h20 v34"/>
+      </g>
+      <g class="wins">
+        <rect class="win" x="1120" y="448" width="26" height="18"/><rect class="win" x="1160" y="448" width="26" height="18"/><rect class="win" x="1240" y="448" width="26" height="18"/><rect class="win" x="1280" y="448" width="26" height="18"/>
+      </g>
+      <g class="neon">
+        <path d="M470,520 v-26 h18 v26"/><path d="M494,520 v-26 h18 v26"/><path d="M518,520 v-26 h18 v26"/>
+      </g>
       <g class="tree" transform="translate(120,520)"><line class="trunk" x1="0" y1="0" x2="0" y2="-20"/><circle class="crown" cx="0" cy="-36" r="18"/><circle class="crown2" cx="-12" cy="-26" r="11"/><circle class="crown2" cx="12" cy="-26" r="11"/></g>
       <g class="tree" transform="translate(300,520)"><line class="trunk" x1="0" y1="0" x2="0" y2="-20"/><circle class="crown" cx="0" cy="-36" r="18"/><circle class="crown2" cx="-12" cy="-26" r="11"/><circle class="crown2" cx="12" cy="-26" r="11"/></g>
       <g class="tree" transform="translate(480,520)"><line class="trunk" x1="0" y1="0" x2="0" y2="-20"/><circle class="crown" cx="0" cy="-36" r="18"/><circle class="crown2" cx="-12" cy="-26" r="11"/><circle class="crown2" cx="12" cy="-26" r="11"/></g>
@@ -793,34 +835,36 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 <div id="app">
   <header id="topbar">
     <button class="icobtn" id="btn-profile" title="Профиль директора">👤</button>
-    <span class="dir-name" id="dir-name">Директор</span>
-    <div class="brand"><span class="bg-gear"></span><span><b>ЦЕХ·7</b><i>фабрика соусов и молока</i></span></div>
-    <div class="tb-mid">
-      <button class="icobtn mob-factory" id="btn-factory" title="Линии производства">🏭<span id="factory-ev-badge"></span></button>
+    <div class="tb-right">
+      <div class="tb-row1">
+        <div class="brand"><span class="bg-gear">⚙</span><span><b>ЦЕХ·7</b></span></div>
+      </div>
+      <div class="stats" id="stats">
+        <div class="lvl-badge" id="lvl-badge"><span class="lvl-num" id="lvl">1</span><span class="lvl-tip" id="lvl-tip"></span></div>
+        <div class="chip gold" id="chip-coins"><span id="coin-ico">💰</span> <b id="coins">0</b></div>
+        <div class="chip" id="chip-energy"><span id="energy-ico">⚡</span> <b id="energy">0</b><span id="emax">/30</span></div>
+        <button class="chip shop" id="chip-energy-up" title="Увеличить максимум энергии на 5">⚡+5 · 💰200</button>
+        <div class="shift-wrap" id="shift-wrap">
+          <span class="shift-label">Смена:</span>
+          <button class="shift-btn" id="theme-toggle" title="Переключить смену" aria-label="Переключить тему"><span class="knob"></span></button>
+        </div>
+      </div>
+    </div>
+    <button class="icobtn mob-factory" id="btn-factory" title="Линии производства">🏭<span id="factory-ev-badge"></span></button>
+    <div class="tb-col">
       <button class="icobtn" id="btn-sound" title="Настройки звука">🔊</button>
-    </div>
-    <div class="stats" id="stats">
-      <div class="lvl-badge" id="lvl-badge"><span class="lvl-num" id="lvl">1</span><span class="lvl-tip" id="lvl-tip"></span></div>
-      <div class="chip gold" id="chip-coins"><span id="coin-ico">💰</span> <b id="coins">0</b></div>
-      <div class="chip" id="chip-energy"><span id="energy-ico">⚡</span> <b id="energy">0</b><span id="emax">/30</span></div>
-      <button class="chip shop" id="chip-energy-up" title="Увеличить максимум энергии на 5">⚡+5 · 💰200</button>
-    </div>
-    <div class="tb-tools">
       <button class="icobtn tool-btn" id="btn-chains" title="Цепочки производства и обучалка">❓</button>
     </div>
   </header>
   <main id="layout">
     <aside id="lines">
       <div class="lines-head"><h3>Производственные площадки</h3></div>
+      <div class="lines-sub">Фабрика соусов и молока</div>
       <div id="lines-list" style="display:contents"></div>
     </aside>
     <section id="gamezone">
       <div id="board-wrap"><div id="board"></div></div>
       <div id="plants"></div>
-      <div class="shift-wrap" id="shift-wrap">
-        <span class="shift-label">Смена:</span>
-        <button class="shift-btn" id="theme-toggle" title="Переключить смену" aria-label="Переключить тему"><span class="knob"></span></button>
-      </div>
     </section>
     <aside id="orders">
       <div class="orders-side">
@@ -877,18 +921,10 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
     <button class="profile-save-btn" id="profile-save">Сохранить</button>
   </div>
 </div>
-<div id="alldone-ov">
-  <div class="alldone-box">
-    <button class="ad-close" id="alldone-close" title="Закрыть">✕</button>
-    <span class="ad-emoji">🏆</span>
-    <b>Поздравляем!</b>
-    <p>Вы собрали все доступные на текущий момент улучшения и награды!</p>
-  </div>
-</div>
 <div id="tut-back"></div>
 <div id="tut-spot"></div>
 <div id="tut-card">
-  <div class="tut-img" id="tut-img" style="display:none"></div>
+  <div class="tut-img" id="tut-img"></div>
   <div class="tut-head"><span class="tut-gear">⚙</span><b id="tut-title"></b></div>
   <p id="tut-text"></p>
   <div class="tut-foot">
@@ -913,10 +949,12 @@ var ART = {
   icon_shop:'art/img/icon_shop.png', icon_energy:'art/img/icon_energy.png', icon_coin:'art/img/icon_coin.png',
   icon_battery:'art/img/icon_battery.png', icon_turbo:'art/img/icon_turbo.png',
   icon_reroll:'art/img/icon_reroll.png', icon_pr:'art/img/icon_pr.png',
-  icon_box:'art/img/icon_box.png', icon_warehouse:'art/img/icon_warehouse.png', icon_expand:'art/img/icon_expand.png',
+  icon_box:'art/img/icon_box.png', icon_expand:'art/img/icon_expand.png',
   loading_factory:'art/img/loading_factory.png',
   tut_intro:'art/img/tut_intro.png',
-  ev_line_bonus:'art/img/ev_line_bonus.png', ev_express_rate:'art/img/ev_express_rate.png', ev_bubble_rate:'art/img/ev_bubble_rate.png',
+  ev_line_bonus:'art/img/ev_line_bonus.png',
+  ev_express_rate:'art/img/ev_express_rate.png',
+  ev_bubble_rate:'art/img/ev_bubble_rate.png',
   cat_oil:'art/img/cat_oil.png', cat_mayo:'art/img/cat_mayo.png', cat_ketchup:'art/img/cat_ketchup.png', cat_milk:'art/img/cat_milk.png',
   card_oil_1:'art/img/card_oil_1.png', card_oil_2:'art/img/card_oil_2.png', card_oil_3:'art/img/card_oil_3.png', card_oil_4:'art/img/card_oil_4.png', card_oil_5:'art/img/card_oil_5.png',
   card_mayo_1:'art/img/card_mayo_1.png', card_mayo_2:'art/img/card_mayo_2.png', card_mayo_3:'art/img/card_mayo_3.png', card_mayo_4:'art/img/card_mayo_4.png', card_mayo_5:'art/img/card_mayo_5.png',
@@ -969,14 +1007,14 @@ var SPAWN_COST=2, WH_COST=3, E_REGEN=1400, RARE_CHANCE=0.22, SLOTS=3;
 var EU_COSTS=[200,450,800,1250];
 var DONE_HOLD=2000, DONE_FADE=700, NEW_PAUSE=1400;
 var BUBBLE_CHANCE=0.12, BUBBLE_LIFE=12000;
+function getBubbleChance(){ return currentEvent==='bubble_rate' ? BUBBLE_CHANCE*(1+(currentEventBubbleRate||0)) : BUBBLE_CHANCE; }
 var TURBO_TIME=300000, TURBO_COST=150, BATT_COST=60, REROLL_COST=50, PR_COST=900;
-var WH_PRICES=[1500,3000];
 var SKEY='ceh7.save.v4';
 var TUT_KEY='ceh7.tut.v1';
 var AVATARS = [
   {lvl:1, icon:'👤', name:'Новичок'},
   {lvl:5, icon:'🧑‍🌾', name:'Фермер'},
-  {lvl:10, icon:'👨‍', name:'Повар'},
+  {lvl:10, icon:'👨‍🍳', name:'Повар'},
   {lvl:15, icon:'🧑‍🔬', name:'Технолог'},
   {lvl:20, icon:'👩‍', name:'Менеджер'},
   {lvl:25, icon:'🤴', name:'Директор'},
@@ -1001,7 +1039,7 @@ var items=[], cellEls=[], bubbles=[], bubUid=0;
 var coins=80, energy=24, lvl=1, xp=0, done=0;
 var directorName='Директор', directorAvatar=0;
 var unlocked=['oil'], whOwned=[], eu=0, E_MAX=30;
-var whStage=0, prOwned=false, turboUntil=0;
+var prOwned=false, turboUntil=0;
 var cards={}, pending=[], pity={}, prized={};
 var orders=new Array(SLOTS).fill(null);
 var sinceExpress=0;
@@ -1009,10 +1047,12 @@ var lastRegen=Date.now();
 var shopMode='main';
 var sheetType=null;
 var bureauView='home';
-var allDoneShown=false;
 var EVENT_TYPES=['line_bonus','express_rate','bubble_rate'];
+var EVENT_PATTERN=['line','bubble','line','line','express'];
+var evPatternIdx=0, lineRot=null, lineRotIdx=0;
 var currentEvent=null, eventEnd=0, EVENT_DURATION=48*60*60*1000;
 var currentEventLine=null, currentEventBubbleRate=0;
+/* звук */
 var musicOn=true, sfxOn=true, volMusic=.5, volSfx=1;
 var BGM=null, bgmOk=false;
 var MUSIC_TRACKS=['music_main.mp3','music_main2.mp3','music_main3.mp3'];
@@ -1020,18 +1060,27 @@ var MUSIC_BASE_PATHS=['art/audio/','art/',''];
 function getMusicCandidates(){
   var result=[];
   for(var t=0;t<MUSIC_TRACKS.length;t++){
-    for(var p=0;p<MUSIC_BASE_PATHS.length;p++){ result.push(MUSIC_BASE_PATHS[p]+MUSIC_TRACKS[t]); }
+    for(var p=0;p<MUSIC_BASE_PATHS.length;p++){
+      result.push(MUSIC_BASE_PATHS[p]+MUSIC_TRACKS[t]);
+    }
   }
   return result;
 }
 var MUSIC_CANDIDATES=getMusicCandidates();
+var currentTrackIndex=0, isFading=false;
 function pickNewEvent(){
-  if(Math.random()<0.35){
-    currentEvent=pick(EVENT_TYPES); eventEnd=Date.now()+EVENT_DURATION;
-    if(currentEvent==='line_bonus'){ var uc=unlockedChains(); currentEventLine=uc.length?pick(uc).id:null; currentEventBubbleRate=0; }
-    else if(currentEvent==='bubble_rate'){ currentEventLine=null; currentEventBubbleRate=0.7; }
-    else { currentEventLine=null; currentEventBubbleRate=0; }
-  } else { currentEvent=null; eventEnd=0; currentEventBubbleRate=0; }
+  var type=EVENT_PATTERN[evPatternIdx % EVENT_PATTERN.length]; evPatternIdx++;
+  if(type==='line'){
+    var uc=unlockedChains();
+    if(!lineRot||lineRotIdx>=lineRot.length){ lineRot=shuffle(uc.map(function(c){return c.id;})); lineRotIdx=0; }
+    currentEventLine=lineRot.length?lineRot[lineRotIdx++]:null;
+    currentEvent='line_bonus'; currentEventBubbleRate=0;
+  } else if(type==='bubble'){
+    currentEvent='bubble_rate'; currentEventLine=null; currentEventBubbleRate=0.7;
+  } else {
+    currentEvent='express_rate'; currentEventLine=null; currentEventBubbleRate=0;
+  }
+  eventEnd=Date.now()+EVENT_DURATION;
   refreshEventCards();
   save();
 }
@@ -1066,7 +1115,6 @@ function hasWh(id){ return whOwned.indexOf(id)>=0; }
 function unlockedChains(){ return CHAINS.filter(function(c){ return isUnlocked(c.id); }); }
 function turboActive(){ return Date.now()<turboUntil; }
 function bubblePrice(t){ return 10*Math.pow(2,t-1); }
-function getBubbleChance(){ return currentEvent==='bubble_rate' ? BUBBLE_CHANCE*(1+(currentEventBubbleRate||0)) : BUBBLE_CHANCE; }
 function xpNeed(){ return 150+(lvl-1)*75; }
 function cardsCount(){ var n=0; for(var k in cards) if(cards[k]) n++; return n; }
 function ownedIn(line){ var n=0; CHAIN[line].tiers.forEach(function(t){ if(cards[t.key]) n++; }); return n; }
@@ -1173,12 +1221,12 @@ var lowFX=false;
     measure(function(avg){ if(avg==null) return; if(lowFX&&avg>45) apply(false); else if(!lowFX&&avg<30) apply(true); });
   },60000);
 })();
-var currentTrackIndex=0;
+/* музыка: перебор путей + пауза 0.5с между треками */
 function initMusic(){
   try{
     if(BGM){ BGM.pause(); BGM=null; }
     BGM=new Audio();
-    BGM.preload='auto'; BGM.loop=true; BGM.volume=volMusic;
+    BGM.preload='auto'; BGM.loop=false; BGM.volume=volMusic;
     BGM.addEventListener('ended',handleTrackEnd);
     BGM.addEventListener('playing',function(){ bgmOk=true; });
     var ci=0;
@@ -1192,14 +1240,23 @@ function initMusic(){
   }catch(e){ BGM=null; bgmOk=false; }
 }
 function handleTrackEnd(){
-  if(!BGM||MUSIC_CANDIDATES.length<2) return;
-  setTimeout(function(){
-    if(!BGM) return;
-    currentTrackIndex=(currentTrackIndex+1)%MUSIC_CANDIDATES.length;
-    BGM.src=MUSIC_CANDIDATES[currentTrackIndex];
-    BGM.volume=volMusic;
-    if(musicOn){ var p=BGM.play(); if(p&&p.catch)p.catch(function(){}); }
-  },500);
+  if(isFading||!BGM||MUSIC_CANDIDATES.length<2) return;
+  isFading=true;
+  var fadeVol=volMusic, step=volMusic/20;
+  var fi=setInterval(function(){
+    fadeVol-=step;
+    if(BGM&&!BGM.paused) BGM.volume=Math.max(0,fadeVol);
+    if(fadeVol<=0){
+      clearInterval(fi);
+      setTimeout(function(){
+        currentTrackIndex=(currentTrackIndex+1)%MUSIC_CANDIDATES.length;
+        BGM.src=MUSIC_CANDIDATES[currentTrackIndex];
+        BGM.volume=volMusic;
+        if(musicOn) BGM.play().catch(function(){});
+        isFading=false;
+      },500);
+    }
+  },50);
 }
 function tryPlayMusic(){
   if(!musicOn||!BGM) return;
@@ -1209,19 +1266,6 @@ function tryPlayMusic(){
   if(p&&p.catch) p.catch(function(){});
 }
 function updSoundIcon(){ var b=$('#btn-sound'); if(b) b.textContent=(musicOn||sfxOn)?'🔊':'🔇'; }
-function checkAllDone(){
-  if(allDoneShown) return;
-  var allCards=cardsCount()>=TOTAL_CARDS;
-  var allAv=lvl>=AVATARS[AVATARS.length-1].lvl;
-  var allWh=whStage>=2;
-  var allLines=unlocked.length>=CHAINS.length;
-  if(allCards&&allAv&&allWh&&allLines&&prOwned){ allDoneShown=true; save(); showAllDone(); }
-}
-function showAllDone(){
-  confetti(window.innerWidth/2,window.innerHeight/2);
-  $('#alldone-ov').classList.add('open');
-  sfx('lvl');
-}
 function updBureauButton(){
   var n=cardsCount()+'/'+TOTAL_CARDS;
   document.querySelectorAll('.cards-count').forEach(function(el){ el.textContent=n; });
@@ -1232,7 +1276,6 @@ function updBureauButton(){
   $('#btn-bureau').classList.toggle('pending',pendN>0);
   var bm=$('#btn-bureau-m'); if(bm) bm.classList.toggle('pending',pendN>0);
   checkPrizeBg();
-  checkAllDone();
 }
 function flyCard(key,fromRect){
   var btn=$('#btn-bureau')||$('#btn-bureau-m'); if(!btn) return;
@@ -1382,7 +1425,6 @@ function renderAvatarButton(){
   img.onload=function(){ b.innerHTML=''; b.appendChild(img); };
   b.appendChild(img);
   b.title='Профиль директора: '+directorName;
-  var dn=$('#dir-name'); if(dn) dn.textContent=directorName;
 }
 function openProfile(){
   $('#profile-ov').classList.add('open');
@@ -1510,7 +1552,7 @@ function positionSpot(key){
 }
 function placeCard(target){
   var card=$('#tut-card');
-  if(!target){ card.style.top='auto'; card.style.bottom='8%'; return; }
+  if(!target){ card.style.top='auto'; card.style.bottom='30%'; return; }
   var el=$(target);
   if(!el){ card.style.top='auto'; card.style.bottom='8%'; return; }
   var rect=el.getBoundingClientRect();
@@ -1561,6 +1603,37 @@ function refreshSheetIf(type){
   if(sheetType==='lines') renderLines($('#sheet-body'));
   else if(sheetType==='chains') renderChains($('#sheet-body'),true);
   else if(sheetType==='stats') renderStats($('#sheet-body'));
+}
+function renderEventCardInto(host){
+  if(!host) return;
+  var old=host.querySelector('.ev-card'); if(old) old.remove();
+  if(!currentEvent||eventEnd<=Date.now()) return;
+  var card=document.createElement('div'); card.className='ev-card';
+  var img=document.createElement('div'); img.className='ev-img';
+  var key=eventArtKey(currentEvent);
+  if(key){ fillArt(img,key,eventEmojiEv(currentEvent)); }
+  var cd=document.createElement('span'); cd.className='ev-cd'; cd.textContent=formatEventTime(eventTimeLeft());
+  img.appendChild(cd);
+  var info=document.createElement('div'); info.className='ev-info';
+  info.innerHTML='<b>'+eventName(currentEvent)+'</b><span>Событие длится 2 дня</span>';
+  card.appendChild(img); card.appendChild(info);
+  host.appendChild(card);
+}
+function eventEmojiEv(ev){
+  if(ev==='line_bonus') return '🎉';
+  if(ev==='express_rate') return '⚡';
+  if(ev==='bubble_rate') return '🫧';
+  return '🎉';
+}
+function refreshEventCards(){
+  renderEventCardInto($('#lines-list'));
+  if(sheetType==='lines') renderLines($('#sheet-body'));
+  updateEvBadge();
+}
+function updateEvBadge(){
+  var b=$('#factory-ev-badge'); if(!b) return;
+  if(currentEvent&&eventEnd>Date.now()){ b.style.display=''; b.textContent=formatEventTime(eventTimeLeft()); }
+  else b.style.display='none';
 }
 function renderStats(host){
   host.innerHTML='';
@@ -1870,21 +1943,21 @@ function renderOrders(){
     if(!o){ if(i===2) return;
       var e=document.createElement('div'); e.className='order-card empty';
       e.innerHTML='<span class="g">⚙</span>&nbsp;формируем заказ…'; cardsBox.appendChild(e); return; }
-    var c=CHAIN[o.chain], tt=c.tiers[o.tier-1];
+    var c=CHAIN[o.chain], t=c.tiers[o.tier-1];
     var e2=document.createElement('div');
     e2.className='order-card'+(o.done?' done':'')+(o.express?' express':'');
     e2.dataset.slot=i; e2.style.setProperty('--acc', o.express?'#7a5cff':c.color);
     var row=document.createElement('div'); row.className='o-row';
-    var art=document.createElement('div'); art.className='o-art'; fillArt(art,tt.key,tt.emoji);
+    var art=document.createElement('div'); art.className='o-art'; fillArt(art,t.key,t.emoji);
     var info=document.createElement('div'); info.className='o-info';
-    info.innerHTML='<b>'+orderName(tt)+'</b><span class="'+(o.express?'x':'')+'">'+
+    info.innerHTML='<b>'+orderName(t)+'</b><span class="'+(o.express?'x':'')+'">'+
       (o.done?'заказ закрыт':'Заказчик: '+o.client)+'</span>';
     var qty=document.createElement('div'); qty.className='o-qty'; qty.textContent=o.done?'ВЫПОЛНЕНО ✓':'×'+o.need;
     row.appendChild(art); row.appendChild(info); row.appendChild(qty);
     var side=document.createElement('div'); side.className='o-side';
     var ex2=document.createElement('button'); ex2.className='o-exp2'; ex2.title='Подробнее о заказе';
     var h2=document.createElement('span'); h2.className='exp-ico'; ex2.appendChild(h2);
-    fillArt(h2,'icon_expand','⌃');
+    fillArt(h2,'icon_expand','⌃⌃');
     ex2.addEventListener('click',function(e){ e.stopPropagation(); openOrderSheet(i); });
     var qw2=document.createElement('span'); qw2.className='o-qwrap';
     var q3=document.createElement('span'); q3.className='o-qty2'; q3.textContent=o.done?'✓':'×'+o.need;
@@ -1944,37 +2017,6 @@ function orderCardRects(){
   return list.filter(function(el){ return el.dataset.slot!=null; })
     .map(function(el){ return {el:el,slot:+el.dataset.slot,r:el.getBoundingClientRect()}; });
 }
-function renderEventCardInto(host){
-  if(!host) return;
-  var old=host.querySelector('.ev-card'); if(old) old.remove();
-  if(!currentEvent||eventEnd<=Date.now()) return;
-  var card=document.createElement('div'); card.className='ev-card';
-  var img=document.createElement('div'); img.className='ev-img';
-  var key=eventArtKey(currentEvent);
-  if(key){ fillArt(img,key,eventEmojiEv(currentEvent)); }
-  var cd=document.createElement('span'); cd.className='ev-cd'; cd.textContent=formatEventTime(eventTimeLeft());
-  img.appendChild(cd);
-  var info=document.createElement('div'); info.className='ev-info';
-  info.innerHTML='<b>'+eventName(currentEvent)+'</b><span>Событие длится 2 дня</span>';
-  card.appendChild(img); card.appendChild(info);
-  host.appendChild(card);
-}
-function eventEmojiEv(ev){
-  if(ev==='line_bonus') return '🎉';
-  if(ev==='express_rate') return '⚡';
-  if(ev==='bubble_rate') return '🫧';
-  return '🎉';
-}
-function refreshEventCards(){
-  renderEventCardInto($('#lines-list'));
-  if(sheetType==='lines') renderLines($('#sheet-body'));
-  updateEvBadge();
-}
-function updateEvBadge(){
-  var b=$('#factory-ev-badge'); if(!b) return;
-  if(currentEvent&&eventEnd>Date.now()){ b.style.display=''; b.textContent=formatEventTime(eventTimeLeft()); }
-  else b.style.display='none';
-}
 function renderLines(host){
   host.innerHTML='';
   CHAINS.forEach(function(c){
@@ -2006,7 +2048,6 @@ function tryUnlock(c){
   unlocked.push(c.id);
   buildLines(); buildPlants(); buildChainHelp();
   refreshSheetIf('lines');
-  refreshEventCards();
   showStamp('Новая линия!','«'+c.lineName+'» запущена'); sfx('buy'); save();
 }
 function renderChains(host,withTut){
@@ -2164,13 +2205,6 @@ function renderShop(){
     row(icoHTML('icon_box','📦'),'Оптовая поставка','больше сырья за меньшую стоимость','выбрать',function(){ shopMode='wh'; renderShop(); });
   if(orders.some(function(o){ return o&&!o.done&&!o.express; }))
     row(icoHTML('icon_reroll','🌀'),'Заменить заказ','',coinHTML(REROLL_COST),function(){ shopMode='reroll'; renderShop(); });
-  if(whStage>=2) row(icoHTML('icon_warehouse','🏭'),'Склад','максимальный размер','MAX',null,'owned');
-  else row(icoHTML('icon_warehouse','🏭'),'Склад','+6 ячеек игрового поля',coinHTML(WH_PRICES[whStage]),function(){
-    var cost=WH_PRICES[whStage];
-    if(coins<cost){ toast('Нужно 💰 '+cost,true); sfx('err'); return; }
-    coins-=cost; $('#coins').textContent=coins; bump('#chip-coins');
-    expandWarehouse(); sfx('buy'); save(); renderShop();
-  });
   if(prOwned) row(icoHTML('icon_pr','📣'),'PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них','✓',null,'owned');
   else row(icoHTML('icon_pr','📣'),'PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них',coinHTML(PR_COST),function(){
     if(coins<PR_COST){ toast('Нужно 💰 '+PR_COST,true); sfx('err'); return; }
@@ -2187,27 +2221,6 @@ function replaceOrder(slot){
   var el=cardsBox.querySelector('[data-slot="'+slot+'"]'); if(el) el.classList.add('fresh');
   sfx('new'); save();
   shopMode='main'; renderShop();
-}
-function applyWarehouseGeom(){
-  var e=clamp(whStage,0,2);
-  var landscape=window.innerWidth>window.innerWidth?false:(window.innerWidth>window.innerHeight);
-  if(landscape){ COLS=6+e; ROWS=6; } else { COLS=6; ROWS=6+e; }
-}
-function expandWarehouse(){
-  bubbles.slice().forEach(function(b){ killBubble(b,true); });
-  var oldCols=COLS, oldRows=ROWS;
-  whStage++;
-  applyWarehouseGeom();
-  items.forEach(function(it){
-    var r=Math.floor(it.idx/oldCols), c=it.idx%oldCols;
-    it.idx=r*COLS+c;
-  });
-  grid=new Array(COLS*ROWS).fill(null);
-  bubbleGrid=new Array(COLS*ROWS).fill(null);
-  rebuildCellEls(); rebuildGrid();
-  sizeBoard();
-  showStamp('Склад расширен!','+6 ячеек');
-  save();
 }
 function updateXpUI(){
   var b=$('#lvl-badge'); if(!b) return;
@@ -2237,7 +2250,6 @@ function addXp(n){
     need=xpNeed();
   }
   updateXpUI();
-  updBureauButton();
 }
 function updEnergy(){
   $('#energy').textContent=energy;
@@ -2332,11 +2344,11 @@ function save(){
       v:4,coins:coins,energy:energy,ts:Date.now(),lvl:lvl,xp:xp,done:done,
       dn:directorName,da:directorAvatar,
       mon:musicOn,son:sfxOn,vm:volMusic,vs:volSfx,
-      un:unlocked,wh:whOwned,eu:eu,ws:whStage,pr:prOwned,tb:turboUntil,cols:COLS,rows:ROWS,
-      cd:cards,pd:pending,py:pity,pz:prized,ad:allDoneShown,
+      un:unlocked,wh:whOwned,eu:eu,pr:prOwned,tb:turboUntil,cols:COLS,rows:ROWS,
+      cd:cards,pd:pending,py:pity,pz:prized,
       items:items.map(function(it){ return {i:it.idx,c:it.chain,t:it.tier}; }),
       orders:orders.map(function(o){ return o?{c:o.chain,q:o.qty,n:o.need,r:o.reward,d:!!o.done,t:o.tier,e:!!o.express,dl:o.deadline||0,cl:o.client||''}:0; }),
-      ev:currentEvent,evend:eventEnd
+      ev:currentEvent,evend:eventEnd,evp:evPatternIdx
     }));
   }catch(e){}
 }
@@ -2349,13 +2361,12 @@ function load(){
     bubbleGrid=new Array(COLS*ROWS).fill(null);
     coins=def(s.coins,80);
     eu=clamp(def(s.eu,0),0,EU_COSTS.length); E_MAX=30+eu*5;
-    whStage=clamp(def(s.ws,0),0,2); prOwned=!!s.pr; turboUntil=def(s.tb,0);
+    prOwned=!!s.pr; turboUntil=def(s.tb,0);
     directorName=def(s.dn,'Директор'); directorAvatar=clamp(def(s.da,0),0,AVATARS.length-1);
     musicOn=def(s.mon,true); sfxOn=def(s.son,true);
     volMusic=clamp(def(s.vm,.5),0,1); volSfx=clamp(def(s.vs,1),0,1);
-    allDoneShown=!!s.ad;
     cards=s.cd||{}; pending=s.pd||[]; pity=s.py||{}; prized=s.pz||{};
-    currentEvent=s.ev||null; eventEnd=s.evend||0;
+    currentEvent=s.ev||null; eventEnd=s.evend||0; evPatternIdx=def(s.evp,0);
     var un=(s.un&&s.un.length)?s.un.slice():['oil'];
     if(un.indexOf('oil')<0) un.push('oil');
     unlocked=un.filter(function(id){ return CHAIN[id]; });
@@ -2385,24 +2396,24 @@ var mqMobile=window.matchMedia?window.matchMedia('(max-width:640px)'):null;
 function placeControls(){
   var mobile=mqMobile&&mqMobile.matches;
   var sw=$('#shift-wrap');
-  if(mobile){ $('#stats').appendChild(sw); }
-  else { $('#gamezone').appendChild(sw); }
+  if(mobile){
+    $('#stats').appendChild(sw);
+  } else {
+    $('#gamezone').appendChild(sw);
+  }
   requestAnimationFrame(sizeBoard);
 }
 if(mqMobile){
-  var onMq=function(){ placeControls(); applyWarehouseGeom(); rebuildCellEls(); rebuildGrid(); sizeBoard(); };
-  if(mqMobile.addEventListener) mqMobile.addEventListener('change',onMq);
-  else if(mqMobile.addListener) mqMobile.addListener(onMq);
+  if(mqMobile.addEventListener) mqMobile.addEventListener('change',placeControls);
+  else if(mqMobile.addListener) mqMobile.addListener(placeControls);
 }
 var initDone=false;
 function init(){
   if(initDone) return; initDone=true;
   try{ var ps=JSON.parse(localStorage.getItem(SKEY)||'null');
-    if(ps&&ps.v===4){
+    if(ps&&ps.v===4){ COLS=ps.cols||6; ROWS=ps.rows||6;
       musicOn=def(ps.mon,true); sfxOn=def(ps.son,true); volMusic=clamp(def(ps.vm,.5),0,1); volSfx=clamp(def(ps.vs,1),0,1);
-      directorName=def(ps.dn,'Директор'); directorAvatar=clamp(def(ps.da,0),0,AVATARS.length-1);
-      allDoneShown=!!ps.ad; } }catch(e){}
-  applyWarehouseGeom();
+      directorName=def(ps.dn,'Директор'); directorAvatar=clamp(def(ps.da,0),0,AVATARS.length-1); } }catch(e){}
   grid=new Array(COLS*ROWS).fill(null);
   bubbleGrid=new Array(COLS*ROWS).fill(null);
   rebuildCellEls(); sizeBoard();
@@ -2469,8 +2480,6 @@ $('#btn-profile').onclick=function(e){ e.stopPropagation(); openProfile(); };
 $('#profile-close').onclick=closeProfile;
 $('#profile-save').onclick=saveDirectorName;
 $('#profile-ov').addEventListener('click',function(e){ if(e.target===this) closeProfile(); });
-$('#alldone-close').onclick=function(){ $('#alldone-ov').classList.remove('open'); };
-$('#alldone-ov').addEventListener('click',function(e){ if(e.target===this) this.classList.remove('open'); });
 $('#btn-sound').onclick=function(e){ e.stopPropagation(); $('#sound-pop').classList.toggle('open'); updSoundIcon(); };
 $('#snd-music-on').onchange=function(){ musicOn=this.checked; if(musicOn) tryPlayMusic(); else if(BGM) BGM.pause(); updSoundIcon(); save(); };
 $('#snd-music-vol').oninput=function(){ volMusic=this.value/100; if(BGM) BGM.volume=volMusic; save(); };
