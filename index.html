@@ -87,6 +87,7 @@ body.lowfx .order-card,body.lowfx .order-card.fresh,body.lowfx .order-card.expre
 body.lowfx .item.pop .in,body.lowfx .item.dropin .in{animation:none}
 body.lowfx .chip.bump{animation:none}
 body.lowfx #factory-svg .smk,body.lowfx #factory-svg .win,body.lowfx #factory-svg .cloud,body.lowfx #factory-svg .truck{animation:none}
+body.lowfx .smoke-stack i{animation:none;opacity:0}
 #bg{position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;overflow:hidden}
 #bg .tex{position:absolute;top:0;left:0;right:0;bottom:0;background:
   repeating-linear-gradient(45deg, rgba(1,80,61,.04) 0 2px, transparent 2px 26px),
@@ -150,24 +151,51 @@ html[data-theme="night"] #factory-svg .truck{filter:drop-shadow(0 0 6px rgba(12,
   96%{transform:translateX(0) scaleX(1)}
   100%{transform:translateX(0) scaleX(1)}
 }
+/* ═══ ЭКРАН ЗАГРУЗКИ: рамка картинки + дым из трубы ═══ */
+#loading-screen{position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;background:var(--bg);pointer-events:auto}
+.lf-box{position:relative;width:150px;height:150px;margin-bottom:26px}
+.lf-ico{display:grid;place-items:center;width:100%;height:100%;font-size:96px;overflow:hidden}
+.lf-ico img{width:100%;height:100%;object-fit:contain;display:block}
+.smoke-stack{position:absolute;left:var(--smoke-x,34%);top:var(--smoke-y,27%);width:0;height:0;pointer-events:none}
+.smoke-stack i{position:absolute;left:0;bottom:0;width:12px;height:12px;border-radius:50%;
+  background:rgba(255,255,255,.85);filter:blur(1.5px);opacity:0;animation:puff 2.4s linear infinite}
+.smoke-stack i:nth-child(2){width:16px;height:16px;animation-delay:.8s;background:rgba(255,255,255,.65)}
+.smoke-stack i:nth-child(3){width:20px;height:20px;animation-delay:1.6s;background:rgba(240,244,248,.75)}
+@keyframes puff{
+  0%{transform:translate(-50%,0) scale(.5);opacity:0}
+  15%{opacity:.8}
+  60%{opacity:.45}
+  100%{transform:translate(calc(-50% + 26px),-70px) scale(1.6);opacity:0}
+}
+.lf-barwrap{width:280px;height:24px;background:var(--panel);border:3px solid var(--brand2);border-radius:999px;overflow:hidden;box-shadow:4px 4px 0 var(--shadowc)}
+#loading-bar{width:0%;height:100%;background:linear-gradient(90deg,var(--amber),var(--amber2));transition:width .3s ease-out}
+#loading-percent{margin-top:12px;font-family:var(--disp);font-weight:700;font-size:18px;color:var(--head)}
+/* ═══ КАРКАС ═══ */
 #app{position:relative;z-index:1;height:100vh;height:100dvh;display:flex;flex-direction:column}
+/* ═══ ШАПКА (ЭТАЛОН): десктоп — одна строка ═══ */
 #topbar{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:8px 12px;
   background:var(--card);border-bottom:2px solid var(--brand);
   box-shadow:0 4px 16px var(--shadowc), 0 2px 4px var(--shadowc2)}
-.tb-right{display:contents}
-.tb-row1{display:contents}
-#btn-profile{order:0;width:40px;height:40px;padding:0;overflow:hidden;font-size:22px;flex:0 0 auto}
-#btn-profile img{width:100%;height:100%;object-fit:cover;border-radius:8px}
-.brand{order:1;display:flex;align-items:center;gap:9px;min-width:0}
+.avatar-btn{width:40px;height:40px;padding:0;overflow:hidden;font-size:22px;flex:0 0 auto}
+.avatar-btn img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+.tb-mid{flex:1;display:flex;align-items:center;gap:12px;min-width:0}
+.tb-namerow{display:flex;align-items:center;gap:10px;min-width:0}
+.dir-name{font-family:var(--disp);font-weight:700;font-size:12px;color:var(--head);
+  max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.brand{display:flex;align-items:center;gap:9px;min-width:0;flex:0 0 auto}
 .brand .bg-gear{font-size:26px;display:inline-block;color:var(--brand);animation:spin 9s linear infinite}
-.brand b{font-family:var(--disp);font-weight:900;font-size:16px;letter-spacing:.04em;color:var(--head);display:block;line-height:1}
-.brand i{font-style:normal;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--mut)}
-.mob-factory{display:none;position:relative}
+.brand-t b{font-family:var(--disp);font-weight:900;font-size:16px;letter-spacing:.04em;color:var(--head);display:block;line-height:1}
+.brand-t i{font-style:normal;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--mut);display:block}
+.stats{margin-left:auto;display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.factory-btn{display:none;position:relative}
 #factory-ev-badge{position:absolute;top:-6px;right:-6px;background:var(--violet);color:#fff;
   font-family:var(--disp);font-weight:700;font-size:8px;border-radius:999px;padding:2px 6px;display:none;
   box-shadow:1px 1px 0 rgba(0,0,0,.25);z-index:2}
-.stats{order:2;margin-left:auto;display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
-#btn-sound{order:3}
+.tb-sndcol{display:flex;flex-direction:row;gap:8px;align-items:center;flex:0 0 auto}
+.chains-btn{display:none}
+.fab-ico{display:grid;place-items:center;width:100%;height:100%}
+.fab-ico img{width:100%;height:100%;object-fit:contain;display:block}
 .chip{display:flex;align-items:center;gap:5px;border:2px solid var(--line2);border-radius:999px;
   padding:4px 11px;font-size:13px;color:var(--mut);white-space:nowrap;
   box-shadow:4px 4px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.08);
@@ -190,7 +218,7 @@ html[data-theme="night"] #factory-svg .truck{filter:drop-shadow(0 0 6px rgba(12,
   font-size:15px;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;justify-content:center;
   box-shadow:4px 4px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.08)}
 .icobtn:hover{border-color:var(--amber2);transform:translateY(-2px);box-shadow:5px 5px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.08)}
-#sound-pop{position:fixed;top:56px;right:12px;z-index:95;width:230px;background:var(--card);
+#sound-pop{position:fixed;top:56px;right:12px;z-index:95;width:min(230px,calc(100vw - 24px));background:var(--card);
   border:2px solid var(--brand);border-radius:12px;padding:10px 12px;display:none;
   box-shadow:6px 6px 0 var(--shadowc)}
 #sound-pop.open{display:block;animation:popin .18s cubic-bezier(.2,1.2,.4,1)}
@@ -206,7 +234,6 @@ html[data-theme="night"] #factory-svg .truck{filter:drop-shadow(0 0 6px rgba(12,
 .fly-card img{width:80%;height:80%;object-fit:contain}
 .shift-wrap{display:flex;flex-direction:row;gap:10px;align-items:center;justify-content:center;padding:2px 0}
 .shift-label{font-family:var(--disp);font-weight:700;font-size:9px;letter-spacing:.16em;color:var(--mut);text-transform:uppercase}
-.tool-btn{display:none}
 .shift-btn{position:relative;width:96px;height:46px;border-radius:999px;cursor:pointer;padding:0;
   border:3px solid var(--line2);overflow:hidden;transition:background .35s;
   box-shadow:5px 5px 0 var(--shadowc), inset 0 2px 6px rgba(0,0,0,.25), inset 0 -2px 4px rgba(0,0,0,.08);
@@ -249,8 +276,7 @@ html[data-theme="night"] .knob::before{opacity:1}
 .lvl-num{position:relative;font-family:var(--disp);font-weight:900;font-size:13px;color:var(--ink)}
 .lvl-badge.lvlup{animation:lvlpop .7s cubic-bezier(.3,1.6,.5,1)}
 @keyframes lvlpop{0%{transform:scale(1)}35%{transform:scale(1.45);box-shadow:0 0 26px rgba(255,148,64,.7)}100%{transform:scale(1)}}
-.lvl-tip{display:none;position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%);width:262px;
-  max-width:calc(100vw - 16px);
+.lvl-tip{display:none;position:absolute;top:calc(100% + 10px);left:0;width:min(262px,calc(100vw - 16px));
   background:var(--bg2);border:1px solid var(--amber2);color:var(--ink);font:400 11px/1.5 var(--body);
   padding:9px 11px;border-radius:10px;pointer-events:none;white-space:normal;text-align:left;z-index:95}
 .lvl-badge:hover .lvl-tip{display:block}
@@ -260,9 +286,10 @@ html[data-theme="night"] .knob::before{opacity:1}
   font-family:var(--disp);font-weight:700;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase}
 #layout{flex:1;display:flex;flex-direction:column;min-height:0;gap:10px;padding:10px}
 #gamezone{order:1;flex:1 1 auto;min-height:0;min-width:0;display:flex;flex-direction:column;align-items:center;gap:9px;overflow:hidden}
-#lines{order:2;flex:0 0 auto;display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;padding:2px}
-#orders{order:3;position:relative}
+#lines{order:2;flex:0 0 auto;display:flex;flex-direction:column;gap:8px;overflow-x:auto;overflow-y:hidden;padding:2px}
 .lines-head{display:none}
+.lines-sub{display:none;font-family:var(--disp);font-weight:700;font-size:10px;color:var(--mut);margin:0 0 2px 2px}
+#orders{order:3;position:relative}
 .orders-side{display:none}
 #board-wrap{flex:1;width:100%;min-height:0;display:grid;place-items:center;overflow:hidden}
 .line{display:flex;align-items:center;gap:8px;min-width:200px;min-height:60px;background:var(--surf);
@@ -280,6 +307,17 @@ html[data-theme="night"] .knob::before{opacity:1}
 .ln-btn{flex:0 0 auto;font-family:var(--disp);font-weight:700;font-size:9px;color:#fff;background:var(--amber2);
   border:none;border-radius:999px;padding:5px 9px;cursor:pointer;box-shadow:3px 3px 0 var(--shadowc)}
 .ln-btn .coin{display:inline-flex;align-items:center;gap:3px}
+/* карточка события */
+.ev-card{display:flex;gap:8px;align-items:center;background:var(--surf);border:2px solid var(--violet);
+  border-radius:12px;padding:8px;box-shadow:4px 4px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.06)}
+.ev-img{position:relative;width:52px;height:52px;flex:0 0 auto;border-radius:10px;overflow:hidden;
+  background:var(--surf2);border:1px solid var(--line);display:grid;place-items:center;font-size:26px}
+.ev-img img{width:100%;height:100%;object-fit:contain;display:block}
+.ev-cd{position:absolute;top:-6px;right:-6px;background:var(--violet);color:#fff;font-family:var(--disp);
+  font-weight:700;font-size:8px;border-radius:999px;padding:2px 6px;box-shadow:1px 1px 0 rgba(0,0,0,.25)}
+.ev-info{flex:1;min-width:0}
+.ev-info b{display:block;font-size:11px;color:var(--ink);line-height:1.25}
+.ev-info .ev-left{font-size:10px;color:var(--violet);font-family:var(--disp);font-weight:700}
 .tut-btn{display:none;font-family:var(--disp);font-weight:700;font-size:10px;color:#fff;background:var(--amber2);
   border:none;border-radius:999px;padding:7px 14px;cursor:pointer;box-shadow:3px 3px 0 var(--shadowc);
   align-self:flex-start;margin:6px 0 2px}
@@ -387,9 +425,6 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 .od-row .o-art{width:48px;height:48px;font-size:32px}
 .od-row b{display:block;font-family:var(--disp);font-weight:700;font-size:12px;color:var(--ink)}
 .od-row span{font-size:11px;color:var(--mut)}
-.od-row.ev-row{background:var(--surf2);border-radius:10px;padding:8px 10px}
-.od-row .ev-time{flex:0 0 auto;font-family:var(--disp);font-weight:700;font-size:11px;color:var(--violet);background:var(--hlbg);padding:4px 9px;border-radius:999px}
-.od-row .ev-ico{width:22px;height:22px;object-fit:contain;display:block}
 .od-hint{font-size:10.5px;color:var(--dim);line-height:1.45}
 #bureau-back{position:fixed;inset:0;background:rgba(8,18,13,.55);z-index:140;opacity:0;pointer-events:none;transition:.25s}
 #bureau-back.open{opacity:1;pointer-events:auto}
@@ -476,12 +511,11 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 @keyframes freshglow{0%,55%{box-shadow:0 0 0 3px var(--acc),6px 6px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.06)}100%{box-shadow:6px 6px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.06)}}
 .order-card.express{border-color:var(--violet);border-left-color:var(--violet);box-shadow:0 0 14px rgba(122,92,255,.25), 5px 5px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.06)}
 .order-card.express.fresh{animation:cardin .4s ease, xpulse 1.2s ease 2}
-@keyframes xpulse{0%{box-shadow:0 0 0 0 rgba(122,92,255,.5), 5px 5px 0 var(--shadowc)}50%{box-shadow:0 0 0 12px rgba(122,92,255,0), 6px 6px 0 var(--shadowc)}100%{box-shadow:0 0 0 0 rgba(122,92,255,0), 5px 5px 0 var(--shadowc)}}
+@keyframes xpulse{0%{box-shadow:0 0 0 0 rgba(122,92,255,.5), 5px 5px 0 var(--shadowc)}50%{box-shadow:0 0 0 12px rgba(122,92,255,0), 6px 6px 0 var(--shadowc)}100%{box-shadow:0 0 0 0 rgba(122,92,255,0), 5px 5px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.06)}}
 .order-card.empty{align-items:center;justify-content:center;min-height:74px;color:var(--mut);font-size:12px;cursor:default}
 .order-card.empty .g{display:inline-block;animation:spin 2.2s linear infinite}
 .o-row{display:flex;align-items:center;gap:9px}
 .o-art{width:44px;height:44px;flex:0 0 auto;display:grid;place-items:center;font-size:29px;border-radius:10px;background:var(--surf2);border:1px solid var(--line);position:relative;box-shadow:2px 2px 0 var(--shadowc)}
-.o-price{display:none}
 .o-info{min-width:0;flex:1;background:linear-gradient(var(--tint),var(--tint));border-radius:8px;padding:3px 8px}
 .o-info b{display:block;font-family:var(--disp);font-weight:700;font-size:10.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink)}
 .o-info span{font-size:10.5px;color:var(--mut)}
@@ -498,6 +532,7 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 .o-qwrap{display:flex;align-items:center;gap:4px}
 .o-qty2{display:none}
 .o-side-price{display:none}
+.o-side-price .coin{display:inline-flex;align-items:center;gap:3px}
 .o-timer{font-family:var(--disp);font-weight:700;font-size:11px;color:var(--violet);white-space:nowrap}
 .o-timer.hurry{color:var(--red);animation:blink .8s steps(2) infinite}
 .o-pips{display:flex;gap:4px}
@@ -529,6 +564,7 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
 .tut-img{width:100%;aspect-ratio:2/1;border-radius:12px;overflow:hidden;border:2px solid var(--line);
   background:var(--surf2);margin:0 0 8px;display:none}
 .tut-img img{width:100%;height:100%;object-fit:cover;display:block}
+.tut-img.start{aspect-ratio:auto;border-color:var(--violet)}
 .tut-head{display:flex;align-items:center;gap:8px;margin:4px 0 6px}
 .tut-head .tut-gear{font-size:20px;color:var(--brand);animation:spin 6s linear infinite}
 .tut-head b{font-family:var(--disp);font-weight:700;font-size:14px;color:var(--head)}
@@ -588,7 +624,7 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
   86%{opacity:1}100%{opacity:0;transform:translate(-50%,-58%) rotate(-8deg) scale(1)}}
 @media (orientation:landscape),(min-width:820px){
   #layout{flex-direction:row;padding:12px}
-  #lines{order:0;flex:0 0 230px;flex-direction:column;overflow:visible;padding-bottom:110px}
+  #lines{order:0;flex:0 0 230px;flex-direction:column;overflow:visible;padding-bottom:8px}
   .lines-head{display:block}
   .lines-head h3{font-family:var(--disp);font-weight:900;font-size:10px;letter-spacing:.12em;color:var(--head);text-transform:uppercase;margin:0 0 2px 2px}
   .line{min-width:0}
@@ -603,20 +639,23 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
   .o-expand{display:inline-flex}
   .o-foot .o-pips{position:absolute;right:8px;bottom:8px}
 }
+/* ═══ МОБИЛЬНАЯ ШАПКА (ЭТАЛОН, НЕ МЕНЯТЬ) ═══
+   ряд1: [аватар] [имя + ЦЕХ·7]            [линии] [🔊]
+   ряд2: [аватар] [уровень/монеты/⚡/смена] [линии] [❓] */
 @media (max-width:640px){
-  #topbar{display:grid;grid-template-columns:auto 1fr auto auto;grid-template-rows:auto auto;gap:4px 8px;padding:6px 8px}
-  #btn-profile{grid-column:1;grid-row:1/3;width:48px;height:48px;font-size:26px;align-self:center}
-  .tb-right{grid-column:2;grid-row:1/3;display:flex;flex-direction:column;gap:4px;justify-content:center}
-  .tb-row1{display:flex;align-items:center;gap:6px}
-  .tb-row1 .brand{flex:1;min-width:0}
-  .tb-row1 .brand i{display:none}
-  .tb-row1 .brand b{font-size:14px}
-  .tb-row1 .bg-gear{font-size:18px}
-  .mob-factory{display:block;grid-column:3;grid-row:1/3;width:48px;height:48px;font-size:22px;align-self:center}
-  .tb-col{grid-column:4;grid-row:1/3;display:flex;flex-direction:column;gap:4px;align-self:center}
+  #topbar{display:grid;grid-template-columns:auto 1fr auto auto;grid-template-rows:auto auto;gap:4px 8px;align-items:center;padding:6px 8px}
+  .avatar-btn{grid-column:1;grid-row:1/3;width:52px;height:52px;font-size:26px}
+  .tb-mid{grid-column:2;grid-row:1/3;flex:none;display:flex;flex-direction:column;gap:4px;min-width:0;justify-content:center}
+  .tb-namerow{flex-direction:row;align-items:center;gap:8px}
+  .dir-name{max-width:42vw;font-size:12px}
+  .brand-t i{display:none}
+  .brand-t b{font-size:14px}
+  .brand .bg-gear{font-size:18px}
+  .stats{margin-left:0;justify-content:flex-start;gap:5px}
+  .factory-btn{grid-column:3;grid-row:1/3;display:flex;width:52px;height:52px;font-size:24px}
+  .tb-sndcol{grid-column:4;grid-row:1/3;flex-direction:column;gap:4px;align-items:center;justify-content:center}
   #btn-sound{width:30px;height:30px;font-size:13px}
-  .tool-btn{display:block;width:30px;height:30px;font-size:12px}
-  .stats{grid-column:2;grid-row:2;margin-left:0;justify-content:flex-start;gap:5px}
+  .chains-btn{display:flex;width:30px;height:30px;font-size:12px}
   #chip-energy-up{display:none}
   #emax{display:none}
   .chip{padding:3px 8px;font-size:11px;box-shadow:3px 3px 0 var(--shadowc), inset 0 -1px 3px rgba(0,0,0,.08)}
@@ -630,16 +669,18 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
   .shift-btn::before{right:5px;top:5px;width:12px;height:5px;box-shadow:-5px 2px 0 1px #fff, 6px 2px 0 0 #eef4ff, 2px -3px 0 1px #fff}
   .shift-btn::after{left:3px;top:2px;width:26px;bottom:2px}
   #lines{display:none}
+  .lines-sub{display:block}
   #chain-help{display:none!important}
   .hint{display:none}
   #layout{gap:6px;padding:6px}
   #gamezone{gap:6px}
-  #plants{gap:6px}
+  #plants{gap:6px;margin-bottom:12px}
   .plant{width:46px;height:46px;border-width:2px;box-shadow:4px 4px 0 var(--shadowc), inset 0 -1px 3px rgba(0,0,0,.08)}
   .p-art{width:32px;height:32px;font-size:20px}
   .p-lock{font-size:10px;bottom:-3px;right:-3px}
   .p-wh{top:-6px;left:-6px;font-size:7px;padding:2px 5px}
   .p-badge{top:-6px;right:-6px;font-size:7px;padding:2px 5px}
+  .p-tip{position:fixed;bottom:110px;top:auto;left:50%;transform:translateX(-50%);width:min(320px,90vw)}
   #orders{flex-direction:row;align-items:stretch;gap:6px;padding:6px;max-height:none;box-shadow:4px 4px 0 var(--shadowc), inset 0 -1px 3px rgba(0,0,0,.06)}
   .orders-side{display:flex;flex-direction:column;gap:6px;align-items:center;flex:0 0 auto}
   #btn-orders-icon{display:block;width:40px;height:40px;font-size:17px;border-radius:12px}
@@ -655,12 +696,10 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
   .o-info{display:none}
   .o-qty{display:none}
   .o-art{width:52px;height:52px;font-size:30px}
-  .o-price{display:none}
   .o-side{display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin-left:2px;padding-right:2px}
   .o-side .o-qwrap{gap:3px}
   .o-qty2{display:block;font-family:var(--disp);font-weight:900;font-size:11px;color:var(--acc,var(--brand))}
   .o-side-price{display:block;font-family:var(--disp);font-weight:700;font-size:9px;color:var(--amber2);white-space:nowrap}
-  .o-side-price .coin{display:inline-flex;align-items:center;gap:2px}
   .o-timer-m{font-size:8px}
   .o-side .o-pips i{width:6px;height:6px}
   .o-foot{display:none}
@@ -716,29 +755,15 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
     </defs>
     <rect class="sky" x="0" y="0" width="1440" height="560"/>
     <g class="neonwrap">
-      <g class="cloud c1">
-        <path d="M150,170 q22,-16 44,0 q22,16 44,0 q22,-16 44,0"/>
-        <path d="M210,196 q22,-14 44,0 q22,14 44,0"/>
-      </g>
-      <g class="cloud c2">
-        <path d="M520,140 q24,-16 48,0 q24,16 48,0 q24,-16 48,0"/>
-        <path d="M600,168 q24,-14 48,0 q24,14 48,0"/>
-      </g>
-      <g class="cloud c3">
-        <path d="M980,160 q24,-16 48,0 q24,16 48,0 q24,-16 48,0"/>
-        <path d="M1060,188 q24,-14 48,0 q24,14 48,0"/>
-      </g>
+      <g class="cloud c1"><path d="M150,170 q22,-16 44,0 q22,16 44,0 q22,-16 44,0"/><path d="M210,196 q22,-14 44,0 q22,14 44,0"/></g>
+      <g class="cloud c2"><path d="M520,140 q24,-16 48,0 q24,16 48,0 q24,-16 48,0"/><path d="M600,168 q24,-14 48,0 q24,14 48,0"/></g>
+      <g class="cloud c3"><path d="M980,160 q24,-16 48,0 q24,16 48,0 q24,-16 48,0"/><path d="M1060,188 q24,-14 48,0 q24,14 48,0"/></g>
       <g class="neon">
-        <path d="M200,350 V250 h26 V350"/>
-        <line x1="200" y1="280" x2="226" y2="280"/><line x1="200" y1="310" x2="226" y2="310"/>
-        <path d="M350,330 V270 h22 V330"/>
-        <line x1="350" y1="300" x2="372" y2="300"/>
-        <path d="M730,310 V230 h30 V310"/>
-        <line x1="730" y1="260" x2="760" y2="260"/><line x1="730" y1="290" x2="760" y2="290"/>
-        <path d="M884,390 V255 h24 V390"/>
-        <line x1="884" y1="285" x2="908" y2="285"/><line x1="884" y1="315" x2="908" y2="315"/><line x1="884" y1="345" x2="908" y2="345"/>
-        <path d="M1180,430 V300 h28 V430"/>
-        <line x1="1180" y1="330" x2="1208" y2="330"/><line x1="1180" y1="360" x2="1208" y2="360"/><line x1="1180" y1="390" x2="1208" y2="390"/>
+        <path d="M200,350 V250 h26 V350"/><line x1="200" y1="280" x2="226" y2="280"/><line x1="200" y1="310" x2="226" y2="310"/>
+        <path d="M350,330 V270 h22 V330"/><line x1="350" y1="300" x2="372" y2="300"/>
+        <path d="M730,310 V230 h30 V310"/><line x1="730" y1="260" x2="760" y2="260"/><line x1="730" y1="290" x2="760" y2="290"/>
+        <path d="M884,390 V255 h24 V390"/><line x1="884" y1="285" x2="908" y2="285"/><line x1="884" y1="315" x2="908" y2="315"/><line x1="884" y1="345" x2="908" y2="345"/>
+        <path d="M1180,430 V300 h28 V430"/><line x1="1180" y1="330" x2="1208" y2="330"/><line x1="1180" y1="360" x2="1208" y2="360"/><line x1="1180" y1="390" x2="1208" y2="390"/>
       </g>
       <g class="smokeg" transform="translate(213,250)"><circle class="smk" r="8"/><circle class="smk s2" r="10"/><circle class="smk s3" r="12"/></g>
       <g class="smokeg" transform="translate(361,270)"><circle class="smk" r="7"/><circle class="smk s2" r="9"/><circle class="smk s3" r="11"/></g>
@@ -746,66 +771,24 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
       <g class="smokeg" transform="translate(896,255)"><circle class="smk" r="8"/><circle class="smk s2" r="10"/><circle class="smk s3" r="12"/></g>
       <g class="smokeg" transform="translate(1194,300)"><circle class="smk" r="8"/><circle class="smk s2" r="10"/><circle class="smk s3" r="12"/></g>
       <g class="neon">
-        <path d="M430,320 V240 q0,-34 65,-34 q65,0 65,34 V320"/>
-        <line x1="430" y1="262" x2="560" y2="262"/><line x1="430" y1="290" x2="560" y2="290"/>
+        <path d="M430,320 V240 q0,-34 65,-34 q65,0 65,34 V320"/><line x1="430" y1="262" x2="560" y2="262"/><line x1="430" y1="290" x2="560" y2="290"/>
         <line x1="445" y1="320" x2="445" y2="520"/><line x1="545" y1="320" x2="545" y2="520"/>
+        <path d="M90,470 V400 q0,-16 15,-16 q15,0 15,16 V470"/><line x1="120" y1="430" x2="140" y2="430"/>
+        <path d="M140,520 V350 h150 V520"/><path d="M205,520 v-34 h20 v34"/>
       </g>
-      <g class="neon">
-        <path d="M90,470 V400 q0,-16 15,-16 q15,0 15,16 V470"/>
-        <line x1="120" y1="430" x2="140" y2="430"/>
-        <path d="M140,520 V350 h150 V520"/>
-        <path d="M205,520 v-34 h20 v34"/>
-      </g>
-      <g class="wins">
-        <rect class="win" x="158" y="368" width="26" height="20"/><rect class="win" x="234" y="368" width="26" height="20"/>
-        <rect class="win" x="158" y="402" width="26" height="20"/><rect class="win" x="234" y="402" width="26" height="20"/>
-      </g>
-      <g class="neon">
-        <path d="M320,520 V330 h150 V520"/>
-        <path d="M385,520 v-34 h20 v34"/>
-      </g>
-      <g class="wins">
-        <rect class="win" x="338" y="350" width="24" height="18"/><rect class="win" x="376" y="350" width="24" height="18"/><rect class="win" x="414" y="350" width="24" height="18"/>
-        <rect class="win" x="338" y="384" width="24" height="18"/><rect class="win" x="414" y="384" width="24" height="18"/>
-      </g>
-      <g class="neon">
-        <path d="M500,520 V350 h160 V520"/>
-        <path d="M570,520 v-36 h20 v36"/>
-      </g>
-      <g class="wins">
-        <rect class="win" x="530" y="370" width="24" height="18"/><rect class="win" x="620" y="370" width="24" height="18"/>
-      </g>
-      <g class="neon">
-        <path d="M700,520 V310 h100 V520"/>
-        <path d="M740,520 v-34 h20 v34"/>
-      </g>
-      <g class="wins">
-        <rect class="win" x="716" y="330" width="18" height="16"/><rect class="win" x="748" y="330" width="18" height="16"/>
-        <rect class="win" x="716" y="362" width="18" height="16"/><rect class="win" x="748" y="362" width="18" height="16"/>
-        <rect class="win" x="716" y="394" width="18" height="16"/><rect class="win" x="748" y="394" width="18" height="16"/>
-      </g>
-      <g class="neon">
-        <path d="M840,520 V390 h140 V520"/>
-        <path d="M900,520 v-32 h20 v32"/>
-      </g>
-      <g class="wins">
-        <rect class="win" x="858" y="408" width="24" height="18"/><rect class="win" x="934" y="408" width="24" height="18"/>
-      </g>
-      <g class="neon">
-        <path d="M1000,340 h70 v90 l-35,40 l-35,-40 Z"/>
-        <line x1="1000" y1="368" x2="1070" y2="368"/>
-        <line x1="1012" y1="470" x2="1012" y2="520"/><line x1="1058" y1="470" x2="1058" y2="520"/>
-      </g>
-      <g class="neon">
-        <path d="M1100,520 V430 h220 V520"/>
-        <path d="M1200,520 v-34 h20 v34"/>
-      </g>
-      <g class="wins">
-        <rect class="win" x="1120" y="448" width="26" height="18"/><rect class="win" x="1160" y="448" width="26" height="18"/><rect class="win" x="1240" y="448" width="26" height="18"/><rect class="win" x="1280" y="448" width="26" height="18"/>
-      </g>
-      <g class="neon">
-        <path d="M470,520 v-26 h18 v26"/><path d="M494,520 v-26 h18 v26"/><path d="M518,520 v-26 h18 v26"/>
-      </g>
+      <g class="wins"><rect class="win" x="158" y="368" width="26" height="20"/><rect class="win" x="234" y="368" width="26" height="20"/><rect class="win" x="158" y="402" width="26" height="20"/><rect class="win" x="234" y="402" width="26" height="20"/></g>
+      <g class="neon"><path d="M320,520 V330 h150 V520"/><path d="M385,520 v-34 h20 v34"/></g>
+      <g class="wins"><rect class="win" x="338" y="350" width="24" height="18"/><rect class="win" x="376" y="350" width="24" height="18"/><rect class="win" x="414" y="350" width="24" height="18"/><rect class="win" x="338" y="384" width="24" height="18"/><rect class="win" x="414" y="384" width="24" height="18"/></g>
+      <g class="neon"><path d="M500,520 V350 h160 V520"/><path d="M570,520 v-36 h20 v36"/></g>
+      <g class="wins"><rect class="win" x="530" y="370" width="24" height="18"/><rect class="win" x="620" y="370" width="24" height="18"/></g>
+      <g class="neon"><path d="M700,520 V310 h100 V520"/><path d="M740,520 v-34 h20 v34"/></g>
+      <g class="wins"><rect class="win" x="716" y="330" width="18" height="16"/><rect class="win" x="748" y="330" width="18" height="16"/><rect class="win" x="716" y="362" width="18" height="16"/><rect class="win" x="748" y="362" width="18" height="16"/><rect class="win" x="716" y="394" width="18" height="16"/><rect class="win" x="748" y="394" width="18" height="16"/></g>
+      <g class="neon"><path d="M840,520 V390 h140 V520"/><path d="M900,520 v-32 h20 v32"/></g>
+      <g class="wins"><rect class="win" x="858" y="408" width="24" height="18"/><rect class="win" x="934" y="408" width="24" height="18"/></g>
+      <g class="neon"><path d="M1000,340 h70 v90 l-35,40 l-35,-40 Z"/><line x1="1000" y1="368" x2="1070" y2="368"/><line x1="1012" y1="470" x2="1012" y2="520"/><line x1="1058" y1="470" x2="1058" y2="520"/></g>
+      <g class="neon"><path d="M1100,520 V430 h220 V520"/><path d="M1200,520 v-34 h20 v34"/></g>
+      <g class="wins"><rect class="win" x="1120" y="448" width="26" height="18"/><rect class="win" x="1160" y="448" width="26" height="18"/><rect class="win" x="1240" y="448" width="26" height="18"/><rect class="win" x="1280" y="448" width="26" height="18"/></g>
+      <g class="neon"><path d="M470,520 v-26 h18 v26"/><path d="M494,520 v-26 h18 v26"/><path d="M518,520 v-26 h18 v26"/></g>
       <g class="tree" transform="translate(120,520)"><line class="trunk" x1="0" y1="0" x2="0" y2="-20"/><circle class="crown" cx="0" cy="-36" r="18"/><circle class="crown2" cx="-12" cy="-26" r="11"/><circle class="crown2" cx="12" cy="-26" r="11"/></g>
       <g class="tree" transform="translate(300,520)"><line class="trunk" x1="0" y1="0" x2="0" y2="-20"/><circle class="crown" cx="0" cy="-36" r="18"/><circle class="crown2" cx="-12" cy="-26" r="11"/><circle class="crown2" cx="12" cy="-26" r="11"/></g>
       <g class="tree" transform="translate(480,520)"><line class="trunk" x1="0" y1="0" x2="0" y2="-20"/><circle class="crown" cx="0" cy="-36" r="18"/><circle class="crown2" cx="-12" cy="-26" r="11"/><circle class="crown2" cx="12" cy="-26" r="11"/></g>
@@ -820,24 +803,22 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
   </svg>
   <div class="hazard hz-t"></div><div class="hazard hz-b"></div>
   <div class="gear gr1">⚙</div><div class="gear gr2">⚙</div>
-  <div id="loading-screen" style="position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);pointer-events:auto;" onclick="tryPlayMusic();">
-    <div style="position:relative;width:280px;height:280px;margin-bottom:30px;">
-      <div class="gear" style="top:-46px;left:-54px;font-size:200px;animation:spin 42s linear infinite;color:var(--line2);opacity:var(--gearop);">⚙</div>
-      <div class="gear" style="bottom:-64px;right:-46px;font-size:260px;animation-duration:58s;animation-direction:reverse;color:var(--line2);opacity:var(--gearop);">⚙</div>
-      <div id="loading-factory" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:140px;height:140px;font-size:90px;display:grid;place-items:center;">🏭</div>
+  <div id="loading-screen" onclick="tryPlayMusic();">
+    <div class="lf-box" style="--smoke-x:34%;--smoke-y:27%;">
+      <span class="lf-ico" id="loading-factory-ico">🏭</span>
+      <div class="smoke-stack" aria-hidden="true"><i></i><i></i><i></i></div>
     </div>
-    <div style="width:280px;height:24px;background:var(--panel);border:3px solid var(--brand2);border-radius:999px;overflow:hidden;box-shadow:4px 4px 0 var(--shadowc);">
-      <div id="loading-bar" style="width:0%;height:100%;background:linear-gradient(90deg,var(--amber),var(--amber2));transition:width .3s ease-out;"></div>
-    </div>
-    <div id="loading-percent" style="margin-top:12px;font-family:var(--disp);font-weight:700;font-size:18px;color:var(--head);">0%</div>
+    <div class="lf-barwrap"><div id="loading-bar"></div></div>
+    <div id="loading-percent">0%</div>
   </div>
 </div>
 <div id="app">
   <header id="topbar">
-    <button class="icobtn" id="btn-profile" title="Профиль директора">👤</button>
-    <div class="tb-right">
-      <div class="tb-row1">
-        <div class="brand"><span class="bg-gear">⚙</span><span><b>ЦЕХ·7</b></span></div>
+    <button class="icobtn avatar-btn" id="btn-profile" title="Профиль директора">👤</button>
+    <div class="tb-mid">
+      <div class="tb-namerow">
+        <span class="dir-name" id="dir-name">Директор</span>
+        <span class="brand"><span class="bg-gear">⚙</span><span class="brand-t"><b>ЦЕХ·7</b><i>фабрика соусов и молока</i></span></span>
       </div>
       <div class="stats" id="stats">
         <div class="lvl-badge" id="lvl-badge"><span class="lvl-num" id="lvl">1</span><span class="lvl-tip" id="lvl-tip"></span></div>
@@ -850,10 +831,10 @@ html[data-theme="night"] .bubble .b-in{background:radial-gradient(circle at 32% 
         </div>
       </div>
     </div>
-    <button class="icobtn mob-factory" id="btn-factory" title="Линии производства">🏭<span id="factory-ev-badge"></span></button>
-    <div class="tb-col">
+    <button class="icobtn factory-btn" id="btn-factory" title="Линии производства"><span class="fab-ico">🏭</span><span id="factory-ev-badge"></span></button>
+    <div class="tb-sndcol">
       <button class="icobtn" id="btn-sound" title="Настройки звука">🔊</button>
-      <button class="icobtn tool-btn" id="btn-chains" title="Цепочки производства и обучалка">❓</button>
+      <button class="icobtn chains-btn" id="btn-chains" title="Цепочки и обучалка">❓</button>
     </div>
   </header>
   <main id="layout">
@@ -950,16 +931,16 @@ var ART = {
   icon_battery:'art/img/icon_battery.png', icon_turbo:'art/img/icon_turbo.png',
   icon_reroll:'art/img/icon_reroll.png', icon_pr:'art/img/icon_pr.png',
   icon_box:'art/img/icon_box.png', icon_expand:'art/img/icon_expand.png',
+  icon_factory:'art/img/icon_factory.png',
   loading_factory:'art/img/loading_factory.png',
   tut_intro:'art/img/tut_intro.png',
-  ev_line_bonus:'art/img/ev_line_bonus.png',
-  ev_express_rate:'art/img/ev_express_rate.png',
-  ev_bubble_rate:'art/img/ev_bubble_rate.png',
+  start_v:'art/img/start_v.png', start_h:'art/img/start_h.png',
+  ev_line_bonus:'art/img/ev_line_bonus.png', ev_express_rate:'art/img/ev_express_rate.png', ev_bubble_rate:'art/img/ev_bubble_rate.png',
   cat_oil:'art/img/cat_oil.png', cat_mayo:'art/img/cat_mayo.png', cat_ketchup:'art/img/cat_ketchup.png', cat_milk:'art/img/cat_milk.png',
   card_oil_1:'art/img/card_oil_1.png', card_oil_2:'art/img/card_oil_2.png', card_oil_3:'art/img/card_oil_3.png', card_oil_4:'art/img/card_oil_4.png', card_oil_5:'art/img/card_oil_5.png',
   card_mayo_1:'art/img/card_mayo_1.png', card_mayo_2:'art/img/card_mayo_2.png', card_mayo_3:'art/img/card_mayo_3.png', card_mayo_4:'art/img/card_mayo_4.png', card_mayo_5:'art/img/card_mayo_5.png',
   card_ketchup_1:'art/img/card_ketchup_1.png', card_ketchup_2:'art/img/card_ketchup_2.png', card_ketchup_3:'art/img/card_ketchup_3.png', card_ketchup_4:'art/img/card_ketchup_4.png', card_ketchup_5:'art/img/card_ketchup_5.png',
-  card_milk_1:'art/img/card_milk_1.png', card_milk_2:'art/img/card_milk_2.png', card_milk_3:'art/img/card_milk_3.png', card_milk_4:'art/img/card_milk_4.png', card_milk_5:'art/img/card_milk_5.png',
+  card_milk_1:'art/img/card_milk_1.png', card_milk_2:'art/img/card_milk_2.png', card_milk_3:'art/img/card_milk_3.png', card_milk_4:'art/img/card_milk_4.png', card_milk_5:'art/img/card_milk_5.png'
 };
 var CLIENTS_RETAIL=['Супермаркет «Ромашка»','Сеть ресторанов «Вилка и Ложка»','Кафе «Уют»','Гипермаркет «Полюс»','Бистро «Быстро»','Сеть пекарен «Колос»','Ресторан «Астория»','Маркет «У дома»','Суши-бар «Киото»','Пиццерия «Томато»','Кофейня «Бодрое утро»','Столовая «Домашняя»'];
 var CLIENTS_FACTORY=['Кондитерская фабрика «Медовая»','Хлебозавод №3','Фабрика мороженого «Пломбир»','Завод снеков «Хруст»','Молочный комбинат «Заря»','Комбинат питания «Школьный»','Пекарня «Тёплый хлеб»','Завод соусов «Южный»','Фабрика чипсов «Хрум»','Консервный завод «Лето»'];
@@ -999,24 +980,24 @@ var CHAINS = [
       {key:'milk_2', emoji:'🧺', name:'Очищенное зерно', fact:'Зёрна очищают от примесей и шелухи, а после замачивают с ферментами, чтобы крахмал превратился в простые сахара и появилась натуральная сладость.'},
       {key:'milk_3', emoji:'🌀', name:'Измельчение', fact:'Массу дробят, затем фильтруют или сепарируют, чтобы отделить овсяную основу от жмыха.'},
       {key:'milk_4', emoji:'🥛', name:'Гомогенизация', oname:'Овсяная основа', fact:'В смесь добавляют масла, витамины, стабилизаторы, а затем обрабатывают под высоким давлением для однородной текстуры.'},
-      {key:'milk_5', emoji:'🧃', name:'Овсяное молоко', fact:'Овсяное молоко было изобретено в 1990-х в Швеции, на его производство уходит в 15 раз меньше воды, а остатки жмыха после фильтрации можно использовать в производстве гранолы и корма для животных.'} ]},
+      {key:'milk_5', emoji:'🧃', name:'Овсяное молоко', fact:'Овсяное молоко было изобретено в 1990-х в Швеции, на его производство уходит в 15 раз меньше воды, а остатки жмыха после фильтрации можно использовать в производстве гранолы и корма для животных.'} ]}
 ];
 CHAINS.forEach(function(c){ c.tiers.forEach(function(t,i){ t.tier=i+1; }); });
-var COLS=6, ROWS=6, MAXT=5, PAD=10, GAP=6;
+var COLS=6, ROWS=6, MAXT=5, PAD=10, GAP=6; /* поле ВСЕГДА 6×6, расширение убрано */
 var SPAWN_COST=2, WH_COST=3, E_REGEN=1400, RARE_CHANCE=0.22, SLOTS=3;
 var EU_COSTS=[200,450,800,1250];
 var DONE_HOLD=2000, DONE_FADE=700, NEW_PAUSE=1400;
 var BUBBLE_CHANCE=0.12, BUBBLE_LIFE=12000;
-function getBubbleChance(){ return currentEvent==='bubble_rate' ? BUBBLE_CHANCE*(1+(currentEventBubbleRate||0)) : BUBBLE_CHANCE; }
 var TURBO_TIME=300000, TURBO_COST=150, BATT_COST=60, REROLL_COST=50, PR_COST=900;
 var SKEY='ceh7.save.v4';
 var TUT_KEY='ceh7.tut.v1';
+var START_KEY='ceh7.start.v1';
 var AVATARS = [
   {lvl:1, icon:'👤', name:'Новичок'},
   {lvl:5, icon:'🧑‍🌾', name:'Фермер'},
   {lvl:10, icon:'👨‍🍳', name:'Повар'},
-  {lvl:15, icon:'🧑‍🔬', name:'Технолог'},
-  {lvl:20, icon:'👩‍', name:'Менеджер'},
+  {lvl:15, icon:'🧑‍', name:'Технолог'},
+  {lvl:20, icon:'👩‍💼', name:'Менеджер'},
   {lvl:25, icon:'🤴', name:'Директор'},
   {lvl:30, icon:'👑', name:'Магнат'},
   {lvl:35, icon:'🏆', name:'Легенда'}
@@ -1047,74 +1028,23 @@ var lastRegen=Date.now();
 var shopMode='main';
 var sheetType=null;
 var bureauView='home';
-var EVENT_TYPES=['line_bonus','express_rate','bubble_rate'];
+/* события: ротация линия→пузыри→линия→линия(другая)→экспресс */
 var EVENT_PATTERN=['line','bubble','line','line','express'];
-var evPatternIdx=0, lineRot=null, lineRotIdx=0;
+var evPatternIdx=0, lineRot=null, lineRotIdx=0, lastLineEvent=null;
 var currentEvent=null, eventEnd=0, EVENT_DURATION=48*60*60*1000;
 var currentEventLine=null, currentEventBubbleRate=0;
-/* звук */
 var musicOn=true, sfxOn=true, volMusic=.5, volSfx=1;
 var BGM=null, bgmOk=false;
 var MUSIC_TRACKS=['music_main.mp3','music_main2.mp3','music_main3.mp3'];
 var MUSIC_BASE_PATHS=['art/audio/','art/',''];
-function getMusicCandidates(){
-  var result=[];
-  for(var t=0;t<MUSIC_TRACKS.length;t++){
-    for(var p=0;p<MUSIC_BASE_PATHS.length;p++){
-      result.push(MUSIC_BASE_PATHS[p]+MUSIC_TRACKS[t]);
-    }
-  }
-  return result;
-}
-var MUSIC_CANDIDATES=getMusicCandidates();
-var currentTrackIndex=0, isFading=false;
-function pickNewEvent(){
-  var type=EVENT_PATTERN[evPatternIdx % EVENT_PATTERN.length]; evPatternIdx++;
-  if(type==='line'){
-    var uc=unlockedChains();
-    if(!lineRot||lineRotIdx>=lineRot.length){ lineRot=shuffle(uc.map(function(c){return c.id;})); lineRotIdx=0; }
-    currentEventLine=lineRot.length?lineRot[lineRotIdx++]:null;
-    currentEvent='line_bonus'; currentEventBubbleRate=0;
-  } else if(type==='bubble'){
-    currentEvent='bubble_rate'; currentEventLine=null; currentEventBubbleRate=0.7;
-  } else {
-    currentEvent='express_rate'; currentEventLine=null; currentEventBubbleRate=0;
-  }
-  eventEnd=Date.now()+EVENT_DURATION;
-  refreshEventCards();
-  save();
-}
-function eventName(ev){
-  if(ev==='line_bonus'){ var ln=currentEventLine&&CHAIN[currentEventLine]?CHAIN[currentEventLine].lineName:''; return '🎉 Бонус линии +10%'+(ln?': «'+ln+'»':''); }
-  if(ev==='express_rate') return '⚡ Экспрессы приходят чаще';
-  if(ev==='bubble_rate') return '🫧 Пузыри с копиями чаще';
-  return '';
-}
-function eventArtKey(ev){
-  if(ev==='line_bonus') return 'ev_line_bonus';
-  if(ev==='express_rate') return 'ev_express_rate';
-  if(ev==='bubble_rate') return 'ev_bubble_rate';
-  return null;
-}
-function eventTimeLeft(){
-  if(!currentEvent||!eventEnd) return 0;
-  var ms=eventEnd-Date.now();
-  return ms>0?ms:0;
-}
-function formatEventTime(ms){
-  if(ms<=0) return '—';
-  var d=Math.floor(ms/(1000*60*60*24));
-  var h=Math.floor((ms%(1000*60*60*24))/(1000*60*60));
-  var m=Math.floor((ms%(1000*60*60))/(1000*60));
-  if(d>0) return d+'д '+h+'ч';
-  if(h>0) return h+'ч '+m+'м';
-  return m+'м';
-}
+var MUSIC_AVAILABLE=null;
+var curTrack=0;
 function isUnlocked(id){ return unlocked.indexOf(id)>=0; }
 function hasWh(id){ return whOwned.indexOf(id)>=0; }
 function unlockedChains(){ return CHAINS.filter(function(c){ return isUnlocked(c.id); }); }
 function turboActive(){ return Date.now()<turboUntil; }
 function bubblePrice(t){ return 10*Math.pow(2,t-1); }
+function getBubbleChance(){ return currentEvent==='bubble_rate' ? BUBBLE_CHANCE*(1+(currentEventBubbleRate||0)) : BUBBLE_CHANCE; }
 function xpNeed(){ return 150+(lvl-1)*75; }
 function cardsCount(){ var n=0; for(var k in cards) if(cards[k]) n++; return n; }
 function ownedIn(line){ var n=0; CHAIN[line].tiers.forEach(function(t){ if(cards[t.key]) n++; }); return n; }
@@ -1166,7 +1096,6 @@ function checkArt(){
 function preloadAllAssets(callback){
   var items=[];
   Object.keys(ART).forEach(function(k){ if(ART[k]) items.push(ART[k]); });
-  items.push(MUSIC_CANDIDATES[0]);
   var loaded=0, total=items.length, finished=false;
   function finish(){ if(finished)return; finished=true; if(callback) callback(); }
   function upd(){
@@ -1177,18 +1106,20 @@ function preloadAllAssets(callback){
     if(pct>=100) setTimeout(finish,300);
   }
   items.forEach(function(src){
-    var isAudio=/\.mp3$/i.test(src);
-    var el=isAudio?new Audio():new Image();
+    var el=new Image();
     function done(){ loaded++; upd(); }
-    if(isAudio){
-      el.addEventListener('canplaythrough',done,{once:true});
-      el.addEventListener('error',done,{once:true});
-      el.preload='metadata';
-      el.src=src;
-    } else { el.onload=done; el.onerror=done; el.src=src; }
+    el.onload=done; el.onerror=done; el.src=src;
   });
   if(!total){ upd(); }
-  setTimeout(finish,8000);
+  setTimeout(finish,6000);
+}
+function hideLoading(){
+  var ls=document.getElementById('loading-screen');
+  if(ls&&ls.parentNode){
+    ls.style.transition='opacity .45s ease';
+    ls.style.opacity='0';
+    setTimeout(function(){ if(ls.parentNode) ls.parentNode.removeChild(ls); },460);
+  }
 }
 function checkPrizeBg(){
   document.body.classList.toggle('prized-all', cardsCount()>=TOTAL_CARDS);
@@ -1221,42 +1152,53 @@ var lowFX=false;
     measure(function(avg){ if(avg==null) return; if(lowFX&&avg>45) apply(false); else if(!lowFX&&avg<30) apply(true); });
   },60000);
 })();
-/* музыка: перебор путей + пауза 0.5с между треками */
-function initMusic(){
-  try{
-    if(BGM){ BGM.pause(); BGM=null; }
-    BGM=new Audio();
-    BGM.preload='auto'; BGM.loop=false; BGM.volume=volMusic;
-    BGM.addEventListener('ended',handleTrackEnd);
-    BGM.addEventListener('playing',function(){ bgmOk=true; });
-    var ci=0;
-    function trySrc(){
-      if(ci>=MUSIC_CANDIDATES.length){ bgmOk=false; return; }
-      BGM.src=MUSIC_CANDIDATES[ci++];
-      BGM.load();
+/* ═══ МУЗЫКА: один плеер, ротация треков, пауза 0.5с между треками ═══ */
+function probeMusic(cb){
+  var list=[]; var i=0;
+  function step(){
+    if(i>=MUSIC_TRACKS.length){ cb(list); return; }
+    var track=MUSIC_TRACKS[i++]; var pi=0;
+    function nextBase(){
+      if(pi>=MUSIC_BASE_PATHS.length){ step(); return; }
+      var src=MUSIC_BASE_PATHS[pi++]+track;
+      var a=new Audio(); var done=false;
+      function ok(){ if(done)return; done=true; list.push(src); step(); }
+      function bad(){ if(done)return; done=true; nextBase(); }
+      a.addEventListener('loadedmetadata',ok,{once:true});
+      a.addEventListener('canplaythrough',ok,{once:true});
+      a.addEventListener('error',bad,{once:true});
+      a.preload='metadata'; a.src=src;
+      setTimeout(bad,3000);
     }
-    BGM.addEventListener('error',trySrc);
-    trySrc();
-  }catch(e){ BGM=null; bgmOk=false; }
+    nextBase();
+  }
+  step();
+}
+function initMusic(){
+  probeMusic(function(list){
+    MUSIC_AVAILABLE=list;
+    try{
+      if(BGM){ BGM.pause(); BGM=null; }
+      if(!MUSIC_AVAILABLE.length){ bgmOk=false; return; }
+      BGM=new Audio();
+      BGM.preload='auto';
+      BGM.loop=(MUSIC_AVAILABLE.length<2);
+      BGM.volume=volMusic;
+      BGM.addEventListener('playing',function(){ bgmOk=true; });
+      BGM.addEventListener('ended',handleTrackEnd);
+      curTrack=0; BGM.src=MUSIC_AVAILABLE[0]; BGM.load();
+    }catch(e){ BGM=null; bgmOk=false; }
+  });
 }
 function handleTrackEnd(){
-  if(isFading||!BGM||MUSIC_CANDIDATES.length<2) return;
-  isFading=true;
-  var fadeVol=volMusic, step=volMusic/20;
-  var fi=setInterval(function(){
-    fadeVol-=step;
-    if(BGM&&!BGM.paused) BGM.volume=Math.max(0,fadeVol);
-    if(fadeVol<=0){
-      clearInterval(fi);
-      setTimeout(function(){
-        currentTrackIndex=(currentTrackIndex+1)%MUSIC_CANDIDATES.length;
-        BGM.src=MUSIC_CANDIDATES[currentTrackIndex];
-        BGM.volume=volMusic;
-        if(musicOn) BGM.play().catch(function(){});
-        isFading=false;
-      },500);
-    }
-  },50);
+  if(!BGM||!MUSIC_AVAILABLE||MUSIC_AVAILABLE.length<2) return;
+  setTimeout(function(){
+    if(!BGM) return;
+    curTrack=(curTrack+1)%MUSIC_AVAILABLE.length;
+    BGM.src=MUSIC_AVAILABLE[curTrack];
+    BGM.volume=volMusic;
+    if(musicOn){ var p=BGM.play(); if(p&&p.catch) p.catch(function(){}); }
+  },500);
 }
 function tryPlayMusic(){
   if(!musicOn||!BGM) return;
@@ -1266,6 +1208,84 @@ function tryPlayMusic(){
   if(p&&p.catch) p.catch(function(){});
 }
 function updSoundIcon(){ var b=$('#btn-sound'); if(b) b.textContent=(musicOn||sfxOn)?'🔊':'🔇'; }
+/* ═══ СОБЫТИЯ ═══ */
+function pickNewEvent(){
+  var type=EVENT_PATTERN[evPatternIdx % EVENT_PATTERN.length]; evPatternIdx++;
+  if(type==='line'){
+    var ids=unlockedChains().map(function(c){ return c.id; });
+    if(!lineRot||lineRotIdx>=lineRot.length){ lineRot=shuffle(ids.slice()); lineRotIdx=0; }
+    var ln=lineRot.length?lineRot[lineRotIdx++]:null;
+    if(ln===lastLineEvent&&lineRot.length>1){ ln=lineRot[lineRotIdx++ % lineRot.length]; }
+    lastLineEvent=ln; currentEventLine=ln;
+    currentEvent='line_bonus'; currentEventBubbleRate=0;
+  } else if(type==='bubble'){
+    currentEvent='bubble_rate'; currentEventLine=null; currentEventBubbleRate=0.7;
+  } else {
+    currentEvent='express_rate'; currentEventLine=null; currentEventBubbleRate=0;
+  }
+  eventEnd=Date.now()+EVENT_DURATION;
+  refreshEventUI();
+  toast(eventName(currentEvent));
+  save();
+}
+function eventName(ev){
+  if(ev==='line_bonus'){ var ln=currentEventLine&&CHAIN[currentEventLine]?CHAIN[currentEventLine].lineName:''; return '🎉 Бонус линии +10%'+(ln?': «'+ln+'»':''); }
+  if(ev==='express_rate') return '⚡ Экспрессы приходят чаще';
+  if(ev==='bubble_rate') return '🫧 Пузыри с копиями чаще';
+  return '';
+}
+function eventArtKey(ev){
+  if(ev==='line_bonus') return 'ev_line_bonus';
+  if(ev==='express_rate') return 'ev_express_rate';
+  if(ev==='bubble_rate') return 'ev_bubble_rate';
+  return null;
+}
+function eventEmoji(ev){
+  if(ev==='line_bonus') return '🎉';
+  if(ev==='express_rate') return '⚡';
+  if(ev==='bubble_rate') return '🫧';
+  return '🎉';
+}
+function eventTimeLeft(){
+  if(!currentEvent||!eventEnd) return 0;
+  var ms=eventEnd-Date.now();
+  return ms>0?ms:0;
+}
+function formatEventTime(ms){
+  if(ms<=0) return '0м';
+  var d=Math.floor(ms/(1000*60*60*24));
+  var h=Math.floor((ms%(1000*60*60*24))/(1000*60*60));
+  var m=Math.floor((ms%(1000*60*60))/(1000*60));
+  if(d>0) return d+'д '+h+'ч';
+  if(h>0) return h+'ч '+m+'м';
+  return m+'м';
+}
+function renderEventCardInto(host){
+  if(!host) return;
+  var old=host.querySelector('.ev-card'); if(old) old.remove();
+  if(!currentEvent||eventEnd<=Date.now()) return;
+  var card=document.createElement('div'); card.className='ev-card';
+  var img=document.createElement('div'); img.className='ev-img';
+  var key=eventArtKey(currentEvent);
+  if(key) fillArt(img,key,eventEmoji(currentEvent));
+  else img.textContent=eventEmoji(currentEvent);
+  var cd=document.createElement('span'); cd.className='ev-cd'; cd.textContent=formatEventTime(eventTimeLeft());
+  img.appendChild(cd);
+  var info=document.createElement('div'); info.className='ev-info';
+  info.innerHTML='<b>'+eventName(currentEvent)+'</b><span class="ev-left">осталось: '+formatEventTime(eventTimeLeft())+'</span>';
+  card.appendChild(img); card.appendChild(info);
+  host.appendChild(card);
+}
+function updateEvBadge(){
+  var b=$('#factory-ev-badge'); if(!b) return;
+  if(currentEvent&&eventEnd>Date.now()){ b.style.display=''; b.textContent=formatEventTime(eventTimeLeft()); }
+  else b.style.display='none';
+}
+function refreshEventUI(){
+  buildLines();
+  if(sheetType==='lines') renderLines($('#sheet-body'));
+  updateEvBadge();
+}
 function updBureauButton(){
   var n=cardsCount()+'/'+TOTAL_CARDS;
   document.querySelectorAll('.cards-count').forEach(function(el){ el.textContent=n; });
@@ -1425,6 +1445,7 @@ function renderAvatarButton(){
   img.onload=function(){ b.innerHTML=''; b.appendChild(img); };
   b.appendChild(img);
   b.title='Профиль директора: '+directorName;
+  var dn=$('#dir-name'); if(dn) dn.textContent=directorName;
 }
 function openProfile(){
   $('#profile-ov').classList.add('open');
@@ -1450,7 +1471,7 @@ function renderAvatarSelector(){
     img.onerror=function(){ this.src=avatarFallbackSVG(); };
     el.appendChild(img);
     if(lvl<av.lvl){ el.classList.add('locked'); el.title='Откроется на уровне '+av.lvl; }
-    else { el.title=av.name; el.onclick=function(){ directorAvatar=i; renderAvatarSelector(); save(); renderAvatarButton(); }; }
+    else { el.title=av.name; el.onclick=function(){ directorAvatar=i; renderAvatarSelector(); renderAvatarButton(); save(); }; }
     cont.appendChild(el);
   });
 }
@@ -1528,8 +1549,8 @@ function renderBureau(){
     }
   }
 }
-var tutStep=0, tutActive=false;
-var TUT_STEPS=[
+var tutStep=0, tutActive=false, tutSteps=[];
+var TUT_BASE=[
   {t:'Привет! Это ЦЕХ·7', x:'Здесь из простых ингредиентов рождаются вкусные продукты. Покажу, как идёт смена, – это быстро!', target:null, img:'tut_intro'},
   {t:'Поставщики сырья', x:'Кружочки под доской – поставщики. Нажми на кружок – и он даст сырьё за энергию ⚡. Энергия восстанавливается со временем.', target:'#plants'},
   {t:'Слияние', x:'Объединяй одинаковые предметы, чтобы получить следующий уровень ингредиента, – и так до готового продукта.', target:'#board'},
@@ -1560,22 +1581,33 @@ function placeCard(target){
   else { card.style.top='10%'; card.style.bottom='auto'; }
 }
 function showTutStep(){
-  var s=TUT_STEPS[tutStep];
-  $('#tut-title').textContent=s.t;
-  $('#tut-text').textContent=s.x;
-  var ti=$('#tut-img');
-  if(ti){
-    if(s.img){ ti.style.display=''; fillArt(ti,s.img,'🏭'); }
-    else { ti.style.display='none'; ti.innerHTML=''; }
+  var s=tutSteps[tutStep];
+  var imgBox=$('#tut-img');
+  imgBox.style.display='none'; imgBox.innerHTML=''; imgBox.classList.remove('start');
+  var head=$('#tut-card .tut-head'), txt=$('#tut-text');
+  if(s.startOnly){
+    head.style.display='none'; txt.style.display='none';
+    imgBox.classList.add('start'); imgBox.style.display='';
+    var key=(window.innerHeight>window.innerWidth)?'start_h':'start_v';
+    fillArt(imgBox,key,'🎉');
+    lsSet(START_KEY,'1');
+  } else {
+    head.style.display=''; txt.style.display='';
+    $('#tut-title').textContent=s.t;
+    $('#tut-text').textContent=s.x;
+    if(s.img){ imgBox.style.display=''; fillArt(imgBox,s.img,'🏭'); }
   }
   var dots=$('#tut-dots'); dots.innerHTML='';
-  TUT_STEPS.forEach(function(_,i){ var d=document.createElement('i'); if(i===tutStep) d.className='on'; dots.appendChild(d); });
-  $('#tut-next').textContent=(tutStep===TUT_STEPS.length-1)?'Начать смену! 🏭':'Далее ➜';
-  $('#tut-skip').style.display=(tutStep===0)?'none':'inline';
-  positionSpot(s.target);
-  placeCard(s.target);
+  tutSteps.forEach(function(_,i){ var d=document.createElement('i'); if(i===tutStep) d.className='on'; dots.appendChild(d); });
+  $('#tut-next').textContent=(tutStep===tutSteps.length-1)?'Начать смену! 🏭':'Далее ➜';
+  $('#tut-skip').style.display=(tutStep===0&&s.startOnly)?'none':'inline';
+  positionSpot(s.startOnly?null:s.target);
+  placeCard(s.startOnly?null:s.target);
 }
 function startTutorial(){
+  tutSteps=TUT_BASE.slice();
+  var portrait=window.innerHeight>window.innerWidth;
+  if(!lsGet(START_KEY)&&(portrait?startImgs.h:startImgs.v)) tutSteps.unshift({startOnly:true});
   tutStep=0; tutActive=true;
   $('#tut-back').classList.add('open');
   $('#tut-card').classList.add('open');
@@ -1603,37 +1635,6 @@ function refreshSheetIf(type){
   if(sheetType==='lines') renderLines($('#sheet-body'));
   else if(sheetType==='chains') renderChains($('#sheet-body'),true);
   else if(sheetType==='stats') renderStats($('#sheet-body'));
-}
-function renderEventCardInto(host){
-  if(!host) return;
-  var old=host.querySelector('.ev-card'); if(old) old.remove();
-  if(!currentEvent||eventEnd<=Date.now()) return;
-  var card=document.createElement('div'); card.className='ev-card';
-  var img=document.createElement('div'); img.className='ev-img';
-  var key=eventArtKey(currentEvent);
-  if(key){ fillArt(img,key,eventEmojiEv(currentEvent)); }
-  var cd=document.createElement('span'); cd.className='ev-cd'; cd.textContent=formatEventTime(eventTimeLeft());
-  img.appendChild(cd);
-  var info=document.createElement('div'); info.className='ev-info';
-  info.innerHTML='<b>'+eventName(currentEvent)+'</b><span>Событие длится 2 дня</span>';
-  card.appendChild(img); card.appendChild(info);
-  host.appendChild(card);
-}
-function eventEmojiEv(ev){
-  if(ev==='line_bonus') return '🎉';
-  if(ev==='express_rate') return '⚡';
-  if(ev==='bubble_rate') return '🫧';
-  return '🎉';
-}
-function refreshEventCards(){
-  renderEventCardInto($('#lines-list'));
-  if(sheetType==='lines') renderLines($('#sheet-body'));
-  updateEvBadge();
-}
-function updateEvBadge(){
-  var b=$('#factory-ev-badge'); if(!b) return;
-  if(currentEvent&&eventEnd>Date.now()){ b.style.display=''; b.textContent=formatEventTime(eventTimeLeft()); }
-  else b.style.display='none';
 }
 function renderStats(host){
   host.innerHTML='';
@@ -1817,6 +1818,7 @@ function tryAutoShip(it){
     if(card){ fulfill(card,it); return; } }
   toast('Сейчас нет заказа на «'+orderName(CHAIN[it.chain].tiers[it.tier-1])+'»',true); sfx('err');
 }
+/* слияние: монеты НЕ начисляются (только опыт) */
 function doMerge(src,dst){
   var nt=src.tier+1, idx=dst.idx, ch=src.chain, freeAt=src.idx;
   removeItem(src); removeItem(dst);
@@ -1879,9 +1881,11 @@ function updateTimers(){
     }
   }
   var tb=$('#turbo-badge');
-  if(tb){ if(turboActive()){ tb.style.display=''; tb.textContent='⚡'+fmtTime(turboUntil-Date.now()); } else tb.style.display='none'; }
-  if(currentEvent&&Date.now()>eventEnd){ currentEvent=null; eventEnd=0; currentEventBubbleRate=0; refreshEventCards(); }
-  document.querySelectorAll('.ev-cd').forEach(function(el){ el.textContent=formatEventTime(eventTimeLeft()); });
+  if(tb){ if(turboActive()){ tb.style.display=''; tb.textContent='⚡ '+fmtTime(turboUntil-Date.now()); } else tb.style.display='none'; }
+  if(currentEvent&&Date.now()>eventEnd){ currentEvent=null; eventEnd=0; currentEventBubbleRate=0; pickNewEvent(); }
+  var tl=formatEventTime(eventTimeLeft());
+  document.querySelectorAll('.ev-cd').forEach(function(el){ el.textContent=tl; });
+  document.querySelectorAll('.ev-left').forEach(function(el){ el.textContent='осталось: '+tl; });
   updateEvBadge();
 }
 function showStamp(txt,sub,mode,hold){
@@ -1932,13 +1936,13 @@ function fulfill(cardEl,it){
 }
 function renderOrders(){
   cardsBox.innerHTML='';
-  var idxOrder=[0,1,2].sort(function(a,b){
+  var orderIdx=[0,1,2].sort(function(a,b){
     var ea=(orders[a]&&orders[a].express&&!orders[a].done)?0:1;
     var eb=(orders[b]&&orders[b].express&&!orders[b].done)?0:1;
     if(ea!==eb) return ea-eb;
     return a-b;
   });
-  idxOrder.forEach(function(i){
+  orderIdx.forEach(function(i){
     var o=orders[i];
     if(!o){ if(i===2) return;
       var e=document.createElement('div'); e.className='order-card empty';
@@ -2344,7 +2348,7 @@ function save(){
       v:4,coins:coins,energy:energy,ts:Date.now(),lvl:lvl,xp:xp,done:done,
       dn:directorName,da:directorAvatar,
       mon:musicOn,son:sfxOn,vm:volMusic,vs:volSfx,
-      un:unlocked,wh:whOwned,eu:eu,pr:prOwned,tb:turboUntil,cols:COLS,rows:ROWS,
+      un:unlocked,wh:whOwned,eu:eu,ws:0,pr:prOwned,tb:turboUntil,cols:6,rows:6,
       cd:cards,pd:pending,py:pity,pz:prized,
       items:items.map(function(it){ return {i:it.idx,c:it.chain,t:it.tier}; }),
       orders:orders.map(function(o){ return o?{c:o.chain,q:o.qty,n:o.need,r:o.reward,d:!!o.done,t:o.tier,e:!!o.express,dl:o.deadline||0,cl:o.client||''}:0; }),
@@ -2356,9 +2360,6 @@ function load(){
   try{
     var raw=localStorage.getItem(SKEY); if(!raw) return false;
     var s=JSON.parse(raw); if(!s||s.v!==4) return false;
-    COLS=s.cols||6; ROWS=s.rows||6;
-    grid=new Array(COLS*ROWS).fill(null);
-    bubbleGrid=new Array(COLS*ROWS).fill(null);
     coins=def(s.coins,80);
     eu=clamp(def(s.eu,0),0,EU_COSTS.length); E_MAX=30+eu*5;
     prOwned=!!s.pr; turboUntil=def(s.tb,0);
@@ -2396,24 +2397,25 @@ var mqMobile=window.matchMedia?window.matchMedia('(max-width:640px)'):null;
 function placeControls(){
   var mobile=mqMobile&&mqMobile.matches;
   var sw=$('#shift-wrap');
-  if(mobile){
-    $('#stats').appendChild(sw);
-  } else {
-    $('#gamezone').appendChild(sw);
-  }
+  if(mobile){ $('#stats').appendChild(sw); }
+  else { $('#gamezone').appendChild(sw); }
   requestAnimationFrame(sizeBoard);
 }
 if(mqMobile){
   if(mqMobile.addEventListener) mqMobile.addEventListener('change',placeControls);
   else if(mqMobile.addListener) mqMobile.addListener(placeControls);
 }
+/* probe стартовых картинок обучалки */
+var startImgs={v:false,h:false};
+(function(){
+  var v=new Image(); v.onload=function(){startImgs.v=true;}; v.src=ART.start_v;
+  var h=new Image(); h.onload=function(){startImgs.h=true;}; h.src=ART.start_h;
+})();
+/* картинка завода на экране загрузки — сразу, до скрытия */
+fillArt($('#loading-factory-ico'),'loading_factory','🏭');
 var initDone=false;
 function init(){
   if(initDone) return; initDone=true;
-  try{ var ps=JSON.parse(localStorage.getItem(SKEY)||'null');
-    if(ps&&ps.v===4){ COLS=ps.cols||6; ROWS=ps.rows||6;
-      musicOn=def(ps.mon,true); sfxOn=def(ps.son,true); volMusic=clamp(def(ps.vm,.5),0,1); volSfx=clamp(def(ps.vs,1),0,1);
-      directorName=def(ps.dn,'Директор'); directorAvatar=clamp(def(ps.da,0),0,AVATARS.length-1); } }catch(e){}
   grid=new Array(COLS*ROWS).fill(null);
   bubbleGrid=new Array(COLS*ROWS).fill(null);
   rebuildCellEls(); sizeBoard();
@@ -2430,11 +2432,11 @@ function init(){
   if(BGM) BGM.volume=volMusic;
   updSoundIcon();
   renderAvatarButton();
+  fillArt($('#factory-ico'),'icon_factory','🏭');
   fillArt($('#bur-ico'),'bureau','🎴');
   fillArt($('#bur-ico-m'),'bureau','🎴');
   fillArt($('#coin-ico'),'icon_coin','💰');
   fillArt($('#energy-ico'),'icon_energy','⚡');
-  fillArt($('#loading-factory'),'loading_factory','🏭');
   updEnergyShop();
   if(!had){
     var starters=[['oil',1],['oil',1],['oil',2]];
@@ -2445,7 +2447,7 @@ function init(){
     orders.forEach(function(o,i){ if(o&&o.done) scheduleReplace(i,o); });
   }
   rebuildGrid();
-  renderOrders(); updEnergy(); updEnergyShop(); updateXpUI(); updBureauButton(); refreshEventCards();
+  renderOrders(); updEnergy(); updEnergyShop(); updateXpUI(); updBureauButton(); refreshEventUI();
   $('#coins').textContent=coins;
   setInterval(function(){
     if(energy<E_MAX){ var now=Date.now(), add=Math.floor((now-lastRegen)/E_REGEN);
@@ -2465,17 +2467,13 @@ function init(){
   if(!lsGet(TUT_KEY)) setTimeout(startTutorial,700);
   window.__CEH_READY=true;
 }
-preloadAllAssets(function(){
-  setTimeout(function(){
-    var ls=document.getElementById('loading-screen');
-    if(ls){
-      ls.style.transition='opacity .5s ease';
-      ls.style.opacity='0';
-      setTimeout(function(){ ls.style.display='none'; },500);
-    }
-    try{ init(); }catch(err){ showDebug('Ошибка при запуске: '+(err&&err.message?err.message:err)); }
-  },800);
-});
+function boot(){
+  if(window.__CEH_BOOTED) return; window.__CEH_BOOTED=true;
+  hideLoading();
+  try{ init(); }catch(err){ showDebug('Ошибка при запуске: '+(err&&err.message?err.message:err)); }
+}
+preloadAllAssets(function(){ setTimeout(boot,300); });
+setTimeout(boot,6000); /* предохранитель: экран загрузки не может зависнуть */
 $('#btn-profile').onclick=function(e){ e.stopPropagation(); openProfile(); };
 $('#profile-close').onclick=closeProfile;
 $('#profile-save').onclick=saveDirectorName;
@@ -2494,7 +2492,7 @@ $('#bureau-back').onclick=closeBureau;
 $('#btn-factory').onclick=function(){ openSheet('lines','Производственные площадки',renderLines); };
 $('#tut-next').onclick=function(){
   tutStep++;
-  if(tutStep>=TUT_STEPS.length) endTutorial();
+  if(tutStep>=tutSteps.length) endTutorial();
   else showTutStep();
 };
 $('#tut-skip').onclick=endTutorial;
@@ -2505,7 +2503,7 @@ $('#theme-toggle').onclick=function(){
     else { document.documentElement.setAttribute('data-theme','night'); localStorage.setItem('ceh7.theme','night'); }
   }catch(e){}
 };
-$('#btn-chains').onclick=function(){ openSheet('chains','Цепочки производства',function(h){ renderChains(h,true); }); };
+$('#btn-chains').onclick=function(){ openSheet('chains','Цепочки и обучалка',function(h){ renderChains(h,true); }); };
 $('#sheet-close').onclick=closeSheet;
 $('#sheet-back').onclick=closeSheet;
 $('#chip-energy-up').onclick=buyEnergy;
