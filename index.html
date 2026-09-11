@@ -157,18 +157,15 @@ align-items:center;justify-content:center;background:var(--bg);pointer-events:au
 .lf-ico{display:grid;place-items:center;width:100%;height:100%;font-size:96px;overflow:hidden}
 .lf-ico img{width:100%;height:100%;object-fit:contain;display:block}
 .smoke-stack{position:absolute;left:var(--smoke-x,34%);top:var(--smoke-y,27%);width:0;height:0;pointer-events:none}
-.smoke-stack i{position:absolute;left:0;bottom:0;width:10px;height:10px;border-radius:50%;
-background:radial-gradient(circle, rgba(255,255,255,.9) 0%, rgba(255,255,255,.4) 70%, transparent 100%);
-filter:blur(2px);opacity:0;animation:puff 2.8s ease-out infinite}
-.smoke-stack i:nth-child(2){width:14px;height:14px;animation-delay:.9s;animation-duration:3.2s}
-.smoke-stack i:nth-child(3){width:18px;height:18px;animation-delay:1.8s;animation-duration:3.6s}
-.smoke-stack i:nth-child(4){width:12px;height:12px;animation-delay:.4s;animation-duration:2.6s}
-.smoke-stack i:nth-child(5){width:16px;height:16px;animation-delay:1.3s;animation-duration:3s}
+.smoke-stack i{position:absolute;left:0;bottom:0;width:12px;height:12px;border-radius:50%;
+background:rgba(255,255,255,.85);filter:blur(1.5px);opacity:0;animation:puff 2.4s linear infinite}
+.smoke-stack i:nth-child(2){width:16px;height:16px;animation-delay:.8s;background:rgba(255,255,255,.65)}
+.smoke-stack i:nth-child(3){width:20px;height:20px;animation-delay:1.6s;background:rgba(240,244,248,.75)}
 @keyframes puff{
-0%{transform:translate(-50%,0) scale(.3);opacity:0}
-20%{opacity:.7}
-50%{opacity:.5}
-100%{transform:translate(calc(-50% + 20px),-80px) scale(2);opacity:0}
+0%{transform:translate(-50%,0) scale(.5);opacity:0}
+15%{opacity:.8}
+60%{opacity:.45}
+100%{transform:translate(calc(-50% + 26px),-70px) scale(1.6);opacity:0}
 }
 .lf-barwrap{width:280px;height:24px;background:var(--panel);border:3px solid var(--brand2);border-radius:999px;overflow:hidden;box-shadow:4px 4px 0 var(--shadowc)}
 #loading-bar{width:0%;height:100%;background:linear-gradient(90deg,var(--amber),var(--amber2));transition:width .3s ease-out}
@@ -373,11 +370,8 @@ box-shadow:5px 5px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.08);display:gr
 .plant.locked{border-color:var(--line);filter:grayscale(.6);opacity:.75}
 .p-art{font-size:29px;width:44px;height:44px;display:grid;place-items:center;pointer-events:none}
 .p-lock{position:absolute;bottom:-4px;right:-4px;font-size:13px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
-.p-tip{display:none;position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);width:190px;
-max-width:calc(100vw - 16px);
-background:var(--bg2);border:1px solid var(--amber2);color:var(--ink);font:400 11px/1.45 var(--body);
-padding:8px 10px;border-radius:10px;pointer-events:none;white-space:normal;text-align:left;z-index:70}
-.pwrap:hover .p-tip{display:block}
+.p-tip{display:none}
+.pwrap:hover .p-tip{display:none}
 #shopwrap.open .p-tip{display:none!important}
 #shopwrap.open .shopc{box-shadow:0 0 0 4px rgba(122,92,255,.35), 5px 5px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.08)}
 .p-badge{position:absolute;top:-8px;right:-8px;font-family:var(--disp);font-weight:700;font-size:8px;color:#fff;
@@ -638,75 +632,90 @@ white-space:nowrap;text-align:center;box-shadow:6px 6px 0 var(--shadowc);max-wid
 .o-expand{display:inline-flex}
 .o-foot .o-pips{position:absolute;right:8px;bottom:8px}
 }
+/* ═══ МОБИЛЬНАЯ ШАПКА: 2 строки, адаптивные размеры ══ */
 @media (max-width:640px){
-#topbar{display:grid;grid-template-columns:auto 1fr auto auto;grid-template-rows:auto auto;gap:4px 8px;align-items:center;padding:6px 8px}
-.avatar-btn{grid-column:1;grid-row:1/3;width:52px;height:52px;font-size:26px}
-.tb-mid{grid-column:2;grid-row:1/3;flex:none;display:flex;flex-direction:column;gap:4px;min-width:0;justify-content:center}
-.tb-namerow{flex-direction:row;align-items:center;gap:8px}
-.dir-name{max-width:42vw;font-size:12px}
+#topbar{display:grid;grid-template-columns:auto 1fr auto auto;grid-template-rows:auto auto;gap:3px 6px;align-items:center;padding:5px 6px}
+.avatar-btn{grid-column:1;grid-row:1/3;width:clamp(32px,9vw,48px);height:clamp(32px,9vw,48px);font-size:clamp(16px,4.5vw,24px)}
+.tb-mid{grid-column:2;grid-row:1/3;flex:none;display:flex;flex-direction:column;gap:2px;min-width:0;justify-content:center}
+.tb-namerow{flex-direction:row;align-items:center;gap:6px}
+.dir-name{max-width:38vw;font-size:clamp(10px,3vw,12px)}
 .brand-t i{display:none}
-.brand-t b{font-size:14px}
-.brand .bg-gear{font-size:18px}
-.stats{margin-left:0;justify-content:flex-start;gap:5px}
-.factory-btn{grid-column:3;grid-row:1/3;display:flex;width:52px;height:52px;font-size:24px}
-.tb-sndcol{grid-column:4;grid-row:1/3;flex-direction:column;gap:4px;align-items:center;justify-content:center}
-#btn-sound{width:30px;height:30px;font-size:13px}
-.chains-btn{display:flex;width:30px;height:30px;font-size:12px}
+.brand-t b{font-size:clamp(12px,3.5vw,14px)}
+.brand .bg-gear{font-size:clamp(14px,4vw,18px)}
+.stats{margin-left:0;justify-content:flex-start;gap:3px}
+.factory-btn{grid-column:3;grid-row:1/3;display:flex;width:clamp(32px,9vw,48px);height:clamp(32px,9vw,48px);font-size:clamp(16px,4.5vw,22px)}
+.tb-sndcol{grid-column:4;grid-row:1/3;flex-direction:column;gap:3px;align-items:center;justify-content:center}
+#btn-sound{width:clamp(26px,7vw,32px);height:clamp(26px,7vw,32px);font-size:clamp(11px,3vw,13px)}
+.chains-btn{display:flex;width:clamp(26px,7vw,32px);height:clamp(26px,7vw,32px);font-size:clamp(10px,2.8vw,12px)}
 #chip-energy-up{display:none}
 #emax{display:none}
-.chip{padding:3px 8px;font-size:11px;box-shadow:3px 3px 0 var(--shadowc), inset 0 -1px 3px rgba(0,0,0,.08)}
-.chip b{font-size:11px}
-.lvl-badge{width:32px;height:32px}
-.lvl-num{font-size:11px}
-.shift-wrap{gap:5px;padding:0}
+.chip{padding:2px 6px;font-size:clamp(9px,2.5vw,11px);box-shadow:2px 2px 0 var(--shadowc), inset 0 -1px 2px rgba(0,0,0,.08);gap:3px}
+.chip b{font-size:clamp(9px,2.5vw,11px)}
+.lvl-badge{width:clamp(26px,7vw,32px);height:clamp(26px,7vw,32px)}
+.lvl-num{font-size:clamp(9px,2.5vw,11px)}
+.shift-wrap{gap:3px;padding:0}
 .shift-label{display:none}
-.shift-btn{width:52px;height:26px;border-width:2px}
-.knob{--tr:26px;width:18px;height:18px;top:2px;left:2px}
-.shift-btn::before{right:5px;top:5px;width:12px;height:5px;box-shadow:-5px 2px 0 1px #fff, 6px 2px 0 0 #eef4ff, 2px -3px 0 1px #fff}
-.shift-btn::after{left:3px;top:2px;width:26px;bottom:2px}
+.shift-btn{width:clamp(36px,10vw,52px);height:clamp(18px,5vw,26px);border-width:2px}
+.knob{--tr:clamp(18px,5vw,26px);width:clamp(14px,4vw,18px);height:clamp(14px,4vw,18px);top:2px;left:2px}
+.shift-btn::before{right:4px;top:4px;width:8px;height:4px;box-shadow:-3px 1px 0 1px #fff, 4px 1px 0 0 #eef4ff, 1px -2px 0 1px #fff}
+.shift-btn::after{left:2px;top:1px;width:clamp(18px,5vw,26px);bottom:1px}
 #lines{display:none}
 .lines-sub{display:block}
 #chain-help{display:none!important}
 .hint{display:none}
-#layout{gap:6px;padding:6px}
-#gamezone{gap:6px}
-#plants{gap:8px;margin-bottom:18px}
-.plant{width:52px;height:52px;border-width:2px;box-shadow:4px 4px 0 var(--shadowc), inset 0 -1px 3px rgba(0,0,0,.08)}
-.p-art{width:36px;height:36px;font-size:22px}
-.p-lock{font-size:10px;bottom:-3px;right:-3px}
-.p-wh{top:-6px;left:-6px;font-size:7px;padding:2px 5px}
-.p-badge{top:-6px;right:-6px;font-size:7px;padding:2px 5px}
-.p-tip{position:fixed;bottom:110px;top:auto;left:50%;transform:translateX(-50%);width:min(320px,90vw)}
-#orders{flex-direction:row;align-items:stretch;gap:6px;padding:6px;max-height:none;box-shadow:4px 4px 0 var(--shadowc), inset 0 -1px 3px rgba(0,0,0,.06)}
-.orders-side{display:flex;flex-direction:column;gap:6px;align-items:center;flex:0 0 auto}
-#btn-orders-icon{display:block;width:40px;height:40px;font-size:17px;border-radius:12px}
-.bureau-m{position:relative;display:flex;align-items:center;justify-content:center;width:40px;height:40px;
-border-radius:12px;border:2px solid var(--violet);background:var(--card);cursor:pointer;box-shadow:3px 3px 0 var(--shadowc)}
-.bureau-m .bur-ico{width:22px;height:22px;font-size:17px}
-.bureau-m .pend{position:absolute;top:-7px;right:-7px}
+#layout{gap:5px;padding:5px}
+#gamezone{gap:5px}
+#plants{gap:4px;margin-bottom:8px;max-width:100%;justify-content:center}
+.plant{width:clamp(48px,13vw,60px);height:clamp(48px,13vw,60px);border-width:2px;box-shadow:3px 3px 0 var(--shadowc), inset 0 -1px 2px rgba(0,0,0,.08)}
+.p-art{width:clamp(32px,9vw,42px);height:clamp(32px,9vw,42px);font-size:clamp(18px,5vw,24px)}
+.p-lock{font-size:9px;bottom:-2px;right:-2px}
+.p-wh{top:-5px;left:-5px;font-size:6px;padding:1px 4px}
+.p-badge{top:-5px;right:-5px;font-size:6px;padding:1px 4px}
+.p-tip{display:none!important}
+#orders{flex-direction:row;align-items:stretch;gap:5px;padding:5px;max-height:none;box-shadow:3px 3px 0 var(--shadowc), inset 0 -1px 2px rgba(0,0,0,.06)}
+.orders-side{display:flex;flex-direction:column;gap:5px;align-items:center;flex:0 0 auto}
+#btn-orders-icon{display:block;width:clamp(34px,9vw,42px);height:clamp(34px,9vw,42px);font-size:clamp(14px,4vw,17px);border-radius:10px}
+.bureau-m{position:relative;display:flex;align-items:center;justify-content:center;width:clamp(34px,9vw,42px);height:clamp(34px,9vw,42px);
+border-radius:10px;border:2px solid var(--violet);background:var(--card);cursor:pointer;box-shadow:2px 2px 0 var(--shadowc)}
+.bureau-m .bur-ico{width:clamp(18px,5vw,22px);height:clamp(18px,5vw,22px);font-size:clamp(14px,4vw,17px)}
+.bureau-m .pend{position:absolute;top:-6px;right:-6px}
+#btn-tutorial-m{display:flex;align-items:center;justify-content:center;width:clamp(34px,9vw,42px);height:clamp(34px,9vw,42px);
+border-radius:10px;border:2px solid var(--amber2);background:var(--card);cursor:pointer;box-shadow:2px 2px 0 var(--shadowc);font-size:clamp(14px,4vw,17px)}
 .orders-main{flex:1;min-width:0}
 .orders-head{display:none}
-#order-cards{display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;padding:8px 4px 6px}
-.order-card{flex:0 0 auto;width:auto;min-width:0;padding:6px;gap:4px;align-items:stretch;scroll-snap-align:start;border-left-width:4px;box-shadow:4px 4px 0 var(--shadowc), inset 0 -1px 3px rgba(0,0,0,.06)}
-.o-row{flex-direction:row;align-items:center;gap:5px}
+#order-cards{display:flex;gap:5px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;padding:6px 3px 5px}
+.order-card{flex:0 0 auto;width:auto;min-width:0;padding:5px;gap:3px;align-items:stretch;scroll-snap-align:start;border-left-width:3px;box-shadow:3px 3px 0 var(--shadowc), inset 0 -1px 2px rgba(0,0,0,.06)}
+.o-row{flex-direction:row;align-items:center;gap:4px}
 .o-info{display:none}
 .o-qty{display:none}
-.o-art{width:52px;height:52px;font-size:30px}
-.o-side{display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin-left:2px;padding-right:2px}
-.o-side .o-qwrap{gap:3px}
-.o-qty2{display:block;font-family:var(--disp);font-weight:900;font-size:11px;color:var(--acc,var(--brand))}
-.o-side-price{display:block;font-family:var(--disp);font-weight:700;font-size:9px;color:var(--amber2);white-space:nowrap}
-.o-timer-m{font-size:8px}
-.o-side .o-pips i{width:6px;height:6px}
+.o-art{width:clamp(42px,11vw,52px);height:clamp(42px,11vw,52px);font-size:clamp(22px,6vw,30px)}
+.o-side{display:flex;flex-direction:column;align-items:flex-start;gap:1px;margin-left:1px;padding-right:1px}
+.o-side .o-qwrap{gap:2px}
+.o-qty2{display:block;font-family:var(--disp);font-weight:900;font-size:clamp(9px,2.5vw,11px);color:var(--acc,var(--brand))}
+.o-side-price{display:block;font-family:var(--disp);font-weight:700;font-size:clamp(8px,2.2vw,9px);color:var(--amber2);white-space:nowrap}
+.o-timer-m{font-size:7px}
+.o-side .o-pips i{width:5px;height:5px}
 .o-foot{display:none}
-.shop-pop{position:fixed;left:12px;right:12px;bottom:96px;width:auto;max-width:none;transform:none;max-height:52vh}
+.shop-pop{position:fixed;left:10px;right:10px;bottom:90px;width:auto;max-width:none;transform:none;max-height:50vh}
 .shop-pop.open{animation:popfade .18s ease}
-#sound-pop{top:auto;bottom:96px;right:12px}
+#sound-pop{top:auto;bottom:90px;right:10px}
 .cat-grid{grid-template-columns:repeat(2,1fr)}
 .cc-grid{grid-template-columns:repeat(3,1fr)}
 body.prized-all #factory-svg{inset:auto;top:0;left:0;width:100%;height:130px}
 body.prized-all #topbar{background:rgba(255,255,255,.62);backdrop-filter:blur(2px)}
 html[data-theme="night"] body.prized-all #topbar{background:rgba(16,29,22,.62)}
+}
+@media (max-width:360px){
+#topbar{gap:2px 4px;padding:4px 5px}
+.avatar-btn{width:28px;height:28px;font-size:14px}
+.factory-btn{width:28px;height:28px;font-size:14px}
+#btn-sound,.chains-btn,#btn-tutorial-m,#btn-orders-icon,.bureau-m{width:26px;height:26px;font-size:11px}
+.chip{padding:2px 5px;font-size:9px}
+.chip b{font-size:9px}
+.lvl-badge{width:24px;height:24px}
+.lvl-num{font-size:9px}
+.plant{width:44px;height:44px}
+.p-art{width:30px;height:30px;font-size:17px}
 }
 @media (max-width:560px){.chip{padding:3px 7px;font-size:11px}}
 #fx{position:fixed;top:0;left:0;right:0;bottom:0;pointer-events:none;z-index:55}
@@ -798,11 +807,11 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 </g>
 </svg>
 <div class="hazard hz-t"></div><div class="hazard hz-b"></div>
-<div class="gear gr1"></div><div class="gear gr2"></div>
+<div class="gear gr1">⚙</div><div class="gear gr2">⚙</div>
 <div id="loading-screen" onclick="tryPlayMusic();">
 <div class="lf-box" style="--smoke-x:34%;--smoke-y:27%;">
 <span class="lf-ico" id="loading-factory-ico">🏭</span>
-<div class="smoke-stack" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+<div class="smoke-stack" aria-hidden="true"><i></i><i></i><i></i></div>
 </div>
 <div class="lf-barwrap"><div id="loading-bar"></div></div>
 <div id="loading-percent">0%</div>
@@ -810,7 +819,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 </div>
 <div id="app">
 <header id="topbar">
-<button class="icobtn avatar-btn" id="btn-profile" title="Профиль директора">👤</button>
+<button class="icobtn avatar-btn" id="btn-profile" title="Профиль директора"></button>
 <div class="tb-mid">
 <div class="tb-namerow">
 <span class="dir-name" id="dir-name">Директор</span>
@@ -829,7 +838,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 </div>
 <button class="icobtn factory-btn" id="btn-factory" title="Линии производства"><span class="fab-ico"></span><span id="factory-ev-badge"></span></button>
 <div class="tb-sndcol">
-<button class="icobtn" id="btn-sound" title="Настройки звука"></button>
+<button class="icobtn" id="btn-sound" title="Настройки звука">🔊</button>
 <button class="icobtn chains-btn" id="btn-chains" title="Цепочки и обучалка">❓</button>
 </div>
 </header>
@@ -850,6 +859,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <span class="bur-ico" id="bur-ico-m"></span>
 <span class="pend" hidden>+1</span>
 </button>
+<button class="icobtn" id="btn-tutorial-m" title="Пройти обучение">🎓</button>
 </div>
 <div class="orders-main">
 <div class="orders-head">
@@ -857,7 +867,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <button class="chip shop" id="btn-bureau" title="Коллекционное бюро"><span class="bur-ico" id="bur-ico">🎴</span> Бюро <b class="cards-count">0/20</b><span class="pend" hidden>+1</span></button>
 </div>
 <div id="order-cards"></div>
-<button class="tut-btn" id="btn-tutorial">🎓 Пройти обучение</button>
+<button class="tut-btn" id="btn-tutorial"> Пройти обучение</button>
 <div id="chain-help"><h3>Цепочки производства</h3><div id="chain-rows"></div></div>
 <p class="hint">Слева – производственные площадки (открываются за монеты), внизу – кружочки поставщиков сырья: клик даёт сырьё, 🛒 – мини-магазин. Выполняй заказы – в «Бюро» падают коллекционные карточки: обычные с заказов, редкие (★4–★5) – с экспрессов. Собери все 20 – и фабрика оживёт!</p>
 </div>
@@ -871,12 +881,12 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 </div>
 <div class="sheet-back" id="sheet-back"></div>
 <div class="sheet" id="sheet">
-<div class="sheet-head"><b id="sheet-title"></b><button class="icobtn" id="sheet-close" title="Закрыть"></button></div>
+<div class="sheet-head"><b id="sheet-title"></b><button class="icobtn" id="sheet-close" title="Закрыть">✕</button></div>
 <div class="sheet-body" id="sheet-body"></div>
 </div>
 <div id="bureau-back"></div>
 <div id="bureau">
-<div class="bur-head"><b id="bur-title">🎴 Коллекционное бюро</b><button class="icobtn" id="bur-close" title="Закрыть">✕</button></div>
+<div class="bur-head"><b id="bur-title">🎴 Коллекционное бюро</b><button class="icobtn" id="bur-close" title="Закрыть"></button></div>
 <div class="bur-body" id="bur-body"></div>
 </div>
 <div id="confirm-ov"></div>
@@ -961,10 +971,10 @@ tiers:[
 {key:'mayo_5', emoji:'🍯', name:'Майонез «Провансаль»', fact:'В XIX веке майонез считали деликатесом и подавали в лучших ресторанах Европы.'} ]},
 { id:'ketchup', color:'#e0452c', soft:'rgba(224,69,44,.13)', lineName:'Кетчупы', unlock:650, wholesale:550,
 catName:'Все секреты кетчупа', catEmoji:'🍅',
-spawner:{key:'sp_ketchup', emoji:'', name:'Теплица'},
+spawner:{key:'sp_ketchup', emoji:'🍅', name:'Теплица'},
 tiers:[
 {key:'ketchup_1', emoji:'🍅', name:'Помидор', fact:'Томат – ягода по ботанике, а в некоторых странах официально признан фруктом.'},
-{key:'ketchup_2', emoji:'', name:'Измельчение', fact:'Томатную массу дробят, затем пропускают через протирочные машины (сито-машины), чтобы отделить кожицу и семена.'},
+{key:'ketchup_2', emoji:'🔪', name:'Измельчение', fact:'Томатную массу дробят, затем пропускают через протирочные машины (сито-машины), чтобы отделить кожицу и семена.'},
 {key:'ketchup_3', emoji:'🍲', name:'Термическая обработка', fact:'Уваривание происходит в вакууме. За счёт низкого давления вода испаряется быстрее, и кетчуп сохраняет яркий красный цвет и натуральный вкус.'},
 {key:'ketchup_4', emoji:'❄️', name:'Охлаждение', oname:'Томатная паста', fact:'После пастеризации кетчуп выходит из пастеризатора ещё горячим – с температурой около 115–120 °C. Прежде чем он попадёт в фасовочную машину, продукт должен быть охлаждён до 43 °C.'},
 {key:'ketchup_5', emoji:'🍾', name:'Кетчуп томатный', fact:'В XVII веке в Китае делали ферментированный соус «кэ-цап» из рыбы, моллюсков и соевых бобов. В Британии позже появились грибной, ореховый и даже устричный кетчупы. Томаты вошли в рецепт намного позже.'} ]},
@@ -1206,7 +1216,6 @@ function pickNewEvent(){
 var type=EVENT_PATTERN[evPatternIdx % EVENT_PATTERN.length]; evPatternIdx++;
 if(type==='line'){
 var ids=unlockedChains().map(function(c){ return c.id; });
-if(!ids.length) { pickNewEvent(); return; }
 if(!lineRot||lineRotIdx>=lineRot.length){ lineRot=shuffle(ids.slice()); lineRotIdx=0; }
 var ln=lineRot.length?lineRot[lineRotIdx++]:null;
 if(ln===lastLineEvent&&lineRot.length>1){ ln=lineRot[lineRotIdx++ % lineRot.length]; }
@@ -1235,9 +1244,9 @@ if(ev==='bubble_rate') return 'ev_bubble_rate';
 return null;
 }
 function eventEmoji(ev){
-if(ev==='line_bonus') return '🎉';
-if(ev==='express_rate') return '';
-if(ev==='bubble_rate') return '';
+if(ev==='line_bonus') return '';
+if(ev==='express_rate') return '⚡';
+if(ev==='bubble_rate') return '🫧';
 return '🎉';
 }
 function eventTimeLeft(){
@@ -1279,8 +1288,6 @@ function refreshEventUI(){
 buildLines();
 if(sheetType==='lines') renderLines($('#sheet-body'));
 updateEvBadge();
-var linesList = $('#lines-list');
-if(linesList && currentEvent) renderEventCardInto(linesList);
 }
 function updBureauButton(){
 var n=cardsCount()+'/'+TOTAL_CARDS;
@@ -1489,7 +1496,7 @@ var body=$('#bur-body'); body.innerHTML='';
 if(bureauView==='home'){
 $('#bur-title').textContent='🎴 Коллекционное бюро';
 var sub=document.createElement('div'); sub.className='bur-sub';
-sub.textContent='Собери все карточки категории – получи +150. Редкие (★4–★5) выпадают с экспресс-заказов. Собери всё – и фабрика оживёт!';
+sub.textContent='Собери все карточки категории – получи +150💰. Редкие (★4–★5) выпадают с экспресс-заказов. Собери всё – и фабрика оживёт!';
 body.appendChild(sub);
 var g=document.createElement('div'); g.className='cat-grid';
 CHAINS.forEach(function(c){
@@ -1548,9 +1555,9 @@ body.appendChild(ok);
 var tutStep=0, tutActive=false, tutSteps=[];
 var TUT_BASE=[
 {t:'Привет! Это ЦЕХ·7', x:'Здесь из простых ингредиентов рождаются вкусные продукты. Покажу, как идёт смена, – это быстро!', target:null, img:'tut_intro'},
-{t:'Поставщики сырья', x:'Кружочки под доской – поставщики. Нажми на кружок – и он даст сырьё за энергию ⚡. Энергия восстанавливается со временем.', target:'#plants'},
+{t:'Поставщики сырья', x:'Кружочки под доской – поставщики. Нажми на кружок – и он даст сырьё за энергию . Энергия восстанавливается со временем.', target:'#plants'},
 {t:'Слияние', x:'Объединяй одинаковые предметы, чтобы получить следующий уровень ингредиента, – и так до готового продукта.', target:'#board'},
-{t:'Заказы', x:'Перетащи готовый продукт на карточку заказа – или нажми на продукт дважды, чтобы завершить заказ. За заказы падают карточки в «Бюро» !', target:'#orders'},
+{t:'Заказы', x:'Перетащи готовый продукт на карточку заказа – или нажми на продукт дважды, чтобы завершить заказ. За заказы падают карточки в «Бюро» 🎴!', target:'#orders'},
 {t:'Магазин', x:'🛒 – магазин фабрики: батареи, улучшения, опт и новые линии. Заглядывай, когда накопишь монеты!', target:'#shopwrap'},
 {t:'Смена', x:'А это переключатель дневной и ночной смены. Выбери свет по настроению. Удачи на смене!', target:'#shift-wrap'}
 ];
@@ -1640,7 +1647,7 @@ host.innerHTML=
 '<div class="od-row"><span class="sh-ico">📦</span><span class="sh-txt"><b>Сейчас в работе</b>'+active+'</span></div>'+
 '<div class="od-row"><span class="sh-ico">🎴</span><span class="sh-txt"><b>Карточки коллекции</b>'+cardsCount()+'/'+TOTAL_CARDS+'</span></div>'+
 '<div class="od-row"><span class="sh-ico">⚙</span><span class="sh-txt"><b>Уровень фабрики</b>'+lvl+'</span></div>'+
-'<div class="od-row"><span class="sh-ico"></span><span class="sh-txt"><b>Директор</b>'+directorName+' '+(AVATARS[directorAvatar]||AVATARS[0]).icon+'</span></div>';
+'<div class="od-row"><span class="sh-ico">👤</span><span class="sh-txt"><b>Директор</b>'+directorName+' '+(AVATARS[directorAvatar]||AVATARS[0]).icon+'</span></div>';
 }
 function rebuildGrid(){ for(var i=0;i<grid.length;i++) grid[i]=null; for(var j=0;j<items.length;j++) grid[items[j].idx]=items[j]; }
 function rebuildCellEls(){
@@ -1968,21 +1975,21 @@ pr2.innerHTML=coinHTML(o.reward);
 side.appendChild(ex2); side.appendChild(qw2); side.appendChild(pr2);
 if(o.express&&!o.done){
 var tm2=document.createElement('span'); tm2.className='o-timer o-timer-m';
-tm2.textContent=' '+fmtTime(o.deadline-Date.now());
+tm2.textContent='⏱ '+fmtTime(o.deadline-Date.now());
 side.appendChild(tm2);
 }
 row.appendChild(side);
 var foot=document.createElement('div'); foot.className='o-foot';
 var ex=document.createElement('button'); ex.className='o-expand'; ex.title='Подробнее о заказе';
 var h3=document.createElement('span'); h3.className='exp-ico'; ex.appendChild(h3);
-fillArt(h3,'icon_expand','⌃');
+fillArt(h3,'icon_expand','⌃⌃');
 ex.addEventListener('click',function(e){ e.stopPropagation(); openOrderSheet(i); });
 var rew=document.createElement('span'); rew.className='o-reward';
 rew.innerHTML=coinHTML(o.reward);
 foot.appendChild(ex); foot.appendChild(rew);
 if(o.express&&!o.done){
 var tm=document.createElement('span'); tm.className='o-timer';
-tm.textContent=' '+fmtTime(o.deadline-Date.now());
+tm.textContent='⏱ '+fmtTime(o.deadline-Date.now());
 foot.appendChild(tm);
 }
 var pips=document.createElement('div'); pips.className='o-pips';
@@ -2000,7 +2007,7 @@ var c=CHAIN[o.chain], t=c.tiers[o.tier-1];
 var w=document.createElement('div');
 w.innerHTML=
 '<div class="od-row"><span class="o-art"></span>'+
-'<div style="flex:1;min-width:0"><b>'+orderName(t)+'</b><span>'+(o.express?'⚡ экспресс · ':'')+'Заказчик: '+o.client+'</span></div>'+
+'<div style="flex:1;min-width:0"><b>'+orderName(t)+'</b><span>'+(o.express?' экспресс · ':'')+'Заказчик: '+o.client+'</span></div>'+
 '<div class="o-qty">'+(o.done?'✓':'×'+o.need)+'</div></div>'+
 '<div class="od-row"><span class="o-reward" style="display:inline">'+coinHTML(o.reward)+'</span><span class="o-pips"></span>'+
 (o.express&&!o.done?'<span class="o-timer">⏱ '+fmtTime(o.deadline-Date.now())+'</span>':'')+'</div>'+
@@ -2028,7 +2035,7 @@ var txt=document.createElement('span'); txt.className='ln-txt';
 txt.innerHTML='<b>Линия «'+c.lineName+'»</b>';
 row.appendChild(art); row.appendChild(txt);
 if(isUn){
-var g=document.createElement('span'); g.className='ln-gear'; g.textContent=''; g.title='Линия активна';
+var g=document.createElement('span'); g.className='ln-gear'; g.textContent='⚙'; g.title='Линия активна';
 row.appendChild(g);
 } else {
 var btn=document.createElement('button'); btn.className='ln-btn';
@@ -2081,9 +2088,6 @@ b.style.setProperty('--pc',c.color);
 var art=document.createElement('span'); art.className='p-art'; fillArt(art,c.spawner.key,c.spawner.emoji);
 b.appendChild(art);
 if(!isUn){ var lk=document.createElement('span'); lk.className='p-lock'; lk.textContent='🔒'; b.appendChild(lk); }
-var tip=document.createElement('span'); tip.className='p-tip';
-tip.innerHTML='<b>'+c.spawner.name+'</b> – '+(isUn?('сырьё: 1 за '+SPAWN_COST):('линия закрыта, открытие в списке площадок'));
-b.appendChild(tip);
 b.addEventListener('click',function(){
 if(!isUnlocked(c.id)){ toast('Линия «'+c.lineName+'» закрыта – открой её в списке площадок',true); sfx('err'); return; }
 spawn(c.id); });
@@ -2096,9 +2100,6 @@ var sart=document.createElement('span'); sart.className='p-art'; fillArt(sart,'s
 sb.appendChild(sart);
 var badge=document.createElement('span'); badge.className='p-badge'; badge.id='turbo-badge'; badge.style.display='none';
 sb.appendChild(badge);
-var tip=document.createElement('span'); tip.className='p-tip';
-tip.innerHTML='<b>Магазин фабрики</b>';
-sb.appendChild(tip);
 sb.addEventListener('click',function(){ toggleShop(); });
 sw.appendChild(sb);
 var pop=document.createElement('div'); pop.className='shop-pop'; pop.id='shop-pop';
@@ -2129,7 +2130,7 @@ if(hasWh(c.id)){ toast('Опт «'+c.lineName+'» уже активен'); retur
 if(coins<c.wholesale){ toast('Нужно 💰 '+c.wholesale+' для опта «'+c.lineName+'»',true); sfx('err'); bump('#chip-coins'); return; }
 coins-=c.wholesale; $('#coins').textContent=coins; bump('#chip-coins');
 whOwned.push(c.id);
-toast('Опт «'+c.lineName+'» активен: 2 сырья за ⚡'+WH_COST+' '); sfx('buy'); save();
+toast('Опт «'+c.lineName+'» активен: 2 сырья за ⚡'+WH_COST+' 📦'); sfx('buy'); save();
 }
 function toggleShop(){
 var pop=$('#shop-pop'), sw=$('#shopwrap');
@@ -2157,7 +2158,7 @@ function renderShop(){
 var pop=$('#shop-pop'); if(!pop) return;
 pop.innerHTML='';
 var h=document.createElement('h4');
-h.innerHTML=icoHTML('icon_shop','🛒')+' Магазин фабрики';
+h.innerHTML=icoHTML('icon_shop','')+' Магазин фабрики';
 pop.appendChild(h);
 function row(ico,name,desc,btn,cb,cls,mute){
 var r=document.createElement('div'); r.className='sh-row'+(mute?' mute':'');
@@ -2170,8 +2171,8 @@ function back(){ row('←','Назад','','в магазин',function(){ shopM
 if(shopMode==='wh'){
 CHAINS.forEach(function(c){
 if(hasWh(c.id)) row(icoHTML('icon_box','📦'),c.lineName,'опт активен: 2 сырья за ⚡'+WH_COST,'✓',null,'owned');
-else if(!isUnlocked(c.id)) row('',c.lineName,'сначала открой линию','—',null,null,true);
-else row(icoHTML('icon_box','📦'),c.lineName,'2 сырья за ⚡'+WH_COST+' вместо 1 за ⚡'+SPAWN_COST,coinHTML(c.wholesale),function(){
+else if(!isUnlocked(c.id)) row('🔒',c.lineName,'сначала открой линию','—',null,null,true);
+else row(icoHTML('icon_box','📦'),c.lineName,'2 сырья за '+WH_COST+' вместо 1 за ⚡'+SPAWN_COST,coinHTML(c.wholesale),function(){
 tryWh(c); shopMode='main'; renderShop();
 });
 });
@@ -2191,9 +2192,9 @@ coins-=BATT_COST; energy=Math.min(E_MAX,energy+10);
 $('#coins').textContent=coins; updEnergy(); bump('#chip-coins');
 toast('⚡ +10 энергии'); sfx('buy'); save(); renderShop();
 });
-if(eu>=EU_COSTS.length) row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' ⚡','MAX',null,'owned');
+if(eu>=EU_COSTS.length) row(icoHTML('icon_energy',''),'Энергия +5','максимум: '+E_MAX+' ⚡','MAX',null,'owned');
 else row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' → '+(E_MAX+5)+' ⚡',coinHTML(EU_COSTS[eu]),buyEnergy);
-if(turboActive()) row(icoHTML('icon_turbo','⚡'),'Турбо-смена','пузыри можно лопать бесплатно','⚡ '+fmtTime(turboUntil-Date.now()),null,'owned');
+if(turboActive()) row(icoHTML('icon_turbo',''),'Турбо-смена','пузыри можно лопать бесплатно','⚡ '+fmtTime(turboUntil-Date.now()),null,'owned');
 else row(icoHTML('icon_turbo','⚡'),'Турбо-смена','5 мин: пузыри с предметами можно лопать бесплатно',coinHTML(TURBO_COST),function(){
 if(coins<TURBO_COST){ toast('Нужно 💰 '+TURBO_COST,true); sfx('err'); return; }
 coins-=TURBO_COST; turboUntil=Date.now()+TURBO_TIME;
@@ -2347,7 +2348,7 @@ un:unlocked,wh:whOwned,eu:eu,ws:0,pr:prOwned,tb:turboUntil,cols:6,rows:6,
 cd:cards,pd:pending,py:pity,pz:prized,
 items:items.map(function(it){ return {i:it.idx,c:it.chain,t:it.tier}; }),
 orders:orders.map(function(o){ return o?{c:o.chain,q:o.qty,n:o.need,r:o.reward,d:!!o.done,t:o.tier,e:!!o.express,dl:o.deadline||0,cl:o.client||''}:0; }),
-ev:currentEvent,evend:eventEnd,evp:evPatternIdx,evline:currentEventLine
+ev:currentEvent,evend:eventEnd,evp:evPatternIdx
 }));
 }catch(e){}
 }
@@ -2363,7 +2364,6 @@ musicOn=def(s.mon,true); sfxOn=def(s.son,true);
 volMusic=clamp(def(s.vm,.5),0,1); volSfx=clamp(def(s.vs,1),0,1);
 cards=s.cd||{}; pending=s.pd||[]; pity=s.py||{}; prized=s.pz||{};
 currentEvent=s.ev||null; eventEnd=s.evend||0; evPatternIdx=def(s.evp,0);
-currentEventLine=s.evline||null;
 var un=(s.un&&s.un.length)?s.un.slice():['oil'];
 if(un.indexOf('oil')<0) un.push('oil');
 unlocked=un.filter(function(id){ return CHAIN[id]; });
@@ -2426,11 +2426,10 @@ var sv=$('#snd-sfx-vol'); if(sv) sv.value=Math.round(volSfx*100);
 if(BGM) BGM.volume=volMusic;
 updSoundIcon();
 renderAvatarButton();
-var fabBtn = document.querySelector('#btn-factory .fab-ico');
-if(fabBtn) fillArt(fabBtn,'icon_factory','🏭');
+fillArt($('#factory-ico'),'icon_factory','🏭');
 fillArt($('#bur-ico'),'bureau','🎴');
 fillArt($('#bur-ico-m'),'bureau','🎴');
-fillArt($('#coin-ico'),'icon_coin','');
+fillArt($('#coin-ico'),'icon_coin','💰');
 fillArt($('#energy-ico'),'icon_energy','⚡');
 updEnergyShop();
 if(!had){
@@ -2482,6 +2481,7 @@ $('#btn-bureau').onclick=openBureau;
 $('#btn-bureau-m').onclick=openBureau;
 $('#btn-orders-icon').onclick=function(){ openSheet('stats','Статистика заказов',renderStats); };
 $('#btn-tutorial').onclick=function(){ startTutorial(); };
+$('#btn-tutorial-m').onclick=function(){ startTutorial(); };
 $('#bur-close').onclick=closeBureau;
 $('#bureau-back').onclick=closeBureau;
 $('#btn-factory').onclick=function(){ openSheet('lines','Производственные площадки',renderLines); };
