@@ -11,12 +11,6 @@ window.addEventListener('error', function(e){
 var d=document.getElementById('debug');
 if(d){ d.textContent=' Ошибка: '+e.message+(e.lineno?' (строка '+e.lineno+')':''); d.className='on'; }
 });
-setTimeout(function(){
-if(!window.__CEH_READY){
-var d=document.getElementById('debug');
-if(d){ d.textContent=' Основной скрипт не запустился. Похоже, файл сохранился не целиком: скопируй код заново ПОЛНОСТЬЮ, от <!doctype> до </html>, и сохрани в кодировке UTF-8.'; d.className='on'; }
-}
-},2500);
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,7 +81,6 @@ body.lowfx .order-card,body.lowfx .order-card.fresh,body.lowfx .order-card.expre
 body.lowfx .item.pop .in,body.lowfx .item.dropin .in{animation:none}
 body.lowfx .chip.bump{animation:none}
 body.lowfx #factory-svg .smk,body.lowfx #factory-svg .win,body.lowfx #factory-svg .cloud,body.lowfx #factory-svg .truck{animation:none}
-body.lowfx .smoke-stack i{animation:none;opacity:0}
 #bg{position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;overflow:hidden}
 #bg .tex{position:absolute;top:0;left:0;right:0;bottom:0;background:
 repeating-linear-gradient(45deg, rgba(1,80,61,.04) 0 2px, transparent 2px 26px),
@@ -102,9 +95,9 @@ html[data-theme="night"] .glow{opacity:.09}
 .g3{background:var(--blue);top:32%;left:36%;width:28vw;height:28vw;opacity:.10;animation-delay:-11s}
 @keyframes drift{to{transform:translate(4vw,3vw) scale(1.12)}}
 .hazard{position:absolute;left:0;right:0;height:10px;opacity:.85;
-background:repeating-linear-gradient(-45deg,var(--amber2) 0 16px,var(--haz2) 16px 32px);
+background:repeating-linear-gradient(-45deg,var(--brand2) 0 16px,var(--haz2) 16px 32px);
 animation:convoy 2.6s linear infinite}
-html[data-theme="night"] .hazard{opacity:.55}
+html[data-theme="night"] .hazard{opacity:.55;background:repeating-linear-gradient(-45deg,#ffffff 0 16px,var(--haz2) 16px 32px)}
 .hz-t{top:0}.hz-b{bottom:0;animation-direction:reverse}
 @keyframes convoy{to{background-position:45.25px 0}}
 .gear{position:absolute;line-height:1;color:var(--line2);opacity:var(--gearop);animation:spin 42s linear infinite}
@@ -153,20 +146,65 @@ html[data-theme="night"] #factory-svg .truck{filter:drop-shadow(0 0 6px rgba(12,
 }
 #loading-screen{position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;display:flex;flex-direction:column;
 align-items:center;justify-content:center;background:var(--bg);pointer-events:auto}
-.lf-box{position:relative;width:150px;height:150px;margin-bottom:26px}
+.lf-box{
+  position:relative;
+  width:150px;
+  height:180px; /* увеличиваем высоту на 30px для кружочков */
+  margin-bottom:26px;
+  overflow:hidden;
+}
+.lf-ico{
+  position:absolute;
+  top:0;
+  left:0;
+  width:150px;
+  height:150px;
+  z-index:1;
+}
+.lf-box::before,.lf-box::after{
+  content:'';
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:30px;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:0;
+}
+.lf-box::before{
+  background:radial-gradient(circle at 35% 30%,rgba(15,30,20,.85),rgba(8,20,12,.7) 70%);
+  box-shadow:
+    18px -2px 0 1px rgba(76,195,150,.5),
+    36px -4px 0 0 rgba(12,28,18,.75),
+    54px -6px 0 1px rgba(76,195,150,.4),
+    72px -8px 0 0 rgba(10,25,15,.7),
+    90px -10px 0 1px rgba(76,195,150,.35),
+    108px -12px 0 0 rgba(8,22,14,.65),
+    126px -14px 0 1px rgba(76,195,150,.3);
+  animation:swirl1 3s ease-in-out infinite;
+}
+.lf-box::after{
+  background:radial-gradient(circle at 35% 30%,rgba(10,25,15,.8),rgba(6,18,10,.65) 70%);
+  box-shadow:
+    24px -1px 0 1px rgba(76,195,150,.45),
+    48px -3px 0 0 rgba(14,32,20,.7),
+    72px -5px 0 1px rgba(76,195,150,.35),
+    96px -7px 0 0 rgba(12,30,18,.65),
+    120px -9px 0 1px rgba(76,195,150,.3),
+    138px -11px 0 0 rgba(10,28,16,.6);
+  animation:swirl2 3s ease-in-out infinite .5s;
+}
+@keyframes swirl1{
+  0%,100%{opacity:.7;transform:translate(0,0) scale(1)}
+  50%{opacity:1;transform:translate(2px,-2px) scale(1.08)}
+}
+@keyframes swirl2{
+  0%,100%{opacity:.6;transform:translate(0,0) scale(1)}
+  50%{opacity:.9;transform:translate(-2px,-3px) scale(1.12)}
+}
 .lf-ico{display:grid;place-items:center;width:100%;height:100%;font-size:96px;overflow:hidden}
 .lf-ico img{width:100%;height:100%;object-fit:contain;display:block}
-.smoke-stack{position:absolute;left:var(--smoke-x,34%);top:var(--smoke-y,27%);width:0;height:0;pointer-events:none}
-.smoke-stack i{position:absolute;left:0;bottom:0;width:12px;height:12px;border-radius:50%;
-background:rgba(255,255,255,.85);filter:blur(1.5px);opacity:0;animation:puff 2.4s linear infinite}
-.smoke-stack i:nth-child(2){width:16px;height:16px;animation-delay:.8s;background:rgba(255,255,255,.65)}
-.smoke-stack i:nth-child(3){width:20px;height:20px;animation-delay:1.6s;background:rgba(240,244,248,.75)}
-@keyframes puff{
-0%{transform:translate(-50%,0) scale(.5);opacity:0}
-15%{opacity:.8}
-60%{opacity:.45}
-100%{transform:translate(calc(-50% + 26px),-70px) scale(1.6);opacity:0}
-}
 .lf-barwrap{width:280px;height:24px;background:var(--panel);border:3px solid var(--brand2);border-radius:999px;overflow:hidden;box-shadow:4px 4px 0 var(--shadowc)}
 #loading-bar{width:0%;height:100%;background:linear-gradient(90deg,var(--amber),var(--amber2));transition:width .3s ease-out}
 #loading-percent{margin-top:12px;font-family:var(--disp);font-weight:700;font-size:18px;color:var(--head)}
@@ -805,9 +843,8 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <div class="hazard hz-t"></div><div class="hazard hz-b"></div>
 <div class="gear gr1">⚙</div><div class="gear gr2"></div>
 <div id="loading-screen" onclick="tryPlayMusic();">
-<div class="lf-box" style="--smoke-x:34%;--smoke-y:27%;">
+<div class="lf-box">
 <span class="lf-ico" id="loading-factory-ico">🏭</span>
-<div class="smoke-stack" aria-hidden="true"><i></i><i></i><i></i></div>
 </div>
 <div class="lf-barwrap"><div id="loading-bar"></div></div>
 <div id="loading-percent">0%</div>
@@ -864,7 +901,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <div id="order-cards"></div>
 <button class="tut-btn" id="btn-tutorial"> Пройти обучение</button>
 <div id="chain-help"><h3>Цепочки производства</h3><div id="chain-rows"></div></div>
-<p class="hint">Слева – производственные площадки (открываются за монеты), внизу – кружочки поставщиков сырья: клик даёт сырьё, 🛒 – мини-магазин. Выполняй заказы – в «Бюро» падают коллекционные карточки: обычные с заказов, редкие (★4–★5) – с экспрессов. Собери все 20 – и фабрика оживёт!</p>
+<p class="hint">Выполняйте заказы и собирайте коллекционные карточки: обычные падают с простых заказов, редкие (★4–★5) – с экспресс-заказов. Соберите все 20 карточек – и фабрика оживёт!</p>
 </div>
 </aside>
 </main>
@@ -1227,9 +1264,9 @@ toast(eventName(currentEvent));
 save();
 }
 function eventName(ev){
-if(ev==='line_bonus'){ var ln=currentEventLine&&CHAIN[currentEventLine]?CHAIN[currentEventLine].lineName:''; return '🎉 Бонус линии +10%'+(ln?': «'+ln+'»':''); }
-if(ev==='express_rate') return '⚡ Экспрессы приходят чаще';
-if(ev==='bubble_rate') return '🫧 Пузыри с копиями чаще';
+if(ev==='line_bonus'){ var ln=currentEventLine&&CHAIN[currentEventLine]?CHAIN[currentEventLine].lineName:''; return 'Бонус линии +10%'+(ln?': «'+ln+'»':''); }
+if(ev==='express_rate') return 'Экспресс-заказы поступают чаще';
+if(ev==='bubble_rate') return 'Увеличена частота появления копий';
 return '';
 }
 function eventArtKey(ev){
@@ -1550,11 +1587,11 @@ body.appendChild(ok);
 var tutStep=0, tutActive=false, tutSteps=[];
 var TUT_BASE=[
 {t:'Привет! Это ЦЕХ·7', x:'Здесь из простых ингредиентов рождаются вкусные продукты. Покажу, как идёт смена, – это быстро!', target:null, img:'tut_intro'},
-{t:'Поставщики сырья', x:'Кружочки под доской – поставщики. Нажми на кружок – и он даст сырьё за энергию . Энергия восстанавливается со временем.', target:'#plants'},
-{t:'Слияние', x:'Объединяй одинаковые предметы, чтобы получить следующий уровень ингредиента, – и так до готового продукта.', target:'#board'},
-{t:'Заказы', x:'Перетащи готовый продукт на карточку заказа – или нажми на продукт дважды, чтобы завершить заказ. За заказы падают карточки в «Бюро» 🎴!', target:'#orders'},
-{t:'Магазин', x:'🛒 – магазин фабрики: батареи, улучшения, опт и новые линии. Заглядывай, когда накопишь монеты!', target:'#shopwrap'},
-{t:'Смена', x:'А это переключатель дневной и ночной смены. Выбери свет по настроению. Удачи на смене!', target:'#shift-wrap'}
+{t:'Поставщики сырья', x:'Кружочки под доской – поставщики. Нажмите на кружок – и он даст сырьё за энергию. Энергия восстанавливается со временем.', target:'#plants'},
+{t:'Прогресс', x:'Объединяйте одинаковые предметы, чтобы получить следующий уровень ингредиента, – и так до готового продукта.', target:'#board'},
+{t:'Заказы', x:'Переместите готовый продукт на карточку заказа или нажмите на продукт дважды, чтобы завершить заказ. За заказы можно получить карточки в «Бюро» 🎴!', target:'#orders'},
+{t:'Магазин', x:'🛒 – магазин фабрики: здесь можно найти различные улучшения и бонусы. Заглядывайте, когда накопите монеты!', target:'#shopwrap'},
+{t:'Смена', x:'А это переключатель дневной и ночной смены. Выберите свет по настроению. Удачи на смене!', target:'#shift-wrap'}
 ];
 function positionSpot(key){
 var spot=$('#tut-spot');
@@ -2167,7 +2204,7 @@ if(shopMode==='wh'){
 CHAINS.forEach(function(c){
 if(hasWh(c.id)) row(icoHTML('icon_box',''),c.lineName,'опт активен: 2 сырья за ⚡'+WH_COST,'✓',null,'owned');
 else if(!isUnlocked(c.id)) row('🔒',c.lineName,'сначала открой линию','—',null,null,true);
-else row(icoHTML('icon_box','📦'),c.lineName,'2 сырья за '+WH_COST+' вместо 1 за '+SPAWN_COST,coinHTML(c.wholesale),function(){
+else row(icoHTML('icon_box','📦'),c.lineName,'2 сырья за '+WH_COST+' ⚡ вместо 1 за '+SPAWN_COST,coinHTML(c.wholesale),function(){
 tryWh(c); shopMode='main'; renderShop();
 });
 });
@@ -2424,7 +2461,7 @@ renderAvatarButton();
 /* ИСПРАВЛЕНИЕ: правильный селектор для иконки фабрики */
 var fabIco = document.querySelector('#btn-factory .fab-ico');
 if(fabIco) fillArt(fabIco,'icon_factory','🏭');
-fillArt($('#bur-ico'),'bureau','');
+fillArt($('#bur-ico'),'bureau','🎴');
 fillArt($('#bur-ico-m'),'bureau','🎴');
 fillArt($('#coin-ico'),'icon_coin','💰');
 fillArt($('#energy-ico'),'icon_energy','⚡');
