@@ -5,16 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f6f4ec">
 <title>ЦЕХ·7 – фабрика соусов и молока</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏭</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'></text></svg>">
 <script>
 window.addEventListener('error', function(e){
 var d=document.getElementById('debug');
-if(d){ d.textContent='⛔ Ошибка: '+e.message+(e.lineno?' (строка '+e.lineno+')':''); d.className='on'; }
+if(d){ d.textContent=' Ошибка: '+e.message+(e.lineno?' (строка '+e.lineno+')':''); d.className='on'; }
 });
 setTimeout(function(){
 if(!window.__CEH_READY){
 var d=document.getElementById('debug');
-if(d){ d.textContent='⛔ Основной скрипт не запустился. Похоже, файл сохранился не целиком: скопируй код заново ПОЛНОСТЬЮ, от <!doctype> до </html>, и сохрани в кодировке UTF-8.'; d.className='on'; }
+if(d){ d.textContent=' Основной скрипт не запустился. Похоже, файл сохранился не целиком: скопируй код заново ПОЛНОСТЬЮ, от <!doctype> до </html>, и сохрани в кодировке UTF-8.'; d.className='on'; }
 }
 },2500);
 </script>
@@ -595,7 +595,7 @@ transition:.15s;box-shadow:2px 2px 0 var(--shadowc)}
 .avatar-option:hover{transform:scale(1.08);box-shadow:3px 3px 0 var(--shadowc)}
 .avatar-option.selected{border-color:var(--amber2);box-shadow:0 0 0 2px var(--amber2), 3px 3px 0 var(--shadowc)}
 .avatar-option.locked{opacity:.45;cursor:not-allowed;filter:grayscale(.6)}
-.avatar-option.locked::after{content:'🔒';position:absolute;font-size:14px;bottom:-2px;right:-2px}
+.avatar-option.locked::after{content:'';position:absolute;font-size:14px;bottom:-2px;right:-2px}
 .avatar-option img{width:100%;height:100%;object-fit:cover}
 .profile-lvl-info{font-size:11px;color:var(--mut);margin-top:10px;line-height:1.45}
 .profile-lvl-info b{color:var(--head)}
@@ -632,7 +632,6 @@ white-space:nowrap;text-align:center;box-shadow:6px 6px 0 var(--shadowc);max-wid
 .o-expand{display:inline-flex}
 .o-foot .o-pips{position:absolute;right:8px;bottom:8px}
 }
-/* ═══ МОБИЛЬНАЯ ШАПКА: 2 строки, адаптивные размеры ══ */
 @media (max-width:640px){
 #topbar{display:grid;grid-template-columns:auto 1fr auto auto;grid-template-rows:auto auto;gap:3px 6px;align-items:center;padding:5px 6px}
 .avatar-btn{grid-column:1;grid-row:1/3;width:clamp(32px,9vw,48px);height:clamp(32px,9vw,48px);font-size:clamp(16px,4.5vw,24px)}
@@ -671,7 +670,6 @@ white-space:nowrap;text-align:center;box-shadow:6px 6px 0 var(--shadowc);max-wid
 .p-lock{font-size:9px;bottom:-2px;right:-2px}
 .p-wh{top:-5px;left:-5px;font-size:6px;padding:1px 4px}
 .p-badge{top:-5px;right:-5px;font-size:6px;padding:1px 4px}
-.p-tip{display:none!important}
 #orders{flex-direction:row;align-items:stretch;gap:5px;padding:5px;max-height:none;box-shadow:3px 3px 0 var(--shadowc), inset 0 -1px 2px rgba(0,0,0,.06)}
 .orders-side{display:flex;flex-direction:column;gap:5px;align-items:center;flex:0 0 auto}
 #btn-orders-icon{display:block;width:clamp(34px,9vw,42px);height:clamp(34px,9vw,42px);font-size:clamp(14px,4vw,17px);border-radius:10px}
@@ -679,8 +677,6 @@ white-space:nowrap;text-align:center;box-shadow:6px 6px 0 var(--shadowc);max-wid
 border-radius:10px;border:2px solid var(--violet);background:var(--card);cursor:pointer;box-shadow:2px 2px 0 var(--shadowc)}
 .bureau-m .bur-ico{width:clamp(18px,5vw,22px);height:clamp(18px,5vw,22px);font-size:clamp(14px,4vw,17px)}
 .bureau-m .pend{position:absolute;top:-6px;right:-6px}
-#btn-tutorial-m{display:flex;align-items:center;justify-content:center;width:clamp(34px,9vw,42px);height:clamp(34px,9vw,42px);
-border-radius:10px;border:2px solid var(--amber2);background:var(--card);cursor:pointer;box-shadow:2px 2px 0 var(--shadowc);font-size:clamp(14px,4vw,17px)}
 .orders-main{flex:1;min-width:0}
 .orders-head{display:none}
 #order-cards{display:flex;gap:5px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;padding:6px 3px 5px}
@@ -709,7 +705,7 @@ html[data-theme="night"] body.prized-all #topbar{background:rgba(16,29,22,.62)}
 #topbar{gap:2px 4px;padding:4px 5px}
 .avatar-btn{width:28px;height:28px;font-size:14px}
 .factory-btn{width:28px;height:28px;font-size:14px}
-#btn-sound,.chains-btn,#btn-tutorial-m,#btn-orders-icon,.bureau-m{width:26px;height:26px;font-size:11px}
+#btn-sound,.chains-btn,#btn-orders-icon,.bureau-m{width:26px;height:26px;font-size:11px}
 .chip{padding:2px 5px;font-size:9px}
 .chip b{font-size:9px}
 .lvl-badge{width:24px;height:24px}
@@ -807,7 +803,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 </g>
 </svg>
 <div class="hazard hz-t"></div><div class="hazard hz-b"></div>
-<div class="gear gr1">⚙</div><div class="gear gr2">⚙</div>
+<div class="gear gr1">⚙</div><div class="gear gr2"></div>
 <div id="loading-screen" onclick="tryPlayMusic();">
 <div class="lf-box" style="--smoke-x:34%;--smoke-y:27%;">
 <span class="lf-ico" id="loading-factory-ico">🏭</span>
@@ -819,7 +815,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 </div>
 <div id="app">
 <header id="topbar">
-<button class="icobtn avatar-btn" id="btn-profile" title="Профиль директора"></button>
+<button class="icobtn avatar-btn" id="btn-profile" title="Профиль директора">👤</button>
 <div class="tb-mid">
 <div class="tb-namerow">
 <span class="dir-name" id="dir-name">Директор</span>
@@ -827,8 +823,8 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 </div>
 <div class="stats" id="stats">
 <div class="lvl-badge" id="lvl-badge"><span class="lvl-num" id="lvl">1</span><span class="lvl-tip" id="lvl-tip"></span></div>
-<div class="chip gold" id="chip-coins"><span id="coin-ico">💰</span> <b id="coins">0</b></div>
-<div class="chip" id="chip-energy"><span id="energy-ico">⚡</span> <b id="energy">0</b><span id="emax">/30</span></div>
+<div class="chip gold" id="chip-coins"><span id="coin-ico"></span> <b id="coins">0</b></div>
+<div class="chip" id="chip-energy"><span id="energy-ico"></span> <b id="energy">0</b><span id="emax">/30</span></div>
 <button class="chip shop" id="chip-energy-up" title="Увеличить максимум энергии на 5">⚡+5 · 💰200</button>
 <div class="shift-wrap" id="shift-wrap">
 <span class="shift-label">Смена:</span>
@@ -859,7 +855,6 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <span class="bur-ico" id="bur-ico-m"></span>
 <span class="pend" hidden>+1</span>
 </button>
-<button class="icobtn" id="btn-tutorial-m" title="Пройти обучение">🎓</button>
 </div>
 <div class="orders-main">
 <div class="orders-head">
@@ -886,7 +881,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 </div>
 <div id="bureau-back"></div>
 <div id="bureau">
-<div class="bur-head"><b id="bur-title">🎴 Коллекционное бюро</b><button class="icobtn" id="bur-close" title="Закрыть"></button></div>
+<div class="bur-head"><b id="bur-title"> Коллекционное бюро</b><button class="icobtn" id="bur-close" title="Закрыть">✕</button></div>
 <div class="bur-body" id="bur-body"></div>
 </div>
 <div id="confirm-ov"></div>
@@ -912,7 +907,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <div id="tut-spot"></div>
 <div id="tut-card">
 <div class="tut-img" id="tut-img"></div>
-<div class="tut-head"><span class="tut-gear">⚙</span><b id="tut-title"></b></div>
+<div class="tut-head"><span class="tut-gear"></span><b id="tut-title"></b></div>
 <p id="tut-text"></p>
 <div class="tut-foot">
 <div id="tut-dots"></div>
@@ -956,26 +951,26 @@ catName:'Загадка подсолнечного масла', catEmoji:'🌻',
 spawner:{key:'sp_oil', emoji:'🌻', name:'Подсолнечное поле'},
 tiers:[
 {key:'oil_1', emoji:'🌰', name:'Семена подсолнуха', fact:'Родина подсолнечника – Северная Америка. В 100 граммах ядер содержится более 50г жиров, 20г белков и 3г углеводов.'},
-{key:'oil_2', emoji:'', name:'Обрушивание', fact:'Это процесс очистки ядра от мусора и лузги, при котором семечко теряет до 35% своей массы.'},
+{key:'oil_2', emoji:'🥜', name:'Обрушивание', fact:'Это процесс очистки ядра от мусора и лузги, при котором семечко теряет до 35% своей массы.'},
 {key:'oil_3', emoji:'🗜️', name:'Пресс и отжим', fact:'Для получения литра масла нужно примерно 4 кг очищенных семечек, которые прошли через влаготепловую обработку, пресс и отжим.'},
-{key:'oil_4', emoji:'️', name:'Дистилляция и рафинирование', oname:'Дистиллированное масло', fact:'Когда-то масло фильтровали через песок. Современное оборудование позволяет обойтись без него ;-)'},
+{key:'oil_4', emoji:'⚗️', name:'Дистилляция и рафинирование', oname:'Дистиллированное масло', fact:'Когда-то масло фильтровали через песок. Современное оборудование позволяет обойтись без него ;-)'},
 {key:'oil_5', emoji:'🏺', name:'Подсолнечное масло', fact:'В 1829 году крепостной Даниил Бокарев разработал способ холодного отжима подсолнечного масла, а в 1833 году в Алексеевке открылся первый маслобойный завод.'} ]},
 { id:'mayo', color:'#e9b308', soft:'rgba(233,179,8,.16)', lineName:'Майонезы', unlock:300, wholesale:450,
 catName:'Особые тайны майонеза', catEmoji:'🥚',
 spawner:{key:'sp_mayo', emoji:'🐔', name:'Курятник'},
 tiers:[
 {key:'mayo_1', emoji:'🥚', name:'Яйцо', fact:'Несушка даёт около 300 яиц в год. Одно яйцо весит примерно 60 г, а желток занимает почти половину веса.'},
-{key:'mayo_2', emoji:'🍳', name:'Желток', fact:'Желток – природный эмульгатор. Благодаря ему капли масла равномерно распределяются в воде и не расслаиваются.'},
+{key:'mayo_2', emoji:'', name:'Желток', fact:'Желток – природный эмульгатор. Благодаря ему капли масла равномерно распределяются в воде и не расслаиваются.'},
 {key:'mayo_3', emoji:'🥄', name:'Майонезная эмульсия', fact:'В состав майонеза входят растительное масло, вода, яичный желток, уксус, соль, сахар и специи.'},
 {key:'mayo_4', emoji:'🍶', name:'Гомогенизация', oname:'Соус-база', fact:'Настоящий майонез – это эмульсия. Миллионы крошечных капелек масла, взбитых в жидкости.'},
 {key:'mayo_5', emoji:'🍯', name:'Майонез «Провансаль»', fact:'В XIX веке майонез считали деликатесом и подавали в лучших ресторанах Европы.'} ]},
 { id:'ketchup', color:'#e0452c', soft:'rgba(224,69,44,.13)', lineName:'Кетчупы', unlock:650, wholesale:550,
-catName:'Все секреты кетчупа', catEmoji:'🍅',
+catName:'Все секреты кетчупа', catEmoji:'',
 spawner:{key:'sp_ketchup', emoji:'🍅', name:'Теплица'},
 tiers:[
 {key:'ketchup_1', emoji:'🍅', name:'Помидор', fact:'Томат – ягода по ботанике, а в некоторых странах официально признан фруктом.'},
 {key:'ketchup_2', emoji:'🔪', name:'Измельчение', fact:'Томатную массу дробят, затем пропускают через протирочные машины (сито-машины), чтобы отделить кожицу и семена.'},
-{key:'ketchup_3', emoji:'🍲', name:'Термическая обработка', fact:'Уваривание происходит в вакууме. За счёт низкого давления вода испаряется быстрее, и кетчуп сохраняет яркий красный цвет и натуральный вкус.'},
+{key:'ketchup_3', emoji:'', name:'Термическая обработка', fact:'Уваривание происходит в вакууме. За счёт низкого давления вода испаряется быстрее, и кетчуп сохраняет яркий красный цвет и натуральный вкус.'},
 {key:'ketchup_4', emoji:'❄️', name:'Охлаждение', oname:'Томатная паста', fact:'После пастеризации кетчуп выходит из пастеризатора ещё горячим – с температурой около 115–120 °C. Прежде чем он попадёт в фасовочную машину, продукт должен быть охлаждён до 43 °C.'},
 {key:'ketchup_5', emoji:'🍾', name:'Кетчуп томатный', fact:'В XVII веке в Китае делали ферментированный соус «кэ-цап» из рыбы, моллюсков и соевых бобов. В Британии позже появились грибной, ореховый и даже устричный кетчупы. Томаты вошли в рецепт намного позже.'} ]},
 { id:'milk', color:'#2f9fd6', soft:'rgba(47,159,214,.15)', lineName:'Овсяное молоко', unlock:1000, wholesale:650,
@@ -1645,8 +1640,8 @@ var active=orders.filter(function(o){ return o&&!o.done; }).length;
 host.innerHTML=
 '<div class="od-row"><span class="sh-ico">✅</span><span class="sh-txt"><b>Выполнено заказов</b>'+done+'</span></div>'+
 '<div class="od-row"><span class="sh-ico">📦</span><span class="sh-txt"><b>Сейчас в работе</b>'+active+'</span></div>'+
-'<div class="od-row"><span class="sh-ico">🎴</span><span class="sh-txt"><b>Карточки коллекции</b>'+cardsCount()+'/'+TOTAL_CARDS+'</span></div>'+
-'<div class="od-row"><span class="sh-ico">⚙</span><span class="sh-txt"><b>Уровень фабрики</b>'+lvl+'</span></div>'+
+'<div class="od-row"><span class="sh-ico"></span><span class="sh-txt"><b>Карточки коллекции</b>'+cardsCount()+'/'+TOTAL_CARDS+'</span></div>'+
+'<div class="od-row"><span class="sh-ico"></span><span class="sh-txt"><b>Уровень фабрики</b>'+lvl+'</span></div>'+
 '<div class="od-row"><span class="sh-ico">👤</span><span class="sh-txt"><b>Директор</b>'+directorName+' '+(AVATARS[directorAvatar]||AVATARS[0]).icon+'</span></div>';
 }
 function rebuildGrid(){ for(var i=0;i<grid.length;i++) grid[i]=null; for(var j=0;j<items.length;j++) grid[items[j].idx]=items[j]; }
@@ -1982,7 +1977,7 @@ row.appendChild(side);
 var foot=document.createElement('div'); foot.className='o-foot';
 var ex=document.createElement('button'); ex.className='o-expand'; ex.title='Подробнее о заказе';
 var h3=document.createElement('span'); h3.className='exp-ico'; ex.appendChild(h3);
-fillArt(h3,'icon_expand','⌃⌃');
+fillArt(h3,'icon_expand','⌃');
 ex.addEventListener('click',function(e){ e.stopPropagation(); openOrderSheet(i); });
 var rew=document.createElement('span'); rew.className='o-reward';
 rew.innerHTML=coinHTML(o.reward);
@@ -2007,7 +2002,7 @@ var c=CHAIN[o.chain], t=c.tiers[o.tier-1];
 var w=document.createElement('div');
 w.innerHTML=
 '<div class="od-row"><span class="o-art"></span>'+
-'<div style="flex:1;min-width:0"><b>'+orderName(t)+'</b><span>'+(o.express?' экспресс · ':'')+'Заказчик: '+o.client+'</span></div>'+
+'<div style="flex:1;min-width:0"><b>'+orderName(t)+'</b><span>'+(o.express?'⚡ экспресс · ':'')+'Заказчик: '+o.client+'</span></div>'+
 '<div class="o-qty">'+(o.done?'✓':'×'+o.need)+'</div></div>'+
 '<div class="od-row"><span class="o-reward" style="display:inline">'+coinHTML(o.reward)+'</span><span class="o-pips"></span>'+
 (o.express&&!o.done?'<span class="o-timer">⏱ '+fmtTime(o.deadline-Date.now())+'</span>':'')+'</div>'+
@@ -2127,10 +2122,10 @@ sfx('spawn'); save();
 function tryWh(c){
 if(!isUnlocked(c.id)){ toast('Сперва открой линию «'+c.lineName+'»',true); sfx('err'); return; }
 if(hasWh(c.id)){ toast('Опт «'+c.lineName+'» уже активен'); return; }
-if(coins<c.wholesale){ toast('Нужно 💰 '+c.wholesale+' для опта «'+c.lineName+'»',true); sfx('err'); bump('#chip-coins'); return; }
+if(coins<c.wholesale){ toast('Нужно  '+c.wholesale+' для опта «'+c.lineName+'»',true); sfx('err'); bump('#chip-coins'); return; }
 coins-=c.wholesale; $('#coins').textContent=coins; bump('#chip-coins');
 whOwned.push(c.id);
-toast('Опт «'+c.lineName+'» активен: 2 сырья за ⚡'+WH_COST+' 📦'); sfx('buy'); save();
+toast('Опт «'+c.lineName+'» активен: 2 сырья за '+WH_COST+' 📦'); sfx('buy'); save();
 }
 function toggleShop(){
 var pop=$('#shop-pop'), sw=$('#shopwrap');
@@ -2158,7 +2153,7 @@ function renderShop(){
 var pop=$('#shop-pop'); if(!pop) return;
 pop.innerHTML='';
 var h=document.createElement('h4');
-h.innerHTML=icoHTML('icon_shop','')+' Магазин фабрики';
+h.innerHTML=icoHTML('icon_shop','🛒')+' Магазин фабрики';
 pop.appendChild(h);
 function row(ico,name,desc,btn,cb,cls,mute){
 var r=document.createElement('div'); r.className='sh-row'+(mute?' mute':'');
@@ -2170,9 +2165,9 @@ r.appendChild(b); pop.appendChild(r);
 function back(){ row('←','Назад','','в магазин',function(){ shopMode='main'; renderShop(); }); }
 if(shopMode==='wh'){
 CHAINS.forEach(function(c){
-if(hasWh(c.id)) row(icoHTML('icon_box','📦'),c.lineName,'опт активен: 2 сырья за ⚡'+WH_COST,'✓',null,'owned');
+if(hasWh(c.id)) row(icoHTML('icon_box',''),c.lineName,'опт активен: 2 сырья за ⚡'+WH_COST,'✓',null,'owned');
 else if(!isUnlocked(c.id)) row('🔒',c.lineName,'сначала открой линию','—',null,null,true);
-else row(icoHTML('icon_box','📦'),c.lineName,'2 сырья за '+WH_COST+' вместо 1 за ⚡'+SPAWN_COST,coinHTML(c.wholesale),function(){
+else row(icoHTML('icon_box','📦'),c.lineName,'2 сырья за '+WH_COST+' вместо 1 за '+SPAWN_COST,coinHTML(c.wholesale),function(){
 tryWh(c); shopMode='main'; renderShop();
 });
 });
@@ -2192,21 +2187,21 @@ coins-=BATT_COST; energy=Math.min(E_MAX,energy+10);
 $('#coins').textContent=coins; updEnergy(); bump('#chip-coins');
 toast('⚡ +10 энергии'); sfx('buy'); save(); renderShop();
 });
-if(eu>=EU_COSTS.length) row(icoHTML('icon_energy',''),'Энергия +5','максимум: '+E_MAX+' ⚡','MAX',null,'owned');
+if(eu>=EU_COSTS.length) row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' ','MAX',null,'owned');
 else row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' → '+(E_MAX+5)+' ⚡',coinHTML(EU_COSTS[eu]),buyEnergy);
-if(turboActive()) row(icoHTML('icon_turbo',''),'Турбо-смена','пузыри можно лопать бесплатно','⚡ '+fmtTime(turboUntil-Date.now()),null,'owned');
-else row(icoHTML('icon_turbo','⚡'),'Турбо-смена','5 мин: пузыри с предметами можно лопать бесплатно',coinHTML(TURBO_COST),function(){
+if(turboActive()) row(icoHTML('icon_turbo','⚡'),'Турбо-смена','пузыри можно лопать бесплатно','⚡ '+fmtTime(turboUntil-Date.now()),null,'owned');
+else row(icoHTML('icon_turbo',''),'Турбо-смена','5 мин: пузыри с предметами можно лопать бесплатно',coinHTML(TURBO_COST),function(){
 if(coins<TURBO_COST){ toast('Нужно 💰 '+TURBO_COST,true); sfx('err'); return; }
 coins-=TURBO_COST; turboUntil=Date.now()+TURBO_TIME;
 $('#coins').textContent=coins; bump('#chip-coins');
 toast('Турбо-смена! Ломай пузыри бесплатно ⚡ (5 мин)'); sfx('buy'); save(); renderShop();
 });
 if(CHAINS.some(function(c){ return isUnlocked(c.id)&&!hasWh(c.id); }))
-row(icoHTML('icon_box',''),'Оптовая поставка','больше сырья за меньшую стоимость','выбрать',function(){ shopMode='wh'; renderShop(); });
+row(icoHTML('icon_box','📦'),'Оптовая поставка','больше сырья за меньшую стоимость','выбрать',function(){ shopMode='wh'; renderShop(); });
 if(orders.some(function(o){ return o&&!o.done&&!o.express; }))
 row(icoHTML('icon_reroll','🌀'),'Заменить заказ','',coinHTML(REROLL_COST),function(){ shopMode='reroll'; renderShop(); });
 if(prOwned) row(icoHTML('icon_pr','📣'),'PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них','✓',null,'owned');
-else row(icoHTML('icon_pr','📣'),'PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них',coinHTML(PR_COST),function(){
+else row(icoHTML('icon_pr',''),'PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них',coinHTML(PR_COST),function(){
 if(coins<PR_COST){ toast('Нужно 💰 '+PR_COST,true); sfx('err'); return; }
 coins-=PR_COST; prOwned=true; $('#coins').textContent=coins; bump('#chip-coins');
 toast('📣 PR-менеджер нанят: экспрессы чаще и щедрее!'); sfx('buy'); save(); renderShop();
@@ -2242,7 +2237,7 @@ function addXp(n){
 xp+=n; var need=xpNeed();
 while(xp>=need){
 xp-=need; lvl++; $('#lvl').textContent=lvl;
-showStamp('Уровень '+lvl+'!','награда заказов теперь +'+((lvl-1)*5)+'💰',null,3400);
+showStamp('Уровень '+lvl+'!','награда заказов теперь +'+((lvl-1)*5)+'',null,3400);
 sfx('lvl');
 var b=$('#lvl-badge');
 if(b){ b.classList.remove('lvlup'); void b.offsetWidth; b.classList.add('lvlup'); }
@@ -2262,7 +2257,7 @@ b.classList.toggle('dim',energy<cost);
 function updEnergyShop(){
 var b=$('#chip-energy-up');
 if(eu>=EU_COSTS.length){ b.innerHTML=icoHTML('icon_energy','⚡')+' MAX'; b.classList.add('maxed'); }
-else b.innerHTML=icoHTML('icon_energy','')+'+5 · '+icoHTML('icon_coin','💰')+EU_COSTS[eu];
+else b.innerHTML=icoHTML('icon_energy','⚡')+'+5 · '+icoHTML('icon_coin','')+EU_COSTS[eu];
 $('#emax').textContent='/'+E_MAX;
 }
 function addCoins(n){ coins+=n; $('#coins').textContent=coins; bump('#chip-coins'); }
@@ -2426,8 +2421,10 @@ var sv=$('#snd-sfx-vol'); if(sv) sv.value=Math.round(volSfx*100);
 if(BGM) BGM.volume=volMusic;
 updSoundIcon();
 renderAvatarButton();
-fillArt($('#factory-ico'),'icon_factory','🏭');
-fillArt($('#bur-ico'),'bureau','🎴');
+/* ИСПРАВЛЕНИЕ: правильный селектор для иконки фабрики */
+var fabIco = document.querySelector('#btn-factory .fab-ico');
+if(fabIco) fillArt(fabIco,'icon_factory','🏭');
+fillArt($('#bur-ico'),'bureau','');
 fillArt($('#bur-ico-m'),'bureau','🎴');
 fillArt($('#coin-ico'),'icon_coin','💰');
 fillArt($('#energy-ico'),'icon_energy','⚡');
@@ -2481,7 +2478,6 @@ $('#btn-bureau').onclick=openBureau;
 $('#btn-bureau-m').onclick=openBureau;
 $('#btn-orders-icon').onclick=function(){ openSheet('stats','Статистика заказов',renderStats); };
 $('#btn-tutorial').onclick=function(){ startTutorial(); };
-$('#btn-tutorial-m').onclick=function(){ startTutorial(); };
 $('#bur-close').onclick=closeBureau;
 $('#bureau-back').onclick=closeBureau;
 $('#btn-factory').onclick=function(){ openSheet('lines','Производственные площадки',renderLines); };
