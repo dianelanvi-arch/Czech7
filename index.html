@@ -138,11 +138,11 @@ html[data-theme="night"] #factory-svg .trunk{stroke:#3a2a18}
 filter:sepia(1) saturate(2.5) hue-rotate(95deg) brightness(.6)}
 html[data-theme="night"] #factory-svg .truck{filter:drop-shadow(0 0 6px rgba(12,122,91,.85))}
 @keyframes truckride{
-0%{transform:translateX(0)}
-46%{transform:translateX(var(--tx))}
+0%{transform:translateX(0) scaleX(1)}
+46%{transform:translateX(var(--tx)) scaleX(1)}
 50%{transform:translateX(var(--tx)) scaleX(-1)}
 96%{transform:translateX(0) scaleX(-1)}
-100%{transform:translateX(0)}
+100%{transform:translateX(0) scaleX(1)}
 }
 #loading-screen{position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;display:flex;flex-direction:column;
 align-items:center;justify-content:center;background:var(--bg);pointer-events:auto;isolation:isolate}
@@ -711,6 +711,14 @@ transition:.28s cubic-bezier(.2,.9,.3,1.3);max-width:88vw;text-align:center}
 padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wrap;max-height:40vh;overflow:auto;display:none}
 #debug.on{display:block}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+.factory-btn.highlight{
+  animation:factoryPulse 1.6s ease-in-out 2;
+  box-shadow:0 0 0 3px rgba(255,197,49,.6), 4px 4px 0 var(--shadowc);
+}
+@keyframes factoryPulse{
+  0%,100%{box-shadow:0 0 0 3px rgba(255,197,49,.6), 4px 4px 0 var(--shadowc)}
+  50%{box-shadow:0 0 0 8px rgba(255,197,49,0), 4px 4px 0 var(--shadowc); transform:scale(1.08)}
+}
 </style>
 </head>
 <body>
@@ -2068,8 +2076,20 @@ var art=document.createElement('span'); art.className='p-art'; fillArt(art,c.spa
 b.appendChild(art);
 if(!isUn){ var lk=document.createElement('span'); lk.className='p-lock'; lk.textContent='🔒'; b.appendChild(lk); }
 b.addEventListener('click',function(){
-if(!isUnlocked(c.id)){ toast('Линия «'+c.lineName+'» закрыта – открой её в списке площадок',true); sfx('err'); return; }
-spawn(c.id); });
+  if(!isUnlocked(c.id)){ 
+    toast('Линия «'+c.lineName+'» закрыта – открой её в списке площадок',true); 
+    sfx('err'); 
+    var fb=$('#btn-factory');
+    if(fb){
+      fb.classList.remove('highlight');
+      void fb.offsetWidth;
+      fb.classList.add('highlight');
+      setTimeout(function(){ fb.classList.remove('highlight'); },3300);
+    }
+    return; 
+  }
+  spawn(c.id); 
+});
 w.appendChild(b);
 box.appendChild(w);
 });
