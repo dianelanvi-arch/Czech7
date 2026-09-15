@@ -2,19 +2,22 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <meta name="theme-color" content="#f6f4ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <title>ЦЕХ·7 – фабрика соусов и молока</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'></text></svg>">
-<script>
-window.addEventListener('error', function(e){
-var d=document.getElementById('debug');
-if(d){ d.textContent=' Ошибка: '+e.message+(e.lineno?' (строка '+e.lineno+')':''); d.className='on'; }
-});
-</script>
+
+<!-- VK SDK -->
+<script src="https://vk.com/js/api/vk_sdk.js"></script>
+<script src="https://vk.com/js/api/mini_apps.js"></script>
+
+<!-- Шрифты - загрузите локально для VK -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
 :root{
 --bg:#f6f4ec; --bg2:#efece1;
@@ -66,8 +69,9 @@ scrollbar-width:thin;scrollbar-color:var(--line2) transparent}
 ::-webkit-scrollbar-thumb:hover{background:var(--brand)}
 html,body{height:100%}
 body{font-family:var(--body);background:var(--bg);color:var(--ink);overflow:hidden;overscroll-behavior:none;
--webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
-button{touch-action:manipulation;font-family:var(--body)}
+-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;
+-webkit-touch-callout:none;touch-action:manipulation}
+button{touch-action:manipulation;font-family:var(--body);cursor:pointer}
 .ico-inline{width:13px;height:13px;object-fit:contain;display:inline-block;vertical-align:-2px}
 .sh-ico .ico-inline{width:20px;height:20px}
 #coin-ico,#energy-ico{display:inline-grid;place-items:center;width:16px;height:16px}
@@ -712,12 +716,12 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 #debug.on{display:block}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 .factory-btn.highlight{
-  animation:factoryPulse 1.6s ease-in-out 2;
-  box-shadow:0 0 0 3px rgba(255,197,49,.6), 4px 4px 0 var(--shadowc);
+animation:factoryPulse 1.6s ease-in-out 2;
+box-shadow:0 0 0 3px rgba(255,197,49,.6), 4px 4px 0 var(--shadowc);
 }
 @keyframes factoryPulse{
-  0%,100%{box-shadow:0 0 0 3px rgba(255,197,49,.6), 4px 4px 0 var(--shadowc)}
-  50%{box-shadow:0 0 0 8px rgba(255,197,49,0), 4px 4px 0 var(--shadowc); transform:scale(1.08)}
+0%,100%{box-shadow:0 0 0 3px rgba(255,197,49,.6), 4px 4px 0 var(--shadowc)}
+50%{box-shadow:0 0 0 8px rgba(255,197,49,0), 4px 4px 0 var(--shadowc); transform:scale(1.08)}
 }
 </style>
 </head>
@@ -791,7 +795,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <g class="tree" transform="translate(1300,520)"><line class="trunk" x1="0" y1="0" x2="0" y2="-20"/><circle class="crown" cx="0" cy="-36" r="18"/><circle class="crown2" cx="-12" cy="-26" r="11"/><circle class="crown2" cx="12" cy="-26" r="11"/></g>
 <text class="truck" x="60" y="514" font-size="34">🚚</text>
 <text class="truck" x="60" y="514" font-size="34" style="animation-delay:-9s">🚚</text>
-<text class="truck" x="60" y="514" font-size="34" style="animation-delay:-18s">🚗</text>
+<text class="truck" x="60" y="514" font-size="34" style="animation-delay:-18s"></text>
 <line class="neon" x1="0" y1="520" x2="1440" y2="520"/>
 </g>
 </svg>
@@ -827,7 +831,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <button class="icobtn factory-btn" id="btn-factory" title="Линии производства"><span class="fab-ico"></span><span id="factory-ev-badge"></span></button>
 <div class="tb-sndcol">
 <button class="icobtn" id="btn-sound" title="Настройки звука">🔊</button>
-<button class="icobtn chains-btn" id="btn-chains" title="Цепочки и обучалка">❓</button>
+<button class="icobtn chains-btn" id="btn-chains" title="Цепочки и обучалка"></button>
 </div>
 </header>
 <main id="layout">
@@ -851,7 +855,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <div class="orders-main">
 <div class="orders-head">
 <h2>ЗАКАЗЫ</h2>
-<button class="chip shop" id="btn-bureau" title="Коллекционное бюро"><span class="bur-ico" id="bur-ico">🎴</span> Бюро <b class="cards-count">0/20</b><span class="pend" hidden>+1</span></button>
+<button class="chip shop" id="btn-bureau" title="Коллекционное бюро"><span class="bur-ico" id="bur-ico"></span> Бюро <b class="cards-count">0/20</b><span class="pend" hidden>+1</span></button>
 </div>
 <div id="order-cards"></div>
 <button class="tut-btn" id="btn-tutorial"> Пройти обучение</button>
@@ -868,7 +872,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 </div>
 <div class="sheet-back" id="sheet-back"></div>
 <div class="sheet" id="sheet">
-<div class="sheet-head"><b id="sheet-title"></b><button class="icobtn" id="sheet-close" title="Закрыть">✕</button></div>
+<div class="sheet-head"><b id="sheet-title"></b><button class="icobtn" id="sheet-close" title="Закрыть"></button></div>
 <div class="sheet-body" id="sheet-body"></div>
 </div>
 <div id="bureau-back"></div>
@@ -881,7 +885,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <div id="profile-ov">
 <div class="profile-box">
 <button class="profile-close" id="profile-close" title="Закрыть">✕</button>
-<div class="profile-head">🏭 Профиль директора</div>
+<div class="profile-head"> Профиль директора</div>
 <div class="profile-avatar-row">
 <div class="avatar-display" id="profile-avatar-display"><img src="" alt="" id="profile-avatar-img"></div>
 <div class="avatar-label">Ваш аватар</div>
@@ -904,13 +908,36 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <div class="tut-foot">
 <div id="tut-dots"></div>
 <button id="tut-skip">Пропустить</button>
-<button id="tut-next">Далее ➜</button>
+<button id="tut-next">Далее </button>
 </div>
 </div>
 <div id="fx"></div>
 <div id="stamp"></div>
 <div id="toast"></div>
 <div id="debug"></div>
+
+<script>
+// VK SDK инициализация
+var vkInitialized = false;
+window.vkAppId = 'YOUR_VK_APP_ID'; // Замените на ваш ID приложения
+
+function initVK(){
+    if(window.VK){
+        VK.init({
+            apiId: window.vkAppId
+        });
+        vkInitialized = true;
+        console.log('VK SDK initialized');
+    }
+}
+
+// Инициализация при загрузке
+window.addEventListener('load', function(){
+    initVK();
+});
+</script>
+
+<!-- Основной скрипт игры -->
 <script>
 'use strict';
 var ART = {
@@ -940,7 +967,7 @@ var CLIENTS_FACTORY=['Кондитерская фабрика «Медовая»
 var CHAINS = [
 { id:'oil', color:'#ff8a00', soft:'rgba(255,138,0,.15)', lineName:'Подсолнечное масло', unlock:0, wholesale:350,
 catName:'Загадка подсолнечного масла', catEmoji:'🌻',
-spawner:{key:'sp_oil', emoji:'🌻', name:'Подсолнечное поле'},
+spawner:{key:'sp_oil', emoji:'', name:'Подсолнечное поле'},
 tiers:[
 {key:'oil_1', emoji:'', name:'Семена подсолнуха', fact:'Родина подсолнечника – Северная Америка. В 100 граммах ядер содержится более 50г жиров, 20г белков и 3г углеводов.'},
 {key:'oil_2', emoji:'🥜', name:'Обрушивание', fact:'Это процесс очистки ядра от мусора и лузги, при котором семечко теряет до 35% своей массы.'},
@@ -951,16 +978,16 @@ tiers:[
 catName:'Особые тайны майонеза', catEmoji:'🥚',
 spawner:{key:'sp_mayo', emoji:'🐔', name:'Курятник'},
 tiers:[
-{key:'mayo_1', emoji:'🥚', name:'Яйцо', fact:'Несушка даёт около 300 яиц в год. Одно яйцо весит примерно 60 г, а желток занимает почти половину веса.'},
+{key:'mayo_1', emoji:'', name:'Яйцо', fact:'Несушка даёт около 300 яиц в год. Одно яйцо весит примерно 60 г, а желток занимает почти половину веса.'},
 {key:'mayo_2', emoji:'', name:'Желток', fact:'Желток – природный эмульгатор. Благодаря ему капли масла равномерно распределяются в воде и не расслаиваются.'},
 {key:'mayo_3', emoji:'🥄', name:'Майонезная эмульсия', fact:'В состав майонеза входят растительное масло, вода, яичный желток, уксус, соль, сахар и специи.'},
 {key:'mayo_4', emoji:'🍶', name:'Гомогенизация', oname:'Соус-база', fact:'Настоящий майонез – это эмульсия. Миллионы крошечных капелек масла, взбитых в жидкости.'},
 {key:'mayo_5', emoji:'🍯', name:'Майонез «Провансаль»', fact:'В XIX веке майонез считали деликатесом и подавали в лучших ресторанах Европы.'} ]},
 { id:'ketchup', color:'#e0452c', soft:'rgba(224,69,44,.13)', lineName:'Кетчупы', unlock:650, wholesale:550,
 catName:'Все секреты кетчупа', catEmoji:'',
-spawner:{key:'sp_ketchup', emoji:'🍅', name:'Теплица'},
+spawner:{key:'sp_ketchup', emoji:'', name:'Теплица'},
 tiers:[
-{key:'ketchup_1', emoji:'🍅', name:'Помидор', fact:'Томат – ягода по ботанике, а в некоторых странах официально признан фруктом.'},
+{key:'ketchup_1', emoji:'', name:'Помидор', fact:'Томат – ягода по ботанике, а в некоторых странах официально признан фруктом.'},
 {key:'ketchup_2', emoji:'🔪', name:'Измельчение', fact:'Томатную массу дробят, затем пропускают через протирочные машины (сито-машины), чтобы отделить кожицу и семена.'},
 {key:'ketchup_3', emoji:'', name:'Термическая обработка', fact:'Уваривание происходит в вакууме. За счёт низкого давления вода испаряется быстрее, и кетчуп сохраняет яркий красный цвет и натуральный вкус.'},
 {key:'ketchup_4', emoji:'❄️', name:'Охлаждение', oname:'Томатная паста', fact:'После пастеризации кетчуп выходит из пастеризатора ещё горячим – с температурой около 115–120 °C. Прежде чем он попадёт в фасовочную машину, продукт должен быть охлаждён до 43 °C.'},
@@ -970,7 +997,7 @@ catName:'Молоко из растений?', catEmoji:'🌾',
 spawner:{key:'sp_milk', emoji:'🌾', name:'Овсяное поле'},
 tiers:[
 {key:'milk_1', emoji:'🌾', name:'Овсяное зерно', fact:'Овёс возделывают уже более 4 тысяч лет. Злаки легко выдерживают лёгкие заморозки и универсальны в приготовлении.'},
-{key:'milk_2', emoji:'🧺', name:'Очищенное зерно', fact:'Зёрна очищают от примесей и шелухи, а после замачивают с ферментами, чтобы крахмал превратился в простые сахара и появилась натуральная сладость.'},
+{key:'milk_2', emoji:'', name:'Очищенное зерно', fact:'Зёрна очищают от примесей и шелухи, а после замачивают с ферментами, чтобы крахмал превратился в простые сахара и появилась натуральная сладость.'},
 {key:'milk_3', emoji:'🌀', name:'Измельчение', fact:'Массу дробят, затем фильтруют или сепарируют, чтобы отделить овсяную основу от жмыха.'},
 {key:'milk_4', emoji:'', name:'Гомогенизация', oname:'Овсяная основа', fact:'В смесь добавляют масла, витамины, стабилизаторы, а затем обрабатывают под высоким давлением для однородной текстуры.'},
 {key:'milk_5', emoji:'🧃', name:'Овсяное молоко', fact:'Овсяное молоко было изобретено в 1990-х в Швеции, на его производство уходит в 15 раз меньше воды, а остатки жмыха после фильтрации можно использовать в производстве гранолы и корма для животных.'} ]}
@@ -987,8 +1014,8 @@ var TUT_KEY='ceh7.tut.v1';
 var START_KEY='ceh7.start.v1';
 var AVATARS = [
 {lvl:1, icon:'👤', name:'Новичок'},
-{lvl:5, icon:'‍🌾', name:'Фермер'},
-{lvl:10, icon:'‍🍳', name:'Повар'},
+{lvl:5, icon:'🌾', name:'Фермер'},
+{lvl:10, icon:'‍', name:'Повар'},
 {lvl:15, icon:'‍', name:'Технолог'},
 {lvl:20, icon:'👩‍💼', name:'Менеджер'},
 {lvl:25, icon:'🤴', name:'Директор'},
@@ -1001,7 +1028,7 @@ function irand(a,b){ return a+Math.floor(Math.random()*(b-a+1)); }
 function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
 function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
 function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=irand(0,i),t=a[i];a[i]=a[j];a[j]=t; } return a; }
-function showDebug(m){ var d=$('#debug'); if(d){ d.textContent='⛔ '+m; d.className='on'; } }
+function showDebug(m){ var d=$('#debug'); if(d){ d.textContent=' '+m; d.className='on'; } }
 function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
 function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 var board=$('#board'), wrap=$('#board-wrap'), fx=$('#fx'), cardsBox=$('#order-cards');
@@ -1136,7 +1163,7 @@ requestAnimationFrame(loop);
 requestAnimationFrame(loop);
 }
 function apply(on){
-if(on&&!lowFX){ lowFX=true; document.body.classList.add('lowfx'); toast('⚙ Включён режим экономии эффектов'); }
+if(on&&!lowFX){ lowFX=true; document.body.classList.add('lowfx'); toast(' Включён режим экономии эффектов'); }
 else if(!on&&lowFX){ lowFX=false; document.body.classList.remove('lowfx'); toast('✨ Эффекты возвращены'); }
 }
 setTimeout(function(){ measure(function(avg){ if(avg!=null&&avg<30) apply(true); }); },2000);
@@ -1315,7 +1342,7 @@ pity[line]=0; grantCard(t.key,fromRect);
 } else if(missing.length&&p>=3){
 pity[line]=0; grantCard(missing[0].key,fromRect);
 } else if(missing.length===0&&isExpress){
-coins+=20; $('#coins').textContent=coins; toast('🎴 Коллекция «'+L.catName+'» полна: +20💰');
+coins+=20; $('#coins').textContent=coins; toast(' Коллекция «'+L.catName+'» полна: +20💰');
 pity[line]=0;
 } else {
 var owned=L.tiers.filter(function(t){ return cards[t.key]; });
@@ -1483,7 +1510,7 @@ var body=$('#bur-body'); body.innerHTML='';
 if(bureauView==='home'){
 $('#bur-title').textContent=' Коллекционное бюро';
 var sub=document.createElement('div'); sub.className='bur-sub';
-sub.textContent='Собери все карточки категории – получи +150💰. Редкие (★4–★5) выпадают с экспресс-заказов. Собери всё – и фабрика оживёт!';
+sub.textContent='Собери все карточки категории – получи +150. Редкие (★4–★5) выпадают с экспресс-заказов. Собери всё – и фабрика оживёт!';
 body.appendChild(sub);
 var g=document.createElement('div'); g.className='cat-grid';
 CHAINS.forEach(function(c){
@@ -1589,7 +1616,7 @@ if(s.img){ imgBox.style.display=''; fillArt(imgBox,s.img,''); }
 }
 var dots=$('#tut-dots'); dots.innerHTML='';
 tutSteps.forEach(function(_,i){ var d=document.createElement('i'); if(i===tutStep) d.className='on'; dots.appendChild(d); });
-$('#tut-next').textContent=(tutStep===tutSteps.length-1)?'Начать смену! 🏭':'Далее ➜';
+$('#tut-next').textContent=(tutStep===tutSteps.length-1)?'Начать смену! ':'Далее ➜';
 $('#tut-skip').style.display=(tutStep===0&&s.startOnly)?'none':'inline';
 positionSpot(s.startOnly?null:s.target);
 placeCard(s.startOnly?null:s.target);
@@ -1610,7 +1637,7 @@ $('#tut-card').classList.remove('open');
 $('#tut-spot').classList.remove('open');
 lsSet(TUT_KEY,'1');
 confetti(window.innerWidth/2,window.innerHeight/2);
-toast('Смена началась! Удачи! 🏭');
+toast('Смена началась! Удачи! ');
 }
 addEventListener('resize',function(){ if(tutActive) showTutStep(); });
 function openSheet(type,title,fill){
@@ -1860,7 +1887,7 @@ function updateTimers(){
 var o=orders[2];
 if(o&&!o.done){
 var left=o.deadline-Date.now();
-if(left<=0){ orders[2]=null; renderOrders(); toast('⏰ Экспресс-заказ истёк – поезд уехал'); sfx('err'); save(); }
+if(left<=0){ orders[2]=null; renderOrders(); toast(' Экспресс-заказ истёк – поезд уехал'); sfx('err'); save(); }
 else {
 var els=cardsBox.querySelectorAll('[data-slot="2"] .o-timer');
 Array.prototype.forEach.call(els,function(el){
@@ -1915,7 +1942,7 @@ burst(r.left+r.width/2,r.top+r.height/2,o.express?'#7a5cff':CHAIN[o.chain].color
 if(o.need<=0){
 o.done=true; addCoins(o.reward); addXp(15); done++; updDone();
 confetti(r.left+r.width/2,r.top+r.height/2);
-showStamp(o.express?'Экспресс выполнен!':'Заказ выполнен!','+'+o.reward+' 💰',o.express?'violet':null);
+showStamp(o.express?'Экспресс выполнен!':'Заказ выполнен!','+'+o.reward+' ',o.express?'violet':null);
 sfx('order');
 dropCard(o.chain,!!o.express,r);
 if(!o.express) tickExpressCounter();
@@ -1994,7 +2021,7 @@ var c=CHAIN[o.chain], t=c.tiers[o.tier-1];
 var w=document.createElement('div');
 w.innerHTML=
 '<div class="od-row"><span class="o-art"></span>'+
-'<div style="flex:1;min-width:0"><b>'+orderName(t)+'</b><span>'+(o.express?'⚡ экспресс · ':'')+'Заказчик: '+o.client+'</span></div>'+
+'<div style="flex:1;min-width:0"><b>'+orderName(t)+'</b><span>'+(o.express?' экспресс · ':'')+'Заказчик: '+o.client+'</span></div>'+
 '<div class="o-qty">'+(o.done?'✓':'×'+o.need)+'</div></div>'+
 '<div class="od-row"><span class="o-reward" style="display:inline">'+coinHTML(o.reward)+'</span><span class="o-pips"></span>'+
 (o.express&&!o.done?'<span class="o-timer">⏱ '+fmtTime(o.deadline-Date.now())+'</span>':'')+'</div>'+
@@ -2074,21 +2101,21 @@ b.className='plant'+(isUn?'':' locked'); b.dataset.chain=c.id;
 b.style.setProperty('--pc',c.color);
 var art=document.createElement('span'); art.className='p-art'; fillArt(art,c.spawner.key,c.spawner.emoji);
 b.appendChild(art);
-if(!isUn){ var lk=document.createElement('span'); lk.className='p-lock'; lk.textContent='🔒'; b.appendChild(lk); }
+if(!isUn){ var lk=document.createElement('span'); lk.className='p-lock'; lk.textContent=''; b.appendChild(lk); }
 b.addEventListener('click',function(){
-  if(!isUnlocked(c.id)){ 
-    toast('Линия «'+c.lineName+'» закрыта – открой её в списке площадок',true); 
-    sfx('err'); 
-    var fb=$('#btn-factory');
-    if(fb){
-      fb.classList.remove('highlight');
-      void fb.offsetWidth;
-      fb.classList.add('highlight');
-      setTimeout(function(){ fb.classList.remove('highlight'); },3300);
-    }
-    return; 
-  }
-  spawn(c.id); 
+if(!isUnlocked(c.id)){
+toast('Линия «'+c.lineName+'» закрыта – открой её в списке площадок',true);
+sfx('err');
+var fb=$('#btn-factory');
+if(fb){
+fb.classList.remove('highlight');
+void fb.offsetWidth;
+fb.classList.add('highlight');
+setTimeout(function(){ fb.classList.remove('highlight'); },3300);
+}
+return;
+}
+spawn(c.id);
 });
 w.appendChild(b);
 box.appendChild(w);
@@ -2129,7 +2156,7 @@ if(hasWh(c.id)){ toast('Опт «'+c.lineName+'» уже активен'); retur
 if(coins<c.wholesale){ toast('Нужно  '+c.wholesale+' для опта «'+c.lineName+'»',true); sfx('err'); bump('#chip-coins'); return; }
 coins-=c.wholesale; $('#coins').textContent=coins; bump('#chip-coins');
 whOwned.push(c.id);
-toast('Опт «'+c.lineName+'» активен: 2 сырья за '+WH_COST+' 📦'); sfx('buy'); save();
+toast('Опт «'+c.lineName+'» активен: 2 сырья за '+WH_COST+' '); sfx('buy'); save();
 }
 function toggleShop(){
 var pop=$('#shop-pop'), sw=$('#shopwrap');
@@ -2170,8 +2197,8 @@ function back(){ row('←','Назад','','в магазин',function(){ shopM
 if(shopMode==='wh'){
 CHAINS.forEach(function(c){
 if(hasWh(c.id)) row(icoHTML('icon_box',''),c.lineName,'опт активен: 2 сырья за ⚡'+WH_COST,'✓',null,'owned');
-else if(!isUnlocked(c.id)) row('🔒',c.lineName,'сначала открой линию','—',null,null,true);
-else row(icoHTML('icon_box','📦'),c.lineName,'2 сырья за '+WH_COST+' ⚡ вместо 1 за '+SPAWN_COST,coinHTML(c.wholesale),function(){
+else if(!isUnlocked(c.id)) row('',c.lineName,'сначала открой линию','—',null,null,true);
+else row(icoHTML('icon_box','📦'),c.lineName,'2 сырья за '+WH_COST+'  вместо 1 за '+SPAWN_COST,coinHTML(c.wholesale),function(){
 tryWh(c); shopMode='main'; renderShop();
 });
 });
@@ -2189,7 +2216,7 @@ row(icoHTML('icon_battery','🔋'),'Батарея','+10 ⚡ сразу',coinHTM
 if(coins<BATT_COST){ toast('Нужно 💰 '+BATT_COST,true); sfx('err'); return; }
 coins-=BATT_COST; energy=Math.min(E_MAX,energy+10);
 $('#coins').textContent=coins; updEnergy(); bump('#chip-coins');
-toast('⚡ +10 энергии'); sfx('buy'); save(); renderShop();
+toast(' +10 энергии'); sfx('buy'); save(); renderShop();
 });
 if(eu>=EU_COSTS.length) row(icoHTML('icon_energy',''),'Энергия +5','максимум: '+E_MAX+' ','MAX',null,'owned');
 else row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' → '+(E_MAX+5)+' ⚡',coinHTML(EU_COSTS[eu]),buyEnergy);
@@ -2405,7 +2432,7 @@ var startImgs={v:false,h:false};
 var v=new Image(); v.onload=function(){startImgs.v=true;}; v.src=ART.start_v;
 var h=new Image(); h.onload=function(){startImgs.h=true;}; h.src=ART.start_h;
 })();
-fillArt($('#loading-factory-ico'),'loading_factory','🏭');
+fillArt($('#loading-factory-ico'),'loading_factory','');
 var initDone=false;
 function init(){
 if(initDone) return; initDone=true;
@@ -2428,10 +2455,10 @@ renderAvatarButton();
 /* ИСПРАВЛЕНИЕ: правильный селектор для иконки фабрики */
 var fabIco = document.querySelector('#btn-factory .fab-ico');
 if(fabIco) fillArt(fabIco,'icon_factory','🏭');
-fillArt($('#bur-ico'),'bureau','🎴');
+fillArt($('#bur-ico'),'bureau','');
 fillArt($('#bur-ico-m'),'bureau','🎴');
 fillArt($('#coin-ico'),'icon_coin','💰');
-fillArt($('#energy-ico'),'icon_energy','⚡');
+fillArt($('#energy-ico'),'icon_energy','');
 updEnergyShop();
 if(!had){
 var starters=[['oil',1],['oil',1],['oil',2]];
