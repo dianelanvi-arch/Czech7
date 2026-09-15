@@ -169,6 +169,14 @@ max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .brand-t i{font-style:normal;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--mut);display:block}
 .stats{margin-left:auto;display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
 .factory-btn{display:none;position:relative}
+.factory-btn.highlight{
+  animation:factoryPulse 1.6s ease-in-out 2;
+  box-shadow:0 0 0 3px rgba(255,197,49,.6), 4px 4px 0 var(--shadowc);
+}
+@keyframes factoryPulse{
+  0%,100%{box-shadow:0 0 0 3px rgba(255,197,49,.6), 4px 4px 0 var(--shadowc)}
+  50%{box-shadow:0 0 0 8px rgba(255,197,49,0), 4px 4px 0 var(--shadowc); transform:scale(1.08)}
+}
 #factory-ev-badge{position:absolute;top:-6px;right:-6px;background:var(--violet);color:#fff;
 font-family:var(--disp);font-weight:700;font-size:8px;border-radius:999px;padding:2px 6px;display:none;
 box-shadow:1px 1px 0 rgba(0,0,0,.25);z-index:2}
@@ -680,9 +688,6 @@ border-radius:10px;border:2px solid var(--violet);background:var(--card);cursor:
 #sound-pop{top:auto;bottom:90px;right:10px}
 .cat-grid{grid-template-columns:repeat(2,1fr)}
 .cc-grid{grid-template-columns:repeat(3,1fr)}
-body.prized-all #factory-svg{inset:auto;top:58px;left:0;width:100%;height:130px}
-body.prized-all #topbar{background:rgba(255,255,255,.62);backdrop-filter:blur(2px)}
-html[data-theme="night"] body.prized-all #topbar{background:rgba(16,29,22,.62)}
 }
 @media (max-width:360px){
 #topbar{gap:2px 4px;padding:4px 5px}
@@ -781,7 +786,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <g class="tree" transform="translate(1000,520)"><line class="trunk" x1="0" y1="0" x2="0" y2="-20"/><circle class="crown" cx="0" cy="-36" r="18"/><circle class="crown2" cx="-12" cy="-26" r="11"/><circle class="crown2" cx="12" cy="-26" r="11"/></g>
 <g class="tree" transform="translate(1150,520)"><line class="trunk" x1="0" y1="0" x2="0" y2="-20"/><circle class="crown" cx="0" cy="-36" r="18"/><circle class="crown2" cx="-12" cy="-26" r="11"/><circle class="crown2" cx="12" cy="-26" r="11"/></g>
 <g class="tree" transform="translate(1300,520)"><line class="trunk" x1="0" y1="0" x2="0" y2="-20"/><circle class="crown" cx="0" cy="-36" r="18"/><circle class="crown2" cx="-12" cy="-26" r="11"/><circle class="crown2" cx="12" cy="-26" r="11"/></g>
-<text class="truck" x="60" y="520" font-size="34">🚚</text>
+<text class="truck" x="60" y="514" font-size="34">🚚</text>
 <line class="neon" x1="0" y1="520" x2="1440" y2="520"/>
 </g>
 </svg>
@@ -816,7 +821,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 </div>
 <button class="icobtn factory-btn" id="btn-factory" title="Линии производства"><span class="fab-ico"></span><span id="factory-ev-badge"></span></button>
 <div class="tb-sndcol">
-<button class="icobtn" id="btn-sound" title="Настройки звука"></button>
+<button class="icobtn" id="btn-sound" title="Настройки звука">🔊</button>
 <button class="icobtn chains-btn" id="btn-chains" title="Цепочки и обучалка">❓</button>
 </div>
 </header>
@@ -841,7 +846,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <div class="orders-main">
 <div class="orders-head">
 <h2>ЗАКАЗЫ</h2>
-<button class="chip shop" id="btn-bureau" title="Коллекционное бюро"><span class="bur-ico" id="bur-ico"></span> Бюро <b class="cards-count">0/20</b><span class="pend" hidden>+1</span></button>
+<button class="chip shop" id="btn-bureau" title="Коллекционное бюро"><span class="bur-ico" id="bur-ico">🎴</span> Бюро <b class="cards-count">0/20</b><span class="pend" hidden>+1</span></button>
 </div>
 <div id="order-cards"></div>
 <button class="tut-btn" id="btn-tutorial"> Пройти обучение</button>
@@ -852,7 +857,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 </main>
 </div>
 <div id="sound-pop">
-<h4> Звук</h4>
+<h4>🔊 Звук</h4>
 <label class="snd-row"><input type="checkbox" id="snd-music-on" checked><span class="snd-lab">Музыка</span><input type="range" id="snd-music-vol" min="0" max="100" value="50"></label>
 <label class="snd-row"><input type="checkbox" id="snd-sfx-on" checked><span class="snd-lab">Эффекты</span><input type="range" id="snd-sfx-vol" min="0" max="100" value="100"></label>
 </div>
@@ -863,7 +868,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 </div>
 <div id="bureau-back"></div>
 <div id="bureau">
-<div class="bur-head"><b id="bur-title"> Коллекционное бюро</b><button class="icobtn" id="bur-close" title="Закрыть">✕</button></div>
+<div class="bur-head"><b id="bur-title"> Коллекционное бюро</b><button class="icobtn" id="bur-close" title="Закрыть"></button></div>
 <div class="bur-body" id="bur-body"></div>
 </div>
 <div id="confirm-ov"></div>
@@ -932,14 +937,14 @@ var CHAINS = [
 catName:'Загадка подсолнечного масла', catEmoji:'🌻',
 spawner:{key:'sp_oil', emoji:'🌻', name:'Подсолнечное поле'},
 tiers:[
-{key:'oil_1', emoji:'🌰', name:'Семена подсолнуха', fact:'Родина подсолнечника – Северная Америка. В 100 граммах ядер содержится более 50г жиров, 20г белков и 3г углеводов.'},
+{key:'oil_1', emoji:'', name:'Семена подсолнуха', fact:'Родина подсолнечника – Северная Америка. В 100 граммах ядер содержится более 50г жиров, 20г белков и 3г углеводов.'},
 {key:'oil_2', emoji:'🥜', name:'Обрушивание', fact:'Это процесс очистки ядра от мусора и лузги, при котором семечко теряет до 35% своей массы.'},
 {key:'oil_3', emoji:'🗜️', name:'Пресс и отжим', fact:'Для получения литра масла нужно примерно 4 кг очищенных семечек, которые прошли через влаготепловую обработку, пресс и отжим.'},
 {key:'oil_4', emoji:'⚗️', name:'Дистилляция и рафинирование', oname:'Дистиллированное масло', fact:'Когда-то масло фильтровали через песок. Современное оборудование позволяет обойтись без него ;-)'},
-{key:'oil_5', emoji:'', name:'Подсолнечное масло', fact:'В 1829 году крепостной Даниил Бокарев разработал способ холодного отжима подсолнечного масла, а в 1833 году в Алексеевке открылся первый маслобойный завод.'} ]},
+{key:'oil_5', emoji:'🏺', name:'Подсолнечное масло', fact:'В 1829 году крепостной Даниил Бокарев разработал способ холодного отжима подсолнечного масла, а в 1833 году в Алексеевке открылся первый маслобойный завод.'} ]},
 { id:'mayo', color:'#e9b308', soft:'rgba(233,179,8,.16)', lineName:'Майонезы', unlock:300, wholesale:450,
 catName:'Особые тайны майонеза', catEmoji:'🥚',
-spawner:{key:'sp_mayo', emoji:'', name:'Курятник'},
+spawner:{key:'sp_mayo', emoji:'🐔', name:'Курятник'},
 tiers:[
 {key:'mayo_1', emoji:'🥚', name:'Яйцо', fact:'Несушка даёт около 300 яиц в год. Одно яйцо весит примерно 60 г, а желток занимает почти половину веса.'},
 {key:'mayo_2', emoji:'', name:'Желток', fact:'Желток – природный эмульгатор. Благодаря ему капли масла равномерно распределяются в воде и не расслаиваются.'},
@@ -948,22 +953,22 @@ tiers:[
 {key:'mayo_5', emoji:'🍯', name:'Майонез «Провансаль»', fact:'В XIX веке майонез считали деликатесом и подавали в лучших ресторанах Европы.'} ]},
 { id:'ketchup', color:'#e0452c', soft:'rgba(224,69,44,.13)', lineName:'Кетчупы', unlock:650, wholesale:550,
 catName:'Все секреты кетчупа', catEmoji:'',
-spawner:{key:'sp_ketchup', emoji:'🍅', name:'Теплица'},
+spawner:{key:'sp_ketchup', emoji:'', name:'Теплица'},
 tiers:[
-{key:'ketchup_1', emoji:'🍅', name:'Помидор', fact:'Томат – ягода по ботанике, а в некоторых странах официально признан фруктом.'},
+{key:'ketchup_1', emoji:'', name:'Помидор', fact:'Томат – ягода по ботанике, а в некоторых странах официально признан фруктом.'},
 {key:'ketchup_2', emoji:'🔪', name:'Измельчение', fact:'Томатную массу дробят, затем пропускают через протирочные машины (сито-машины), чтобы отделить кожицу и семена.'},
 {key:'ketchup_3', emoji:'', name:'Термическая обработка', fact:'Уваривание происходит в вакууме. За счёт низкого давления вода испаряется быстрее, и кетчуп сохраняет яркий красный цвет и натуральный вкус.'},
 {key:'ketchup_4', emoji:'❄️', name:'Охлаждение', oname:'Томатная паста', fact:'После пастеризации кетчуп выходит из пастеризатора ещё горячим – с температурой около 115–120 °C. Прежде чем он попадёт в фасовочную машину, продукт должен быть охлаждён до 43 °C.'},
 {key:'ketchup_5', emoji:'🍾', name:'Кетчуп томатный', fact:'В XVII веке в Китае делали ферментированный соус «кэ-цап» из рыбы, моллюсков и соевых бобов. В Британии позже появились грибной, ореховый и даже устричный кетчупы. Томаты вошли в рецепт намного позже.'} ]},
 { id:'milk', color:'#2f9fd6', soft:'rgba(47,159,214,.15)', lineName:'Овсяное молоко', unlock:1000, wholesale:650,
-catName:'Молоко из растений?', catEmoji:'',
+catName:'Молоко из растений?', catEmoji:'🌾',
 spawner:{key:'sp_milk', emoji:'🌾', name:'Овсяное поле'},
 tiers:[
-{key:'milk_1', emoji:'🌾', name:'Овсяное зерно', fact:'Овёс возделывают уже более 4 тысяч лет. Злаки легко выдерживают лёгкие заморозки и универсальны в приготовлении.'},
+{key:'milk_1', emoji:'', name:'Овсяное зерно', fact:'Овёс возделывают уже более 4 тысяч лет. Злаки легко выдерживают лёгкие заморозки и универсальны в приготовлении.'},
 {key:'milk_2', emoji:'🧺', name:'Очищенное зерно', fact:'Зёрна очищают от примесей и шелухи, а после замачивают с ферментами, чтобы крахмал превратился в простые сахара и появилась натуральная сладость.'},
-{key:'milk_3', emoji:'🌀', name:'Измельчение', fact:'Массу дробят, затем фильтруют или сепарируют, чтобы отделить овсяную основу от жмыха.'},
-{key:'milk_4', emoji:'', name:'Гомогенизация', oname:'Овсяная основа', fact:'В смесь добавляют масла, витамины, стабилизаторы, а затем обрабатывают под высоким давлением для однородной текстуры.'},
-{key:'milk_5', emoji:'', name:'Овсяное молоко', fact:'Овсяное молоко было изобретено в 1990-х в Швеции, на его производство уходит в 15 раз меньше воды, а остатки жмыха после фильтрации можно использовать в производстве гранолы и корма для животных.'} ]}
+{key:'milk_3', emoji:'', name:'Измельчение', fact:'Массу дробят, затем фильтруют или сепарируют, чтобы отделить овсяную основу от жмыха.'},
+{key:'milk_4', emoji:'🥛', name:'Гомогенизация', oname:'Овсяная основа', fact:'В смесь добавляют масла, витамины, стабилизаторы, а затем обрабатывают под высоким давлением для однородной текстуры.'},
+{key:'milk_5', emoji:'🧃', name:'Овсяное молоко', fact:'Овсяное молоко было изобретено в 1990-х в Швеции, на его производство уходит в 15 раз меньше воды, а остатки жмыха после фильтрации можно использовать в производстве гранолы и корма для животных.'} ]}
 ];
 CHAINS.forEach(function(c){ c.tiers.forEach(function(t,i){ t.tier=i+1; }); });
 var COLS=6, ROWS=6, MAXT=5, PAD=10, GAP=6;
@@ -983,7 +988,7 @@ var AVATARS = [
 {lvl:20, icon:'👩‍💼', name:'Менеджер'},
 {lvl:25, icon:'🤴', name:'Директор'},
 {lvl:30, icon:'👑', name:'Магнат'},
-{lvl:35, icon:'', name:'Легенда'}
+{lvl:35, icon:'🏆', name:'Легенда'}
 ];
 function $(s){ return document.querySelector(s); }
 function def(v,d){ return (v===undefined||v===null)?d:v; }
@@ -1112,6 +1117,28 @@ var portrait=window.innerHeight>window.innerWidth;
 svg.setAttribute('viewBox', portrait?'320 0 800 560':'0 0 1440 560');
 svg.style.setProperty('--tx', portrait?'560px':'1150px');
 }
+/* Позиционирование фона на мобильных */
+function positionFactoryStrip(){
+  if(!document.body.classList.contains('prized-all')) return;
+  if(window.innerWidth>640) return;
+  var svg=$('#factory-svg');
+  if(!svg) return;
+  var topbar=$('#topbar');
+  var board=$('#board');
+  if(!topbar || !board) return;
+  var topbarBottom=topbar.getBoundingClientRect().bottom;
+  var boardTop=board.getBoundingClientRect().top;
+  var height=boardTop-topbarBottom;
+  if(height<50) return;
+  svg.style.position='fixed';
+  svg.style.top=topbarBottom+'px';
+  svg.style.left='0';
+  svg.style.width='100%';
+  svg.style.height=height+'px';
+  svg.style.zIndex='1';
+  svg.style.pointerEvents='none';
+  svg.setAttribute('preserveAspectRatio','none');
+}
 var lowFX=false;
 (function(){
 function measure(cb){
@@ -1222,8 +1249,8 @@ return null;
 }
 function eventEmoji(ev){
 if(ev==='line_bonus') return '';
-if(ev==='express_rate') return '⚡';
-if(ev==='bubble_rate') return '🫧';
+if(ev==='express_rate') return '';
+if(ev==='bubble_rate') return '';
 return '🎉';
 }
 function eventTimeLeft(){
@@ -1313,7 +1340,7 @@ var dup=owned.length?owned[irand(0,owned.length-1)]:L.tiers[0];
 var val=15*dup.tier;
 coins+=val; $('#coins').textContent=coins; bump('#chip-coins');
 pity[line]=p+1;
-toast(' Копия «'+dup.name+'» → +'+val+'💰');
+toast('🎴 Копия «'+dup.name+'» → +'+val+'💰');
 }
 save();
 }
@@ -1413,7 +1440,7 @@ $('#bureau-back').classList.remove('open');
 $('#bureau').classList.remove('open');
 }
 function avatarFallbackSVG(){
-return 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23ddd%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2268%22 font-size=%2252%22 text-anchor=%22middle%22></text></svg>';
+return 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23ddd%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2268%22 font-size=%2252%22 text-anchor=%22middle%22>👤</text></svg>';
 }
 function renderAvatarButton(){
 var b=$('#btn-profile'); if(!b) return;
@@ -1492,7 +1519,7 @@ g.appendChild(tile);
 body.appendChild(g);
 } else {
 var L=CHAIN[bureauView];
-$('#bur-title').textContent=' '+L.catName;
+$('#bur-title').textContent='🎴 '+L.catName;
 var back=document.createElement('button'); back.className='bur-back-btn'; back.textContent='← все коллекции';
 back.addEventListener('click',function(){ bureauView='home'; renderBureau(); });
 body.appendChild(back);
@@ -1534,7 +1561,7 @@ var TUT_BASE=[
 {t:'Привет! Это ЦЕХ·7', x:'Здесь из простых ингредиентов рождаются вкусные продукты. Покажу, как идёт смена, – это быстро!', target:null, img:'tut_intro'},
 {t:'Поставщики сырья', x:'Кружочки под доской – поставщики. Нажмите на кружок – и он даст сырьё за энергию. Энергия восстанавливается со временем.', target:'#plants'},
 {t:'Прогресс', x:'Объединяйте одинаковые предметы, чтобы получить следующий уровень ингредиента, – и так до готового продукта.', target:'#board'},
-{t:'Заказы', x:'Переместите готовый продукт на карточку заказа или нажмите на продукт дважды, чтобы завершить заказ. За заказы можно получить карточки в «Бюро» 🎴!', target:'#orders'},
+{t:'Заказы', x:'Переместите готовый продукт на карточку заказа или нажмите на продукт дважды, чтобы завершить заказ. За заказы можно получить карточки в «Бюро» !', target:'#orders'},
 {t:'Магазин', x:'🛒 – магазин фабрики: здесь можно найти различные улучшения и бонусы. Заглядывайте, когда накопите монеты!', target:'#shopwrap'},
 {t:'Смена', x:'А это переключатель дневной и ночной смены. Выберите свет по настроению. Удачи на смене!', target:'#shift-wrap'}
 ];
@@ -1701,7 +1728,7 @@ if(!free){ coins-=price; $('#coins').textContent=coins; bump('#chip-coins'); }
 killBubble(b,true);
 makeItem(idx,b.chain,b.tier,'pop');
 var r=board.getBoundingClientRect(), p=cellXY(idx);
-floaty(r.left+p.x+STEP/2,r.top+p.y, free?' копия!':'копия! −'+price+'💰','#2f9fd6');
+floaty(r.left+p.x+STEP/2,r.top+p.y, free?'⚡ копия!':'копия! −'+price+'','#2f9fd6');
 sfx('buy'); save();
 }
 function killBubble(b,fast){
@@ -1850,11 +1877,11 @@ function updateTimers(){
 var o=orders[2];
 if(o&&!o.done){
 var left=o.deadline-Date.now();
-if(left<=0){ orders[2]=null; renderOrders(); toast('⏰ Экспресс-заказ истёк – поезд уехал'); sfx('err'); save(); }
+if(left<=0){ orders[2]=null; renderOrders(); toast(' Экспресс-заказ истёк – поезд уехал'); sfx('err'); save(); }
 else {
 var els=cardsBox.querySelectorAll('[data-slot="2"] .o-timer');
 Array.prototype.forEach.call(els,function(el){
-el.textContent='⏱ '+fmtTime(left);
+el.textContent=' '+fmtTime(left);
 el.classList.toggle('hurry',left<10000);
 });
 }
@@ -1925,7 +1952,7 @@ orderIdx.forEach(function(i){
 var o=orders[i];
 if(!o){ if(i===2) return;
 var e=document.createElement('div'); e.className='order-card empty';
-e.innerHTML='<span class="g"></span>&nbsp;формируем заказ…'; cardsBox.appendChild(e); return; }
+e.innerHTML='<span class="g">⚙</span>&nbsp;формируем заказ…'; cardsBox.appendChild(e); return; }
 var c=CHAIN[o.chain], t=c.tiers[o.tier-1];
 var e2=document.createElement('div');
 e2.className='order-card'+(o.done?' done':'')+(o.express?' express':'');
@@ -1966,7 +1993,7 @@ rew.innerHTML=coinHTML(o.reward);
 foot.appendChild(ex); foot.appendChild(rew);
 if(o.express&&!o.done){
 var tm=document.createElement('span'); tm.className='o-timer';
-tm.textContent=' '+fmtTime(o.deadline-Date.now());
+tm.textContent='⏱ '+fmtTime(o.deadline-Date.now());
 foot.appendChild(tm);
 }
 var pips=document.createElement('div'); pips.className='o-pips';
@@ -2044,11 +2071,11 @@ host.appendChild(tb2);
 CHAINS.forEach(function(c){
 var locked=!isUnlocked(c.id);
 var row=document.createElement('div'); row.className='chrow'+(locked?' lk':'');
-var b=document.createElement('b'); b.textContent=c.lineName+(locked?' 🔒':''); row.appendChild(b);
+var b=document.createElement('b'); b.textContent=c.lineName+(locked?' ':''); row.appendChild(b);
 var ic=document.createElement('span'); ic.className='ch-icons';
 c.tiers.forEach(function(t,i){
 var m=document.createElement('span'); m.className='mini'; m.title=t.name; fillArt(m,t.key,t.emoji); ic.appendChild(m);
-if(i<c.tiers.length-1){ var a=document.createElement('span'); a.className='ch-arrow'; a.textContent=''; ic.appendChild(a); }
+if(i<c.tiers.length-1){ var a=document.createElement('span'); a.className='ch-arrow'; a.textContent='▸'; ic.appendChild(a); }
 });
 row.appendChild(ic); host.appendChild(row);
 });
@@ -2066,7 +2093,18 @@ var art=document.createElement('span'); art.className='p-art'; fillArt(art,c.spa
 b.appendChild(art);
 if(!isUn){ var lk=document.createElement('span'); lk.className='p-lock'; lk.textContent='🔒'; b.appendChild(lk); }
 b.addEventListener('click',function(){
-if(!isUnlocked(c.id)){ toast('Линия «'+c.lineName+'» закрыта – открой её в списке площадок',true); sfx('err'); return; }
+if(!isUnlocked(c.id)){ 
+  toast('Линия «'+c.lineName+'» закрыта – открой её в списке площадок',true); 
+  sfx('err'); 
+  var fb=$('#btn-factory');
+  if(fb){
+    fb.classList.remove('highlight');
+    void fb.offsetWidth;
+    fb.classList.add('highlight');
+    setTimeout(function(){ fb.classList.remove('highlight'); },3300);
+  }
+  return; 
+}
 spawn(c.id); });
 w.appendChild(b);
 box.appendChild(w);
@@ -2092,7 +2130,7 @@ var empties=[]; grid.forEach(function(v,i){ if(!v&&!bubbleGrid[i]) empties.push(
 if(!empties.length){ toast('Склад переполнен – нет свободных ячеек!',true); sfx('err'); return; }
 var n=Math.min(want,empties.length);
 var cost=(wh&&n===2)?WH_COST:SPAWN_COST;
-if(energy<cost){ toast('Не хватает энергии  – подожди чуть-чуть',true); sfx('err'); bump('#chip-energy'); return; }
+if(energy<cost){ toast('Не хватает энергии ⚡ – подожди чуть-чуть',true); sfx('err'); bump('#chip-energy'); return; }
 energy-=cost; updEnergy(); shuffle(empties);
 for(var i=0;i<n;i++){
 var tier=Math.random()<RARE_CHANCE?2:1;
@@ -2107,7 +2145,7 @@ if(hasWh(c.id)){ toast('Опт «'+c.lineName+'» уже активен'); retur
 if(coins<c.wholesale){ toast('Нужно  '+c.wholesale+' для опта «'+c.lineName+'»',true); sfx('err'); bump('#chip-coins'); return; }
 coins-=c.wholesale; $('#coins').textContent=coins; bump('#chip-coins');
 whOwned.push(c.id);
-toast('Опт «'+c.lineName+'» активен: 2 сырья за '+WH_COST+' 📦'); sfx('buy'); save();
+toast('Опт «'+c.lineName+'» активен: 2 сырья за '+WH_COST+' '); sfx('buy'); save();
 }
 function toggleShop(){
 var pop=$('#shop-pop'), sw=$('#shopwrap');
@@ -2170,7 +2208,7 @@ $('#coins').textContent=coins; updEnergy(); bump('#chip-coins');
 toast('⚡ +10 энергии'); sfx('buy'); save(); renderShop();
 });
 if(eu>=EU_COSTS.length) row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' ','MAX',null,'owned');
-else row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' → '+(E_MAX+5)+' ⚡',coinHTML(EU_COSTS[eu]),buyEnergy);
+else row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' → '+(E_MAX+5)+' ',coinHTML(EU_COSTS[eu]),buyEnergy);
 if(turboActive()) row(icoHTML('icon_turbo','⚡'),'Турбо-смена','пузыри можно лопать бесплатно','⚡ '+fmtTime(turboUntil-Date.now()),null,'owned');
 else row(icoHTML('icon_turbo',''),'Турбо-смена','5 мин: пузыри с предметами можно лопать бесплатно',coinHTML(TURBO_COST),function(){
 if(coins<TURBO_COST){ toast('Нужно 💰 '+TURBO_COST,true); sfx('err'); return; }
@@ -2182,11 +2220,11 @@ if(CHAINS.some(function(c){ return isUnlocked(c.id)&&!hasWh(c.id); }))
 row(icoHTML('icon_box','📦'),'Оптовая поставка','больше сырья за меньшую стоимость','выбрать',function(){ shopMode='wh'; renderShop(); });
 if(orders.some(function(o){ return o&&!o.done&&!o.express; }))
 row(icoHTML('icon_reroll','🌀'),'Заменить заказ','',coinHTML(REROLL_COST),function(){ shopMode='reroll'; renderShop(); });
-if(prOwned) row(icoHTML('icon_pr','📣'),'PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них','✓',null,'owned');
+if(prOwned) row(icoHTML('icon_pr',''),'PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них','✓',null,'owned');
 else row(icoHTML('icon_pr',''),'PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них',coinHTML(PR_COST),function(){
 if(coins<PR_COST){ toast('Нужно 💰 '+PR_COST,true); sfx('err'); return; }
 coins-=PR_COST; prOwned=true; $('#coins').textContent=coins; bump('#chip-coins');
-toast('📣 PR-менеджер нанят: экспрессы чаще и щедрее!'); sfx('buy'); save(); renderShop();
+toast(' PR-менеджер нанят: экспрессы чаще и щедрее!'); sfx('buy'); save(); renderShop();
 });
 }
 function replaceOrder(slot){
@@ -2395,6 +2433,7 @@ buildLines(); buildPlants(); buildChainHelp();
 placeControls();
 checkArt();
 fitFactory();
+positionFactoryStrip();
 initMusic();
 var mo=$('#snd-music-on'); if(mo) mo.checked=musicOn;
 var so=$('#snd-sfx-on'); if(so) so.checked=sfxOn;
@@ -2403,11 +2442,12 @@ var sv=$('#snd-sfx-vol'); if(sv) sv.value=Math.round(volSfx*100);
 if(BGM) BGM.volume=volMusic;
 updSoundIcon();
 renderAvatarButton();
+/* ИСПРАВЛЕНИЕ: правильный селектор для иконки фабрики */
 var fabIco = document.querySelector('#btn-factory .fab-ico');
 if(fabIco) fillArt(fabIco,'icon_factory','🏭');
 fillArt($('#bur-ico'),'bureau','🎴');
 fillArt($('#bur-ico-m'),'bureau','🎴');
-fillArt($('#coin-ico'),'icon_coin','');
+fillArt($('#coin-ico'),'icon_coin','💰');
 fillArt($('#energy-ico'),'icon_energy','⚡');
 updEnergyShop();
 if(!had){
@@ -2431,10 +2471,9 @@ if(!currentEvent) pickNewEvent();
 setInterval(save,6000);
 addEventListener('beforeunload',save);
 if('ResizeObserver' in window) new ResizeObserver(function(){ requestAnimationFrame(sizeBoard); }).observe(wrap);
-addEventListener('resize',sizeBoard);
-addEventListener('resize',fitFactory);
-addEventListener('load',function(){ sizeBoard(); });
-requestAnimationFrame(function(){ sizeBoard(); });
+addEventListener('resize',function(){ sizeBoard(); positionFactoryStrip(); });
+addEventListener('load',function(){ sizeBoard(); positionFactoryStrip(); });
+requestAnimationFrame(function(){ sizeBoard(); positionFactoryStrip(); });
 if(board.children.length<COLS*ROWS) throw new Error('Доска не построилась');
 if(!lsGet(TUT_KEY)) setTimeout(startTutorial,700);
 window.__CEH_READY=true;
