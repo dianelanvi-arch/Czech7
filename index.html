@@ -80,7 +80,7 @@ body.lowfx .bubble .b-in{animation:none}
 body.lowfx .order-card,body.lowfx .order-card.fresh,body.lowfx .order-card.express.fresh{animation:none}
 body.lowfx .item.pop .in,body.lowfx .item.dropin .in{animation:none}
 body.lowfx .chip.bump{animation:none}
-body.lowfx #factory-svg .smk,body.lowfx #factory-svg .win,body.lowfx #factory-svg .cloud,body.lowfx #factory-svg .truck{animation:none}
+body.lowfx .factory-strip .smk,body.lowfx .factory-strip .win,body.lowfx .factory-strip .cloud,body.lowfx .truck-item{animation:none}
 #bg{position:fixed;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;overflow:hidden}
 #bg .tex{position:absolute;top:0;left:0;right:0;bottom:0;background:
 repeating-linear-gradient(45deg, rgba(1,80,61,.04) 0 2px, transparent 2px 26px),
@@ -104,55 +104,102 @@ html[data-theme="night"] .hazard{opacity:.55;background:repeating-linear-gradien
 .gr1{top:-46px;left:-54px;font-size:200px}
 .gr2{bottom:-64px;right:-46px;font-size:260px;animation-duration:58s;animation-direction:reverse}
 @keyframes spin{to{transform:rotate(360deg)}}
-#factory-svg{position:absolute;inset:0;width:100%;height:100%;display:none;--tx:1150px}
-body.prized-all #factory-svg{display:block}
-#factory-svg .sky{fill:url(#skyDay)}
-html[data-theme="night"] #factory-svg .sky{fill:url(#skyNight)}
-#factory-svg .neon{fill:none;stroke:url(#neonDay);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-html[data-theme="night"] #factory-svg .neon{stroke:url(#neonNight)}
-#factory-svg .neonwrap{opacity:.55}
-html[data-theme="night"] #factory-svg .neonwrap{opacity:.85;animation:hue 26s linear infinite}
-@keyframes hue{to{filter:hue-rotate(360deg)}}
-#factory-svg .smk{fill:var(--mut);opacity:0;transform-box:fill-box;transform-origin:center;animation:smk 4.5s linear infinite}
-#factory-svg .smk.s2{animation-delay:1.5s}
-#factory-svg .smk.s3{animation-delay:3s}
-html[data-theme="night"] #factory-svg .smk{fill:#9fb8ad}
-@keyframes smk{0%{transform:translate(0,0) scale(.5);opacity:0}15%{opacity:.35}60%{opacity:.22}100%{transform:translate(16px,-72px) scale(1.7);opacity:0}}
-#factory-svg .win{fill:var(--amber);opacity:.5;animation:winf 3.6s ease-in-out infinite alternate}
-html[data-theme="night"] #factory-svg .win{fill:var(--head)}
-#factory-svg .win:nth-of-type(2n){animation-delay:1.2s}
-#factory-svg .win:nth-of-type(3n){animation-delay:2.2s}
-@keyframes winf{from{opacity:.3}to{opacity:.9}}
-#factory-svg .cloud{fill:none;stroke:url(#neonDay);stroke-width:2;stroke-linecap:round;opacity:.5;
-animation:cloudsway ease-in-out infinite}
-html[data-theme="night"] #factory-svg .cloud{stroke:url(#neonNight)}
-#factory-svg .c1{animation-duration:14s}
-#factory-svg .c2{animation-duration:18s;animation-delay:-6s}
-#factory-svg .c3{animation-duration:16s;animation-delay:-3s}
-@keyframes cloudsway{0%,100%{transform:translateX(0)}50%{transform:translateX(60px)}}
-#factory-svg .trunk{stroke:#7a4a21;stroke-width:3;stroke-linecap:round;fill:none}
-#factory-svg .crown,#factory-svg .crown2{fill:#3fae6a}
-html[data-theme="night"] #factory-svg .crown,html[data-theme="night"] #factory-svg .crown2{fill:#173527}
-html[data-theme="night"] #factory-svg .trunk{stroke:#3a2a18}
-#factory-svg .truck{animation:truckride 26s linear infinite;transform-box:fill-box;transform-origin:center;
-filter:sepia(1) saturate(2.5) hue-rotate(95deg) brightness(.6)}
-html[data-theme="night"] #factory-svg .truck{filter:drop-shadow(0 0 6px rgba(12,122,91,.85))}
-@keyframes truckride{
-0%{transform:translateX(0) scaleX(-1)}
-46%{transform:translateX(var(--tx)) scaleX(-1)}
-50%{transform:translateX(var(--tx)) scaleX(1)}
-96%{transform:translateX(0) scaleX(1)}
-100%{transform:translateX(0) scaleX(1)}
+.factory-strip{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  height:120px;
+  overflow:hidden;
+  z-index:1;
+  pointer-events:none;
+  display:none;
 }
+body.prized-all .factory-strip{
+  display:block;
+}
+.factory-svg{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+}
+.factory-svg .sky{fill:url(#skyDay)}
+html[data-theme="night"] .factory-svg .sky{fill:url(#skyNight)}
+.factory-svg .neon{fill:none;stroke:url(#neonDay);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+html[data-theme="night"] .factory-svg .neon{stroke:url(#neonNight)}
+.factory-svg .neonwrap{opacity:.55}
+html[data-theme="night"] .factory-svg .neonwrap{opacity:.85;animation:hue 26s linear infinite}
+@keyframes hue{to{filter:hue-rotate(360deg)}}
+.factory-svg .smk{fill:var(--mut);opacity:0;transform-box:fill-box;transform-origin:center;animation:smk 4.5s linear infinite}
+.factory-svg .smk.s2{animation-delay:1.5s}
+.factory-svg .smk.s3{animation-delay:3s}
+html[data-theme="night"] .factory-svg .smk{fill:#9fb8ad}
+@keyframes smk{0%{transform:translate(0,0) scale(.5);opacity:0}15%{opacity:.35}60%{opacity:.22}100%{transform:translate(16px,-72px) scale(1.7);opacity:0}}
+.factory-svg .win{fill:var(--amber);opacity:.5;animation:winf 3.6s ease-in-out infinite alternate}
+html[data-theme="night"] .factory-svg .win{fill:var(--head)}
+.factory-svg .win:nth-of-type(2n){animation-delay:1.2s}
+.factory-svg .win:nth-of-type(3n){animation-delay:2.2s}
+@keyframes winf{from{opacity:.3}to{opacity:.9}}
+.factory-svg .cloud{fill:none;stroke:url(#neonDay);stroke-width:2;stroke-linecap:round;opacity:.5;
+animation:cloudsway ease-in-out infinite}
+html[data-theme="night"] .factory-svg .cloud{stroke:url(#neonNight)}
+.factory-svg .c1{animation-duration:14s}
+.factory-svg .c2{animation-duration:18s;animation-delay:-6s}
+.factory-svg .c3{animation-duration:16s;animation-delay:-3s}
+@keyframes cloudsway{0%,100%{transform:translateX(0)}50%{transform:translateX(60px)}}
+.factory-svg .trunk{stroke:#7a4a21;stroke-width:3;stroke-linecap:round;fill:none}
+.factory-svg .crown,.factory-svg .crown2{fill:#3fae6a}
+html[data-theme="night"] .factory-svg .crown,html[data-theme="night"] .factory-svg .crown2{fill:#173527}
+html[data-theme="night"] .factory-svg .trunk{stroke:#3a2a18}
+.truck-lane{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:40px;
+  overflow:hidden;
+}
+.truck-item{
+  position:absolute;
+  bottom:5px;
+  font-size:28px;
+}
+.truck-item.t1{
+  animation:truckLR 22s linear infinite;
+  animation-delay:0s;
+}
+.truck-item.t2{
+  animation:truckLR 22s linear infinite;
+  animation-delay:-10s;
+}
+.truck-item.t3{
+  animation:truckRL 22s linear infinite;
+  animation-delay:-5s;
+}
+.truck-item.t4{
+  animation:truckRL 22s linear infinite;
+  animation-delay:-15s;
+}
+@keyframes truckLR{
+  0%{left:-50px;transform:scaleX(1)}
+  100%{left:calc(100% + 50px);transform:scaleX(1)}
+}
+@keyframes truckRL{
+  0%{left:calc(100% + 50px);transform:scaleX(1)}
+  100%{left:-50px;transform:scaleX(1)}
+}
+html[data-theme="night"] .truck-item{filter:drop-shadow(0 0 6px rgba(12,122,91,.85))}
 #loading-screen{position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;display:flex;flex-direction:column;
 align-items:center;justify-content:center;background:var(--bg);pointer-events:auto;isolation:isolate}
 .lf-box{position:relative;width:150px;height:150px;margin-bottom:26px;background:var(--bg);overflow:hidden;z-index:10000;outline:1px solid var(--bg)}
 .lf-ico{position:relative;z-index:10001;display:grid;place-items:center;width:100%;height:100%;font-size:0!important;color:transparent!important;line-height:0!important;overflow:hidden;background:var(--bg)}
 .lf-ico img{width:100%;height:100%;object-fit:contain;display:block;background:var(--bg)}
+.hazard,.gear,.glow{z-index:-1!important}
 .lf-barwrap{width:280px;height:24px;background:var(--panel);border:3px solid var(--brand2);border-radius:999px;overflow:hidden;box-shadow:4px 4px 0 var(--shadowc)}
 #loading-bar{width:0%;height:100%;background:linear-gradient(90deg,var(--amber),var(--amber2));transition:width .3s ease-out}
 #loading-percent{margin-top:12px;font-family:var(--disp);font-weight:700;font-size:18px;color:var(--head)}
-#app{position:relative;z-index:1;height:100vh;height:100dvh;display:flex;flex-direction:column}
+#app{position:relative;z-index:2;height:100vh;height:100dvh;display:flex;flex-direction:column}
 #topbar{flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:8px 12px;
 background:var(--card);border-bottom:2px solid var(--brand);
 box-shadow:0 4px 16px var(--shadowc), 0 2px 4px var(--shadowc2)}
@@ -679,7 +726,8 @@ border-radius:10px;border:2px solid var(--violet);background:var(--card);cursor:
 #sound-pop{top:auto;bottom:90px;right:10px}
 .cat-grid{grid-template-columns:repeat(2,1fr)}
 .cc-grid{grid-template-columns:repeat(3,1fr)}
-body.prized-all #factory-svg{inset:auto;top:0;left:0;width:100%;height:130px}
+.factory-strip{height:80px}
+.truck-item{font-size:20px}
 body.prized-all #topbar{background:rgba(255,255,255,.62);backdrop-filter:blur(2px)}
 html[data-theme="night"] body.prized-all #topbar{background:rgba(16,29,22,.62)}
 }
@@ -716,7 +764,12 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <div id="bg" aria-hidden="true">
 <div class="tex"></div>
 <div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div>
-<svg id="factory-svg" viewBox="0 0 1440 560" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+<div class="hazard hz-t"></div><div class="hazard hz-b"></div>
+<div class="gear gr1">⚙</div><div class="gear gr2"></div>
+</div>
+
+<div class="factory-strip" id="factory-strip">
+<svg class="factory-svg" viewBox="0 240 1440 280" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
 <defs>
 <linearGradient id="skyDay" x1="0" y1="0" x2="0" y2="1">
 <stop offset="0" stop-color="#fff8e6"/><stop offset="1" stop-color="#f3ecd9"/>
@@ -736,7 +789,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <stop offset="1" stop-color="#a08cff"><animate attributeName="stop-color" values="#a08cff;#4cc396;#57b7e6;#a08cff" dur="12s" repeatCount="indefinite"/></stop>
 </linearGradient>
 </defs>
-<rect class="sky" x="0" y="0" width="1440" height="560"/>
+<rect class="sky" x="0" y="0" width="1440" height="280"/>
 <g class="neonwrap">
 <g class="cloud c1"><path d="M150,170 q22,-16 44,0 q22,16 44,0 q22,-16 44,0"/><path d="M210,196 q22,-14 44,0 q22,14 44,0"/></g>
 <g class="cloud c2"><path d="M520,140 q24,-16 48,0 q24,16 48,0 q24,-16 48,0"/><path d="M600,168 q24,-14 48,0 q24,14 48,0"/></g>
@@ -780,20 +833,17 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <g class="tree" transform="translate(1000,520)"><line class="trunk" x1="0" y1="0" x2="0" y2="-20"/><circle class="crown" cx="0" cy="-36" r="18"/><circle class="crown2" cx="-12" cy="-26" r="11"/><circle class="crown2" cx="12" cy="-26" r="11"/></g>
 <g class="tree" transform="translate(1150,520)"><line class="trunk" x1="0" y1="0" x2="0" y2="-20"/><circle class="crown" cx="0" cy="-36" r="18"/><circle class="crown2" cx="-12" cy="-26" r="11"/><circle class="crown2" cx="12" cy="-26" r="11"/></g>
 <g class="tree" transform="translate(1300,520)"><line class="trunk" x1="0" y1="0" x2="0" y2="-20"/><circle class="crown" cx="0" cy="-36" r="18"/><circle class="crown2" cx="-12" cy="-26" r="11"/><circle class="crown2" cx="12" cy="-26" r="11"/></g>
-<text class="truck" x="60" y="514" font-size="34">🚚</text>
 <line class="neon" x1="0" y1="520" x2="1440" y2="520"/>
 </g>
 </svg>
-<div class="hazard hz-t"></div><div class="hazard hz-b"></div>
-<div class="gear gr1">⚙</div><div class="gear gr2"></div>
-<div id="loading-screen" onclick="tryPlayMusic();">
-<div class="lf-box">
-<span class="lf-ico" id="loading-factory-ico">🏭</span>
-</div>
-<div class="lf-barwrap"><div id="loading-bar"></div></div>
-<div id="loading-percent">0%</div>
+<div class="truck-lane">
+<div class="truck-item t1">🚚</div>
+<div class="truck-item t2">🚚</div>
+<div class="truck-item t3">🚚</div>
+<div class="truck-item t4">🚚</div>
 </div>
 </div>
+
 <div id="app">
 <header id="topbar">
 <button class="icobtn avatar-btn" id="btn-profile" title="Профиль директора">👤</button>
@@ -806,7 +856,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <div class="lvl-badge" id="lvl-badge"><span class="lvl-num" id="lvl">1</span><span class="lvl-tip" id="lvl-tip"></span></div>
 <div class="chip gold" id="chip-coins"><span id="coin-ico"></span> <b id="coins">0</b></div>
 <div class="chip" id="chip-energy"><span id="energy-ico"></span> <b id="energy">0</b><span id="emax">/30</span></div>
-<button class="chip shop" id="chip-energy-up" title="Увеличить максимум энергии на 5">⚡+5 · 💰200</button>
+<button class="chip shop" id="chip-energy-up" title="Увеличить максимум энергии на 5">+5 · 💰200</button>
 <div class="shift-wrap" id="shift-wrap">
 <span class="shift-label">Смена:</span>
 <button class="shift-btn" id="theme-toggle" title="Переключить смену" aria-label="Переключить тему"><span class="knob"></span></button>
@@ -816,7 +866,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <button class="icobtn factory-btn" id="btn-factory" title="Линии производства"><span class="fab-ico"></span><span id="factory-ev-badge"></span></button>
 <div class="tb-sndcol">
 <button class="icobtn" id="btn-sound" title="Настройки звука">🔊</button>
-<button class="icobtn chains-btn" id="btn-chains" title="Цепочки и обучалка">❓</button>
+<button class="icobtn chains-btn" id="btn-chains" title="Цепочки и обучалка"></button>
 </div>
 </header>
 <main id="layout">
@@ -851,7 +901,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 </main>
 </div>
 <div id="sound-pop">
-<h4>🔊 Звук</h4>
+<h4> Звук</h4>
 <label class="snd-row"><input type="checkbox" id="snd-music-on" checked><span class="snd-lab">Музыка</span><input type="range" id="snd-music-vol" min="0" max="100" value="50"></label>
 <label class="snd-row"><input type="checkbox" id="snd-sfx-on" checked><span class="snd-lab">Эффекты</span><input type="range" id="snd-sfx-vol" min="0" max="100" value="100"></label>
 </div>
@@ -893,7 +943,7 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <div class="tut-foot">
 <div id="tut-dots"></div>
 <button id="tut-skip">Пропустить</button>
-<button id="tut-next">Далее ➜</button>
+<button id="tut-next">Далее </button>
 </div>
 </div>
 <div id="fx"></div>
@@ -928,12 +978,12 @@ var CLIENTS_RETAIL=['Супермаркет «Ромашка»','Сеть рес
 var CLIENTS_FACTORY=['Кондитерская фабрика «Медовая»','Хлебозавод №3','Фабрика мороженого «Пломбир»','Завод снеков «Хруст»','Молочный комбинат «Заря»','Комбинат питания «Школьный»','Пекарня «Тёплый хлеб»','Завод соусов «Южный»','Фабрика чипсов «Хрум»','Консервный завод «Лето»'];
 var CHAINS = [
 { id:'oil', color:'#ff8a00', soft:'rgba(255,138,0,.15)', lineName:'Подсолнечное масло', unlock:0, wholesale:350,
-catName:'Загадка подсолнечного масла', catEmoji:'🌻',
+catName:'Загадка подсолнечного масла', catEmoji:'',
 spawner:{key:'sp_oil', emoji:'🌻', name:'Подсолнечное поле'},
 tiers:[
 {key:'oil_1', emoji:'🌰', name:'Семена подсолнуха', fact:'Родина подсолнечника – Северная Америка. В 100 граммах ядер содержится более 50г жиров, 20г белков и 3г углеводов.'},
 {key:'oil_2', emoji:'🥜', name:'Обрушивание', fact:'Это процесс очистки ядра от мусора и лузги, при котором семечко теряет до 35% своей массы.'},
-{key:'oil_3', emoji:'🗜️', name:'Пресс и отжим', fact:'Для получения литра масла нужно примерно 4 кг очищенных семечек, которые прошли через влаготепловую обработку, пресс и отжим.'},
+{key:'oil_3', emoji:'️', name:'Пресс и отжим', fact:'Для получения литра масла нужно примерно 4 кг очищенных семечек, которые прошли через влаготепловую обработку, пресс и отжим.'},
 {key:'oil_4', emoji:'⚗️', name:'Дистилляция и рафинирование', oname:'Дистиллированное масло', fact:'Когда-то масло фильтровали через песок. Современное оборудование позволяет обойтись без него ;-)'},
 {key:'oil_5', emoji:'🏺', name:'Подсолнечное масло', fact:'В 1829 году крепостной Даниил Бокарев разработал способ холодного отжима подсолнечного масла, а в 1833 году в Алексеевке открылся первый маслобойный завод.'} ]},
 { id:'mayo', color:'#e9b308', soft:'rgba(233,179,8,.16)', lineName:'Майонезы', unlock:300, wholesale:450,
@@ -955,11 +1005,11 @@ tiers:[
 {key:'ketchup_4', emoji:'❄️', name:'Охлаждение', oname:'Томатная паста', fact:'После пастеризации кетчуп выходит из пастеризатора ещё горячим – с температурой около 115–120 °C. Прежде чем он попадёт в фасовочную машину, продукт должен быть охлаждён до 43 °C.'},
 {key:'ketchup_5', emoji:'🍾', name:'Кетчуп томатный', fact:'В XVII веке в Китае делали ферментированный соус «кэ-цап» из рыбы, моллюсков и соевых бобов. В Британии позже появились грибной, ореховый и даже устричный кетчупы. Томаты вошли в рецепт намного позже.'} ]},
 { id:'milk', color:'#2f9fd6', soft:'rgba(47,159,214,.15)', lineName:'Овсяное молоко', unlock:1000, wholesale:650,
-catName:'Молоко из растений?', catEmoji:'🌾',
+catName:'Молоко из растений?', catEmoji:'',
 spawner:{key:'sp_milk', emoji:'🌾', name:'Овсяное поле'},
 tiers:[
 {key:'milk_1', emoji:'🌾', name:'Овсяное зерно', fact:'Овёс возделывают уже более 4 тысяч лет. Злаки легко выдерживают лёгкие заморозки и универсальны в приготовлении.'},
-{key:'milk_2', emoji:'🧺', name:'Очищенное зерно', fact:'Зёрна очищают от примесей и шелухи, а после замачивают с ферментами, чтобы крахмал превратился в простые сахара и появилась натуральная сладость.'},
+{key:'milk_2', emoji:'', name:'Очищенное зерно', fact:'Зёрна очищают от примесей и шелухи, а после замачивают с ферментами, чтобы крахмал превратился в простые сахара и появилась натуральная сладость.'},
 {key:'milk_3', emoji:'🌀', name:'Измельчение', fact:'Массу дробят, затем фильтруют или сепарируют, чтобы отделить овсяную основу от жмыха.'},
 {key:'milk_4', emoji:'🥛', name:'Гомогенизация', oname:'Овсяная основа', fact:'В смесь добавляют масла, витамины, стабилизаторы, а затем обрабатывают под высоким давлением для однородной текстуры.'},
 {key:'milk_5', emoji:'🧃', name:'Овсяное молоко', fact:'Овсяное молоко было изобретено в 1990-х в Швеции, на его производство уходит в 15 раз меньше воды, а остатки жмыха после фильтрации можно использовать в производстве гранолы и корма для животных.'} ]}
@@ -982,7 +1032,7 @@ var AVATARS = [
 {lvl:20, icon:'👩‍💼', name:'Менеджер'},
 {lvl:25, icon:'🤴', name:'Директор'},
 {lvl:30, icon:'👑', name:'Магнат'},
-{lvl:35, icon:'🏆', name:'Легенда'}
+{lvl:35, icon:'', name:'Легенда'}
 ];
 function $(s){ return document.querySelector(s); }
 function def(v,d){ return (v===undefined||v===null)?d:v; }
@@ -1103,13 +1153,8 @@ setTimeout(function(){ if(ls.parentNode) ls.parentNode.removeChild(ls); },460);
 }
 }
 function checkPrizeBg(){
-document.body.classList.toggle('prized-all', cardsCount()>=TOTAL_CARDS);
-}
-function fitFactory(){
-var svg=$('#factory-svg'); if(!svg) return;
-var portrait=window.innerHeight>window.innerWidth;
-svg.setAttribute('viewBox', portrait?'320 0 800 560':'0 0 1440 560');
-svg.style.setProperty('--tx', portrait?'560px':'1150px');
+var all=cardsCount()>=TOTAL_CARDS;
+document.body.classList.toggle('prized-all', all);
 }
 var lowFX=false;
 (function(){
@@ -1304,7 +1349,7 @@ pity[line]=0; grantCard(t.key,fromRect);
 } else if(missing.length&&p>=3){
 pity[line]=0; grantCard(missing[0].key,fromRect);
 } else if(missing.length===0&&isExpress){
-coins+=20; $('#coins').textContent=coins; toast('🎴 Коллекция «'+L.catName+'» полна: +20💰');
+coins+=20; $('#coins').textContent=coins; toast(' Коллекция «'+L.catName+'» полна: +20💰');
 pity[line]=0;
 } else {
 var owned=L.tiers.filter(function(t){ return cards[t.key]; });
@@ -1470,7 +1515,7 @@ var t=document.createElement('div'); t.className='coll-tile'; t.style.setPropert
 function renderBureau(){
 var body=$('#bur-body'); body.innerHTML='';
 if(bureauView==='home'){
-$('#bur-title').textContent='🎴 Коллекционное бюро';
+$('#bur-title').textContent=' Коллекционное бюро';
 var sub=document.createElement('div'); sub.className='bur-sub';
 sub.textContent='Собери все карточки категории – получи +150💰. Редкие (★4–★5) выпадают с экспресс-заказов. Собери всё – и фабрика оживёт!';
 body.appendChild(sub);
@@ -1578,7 +1623,7 @@ if(s.img){ imgBox.style.display=''; fillArt(imgBox,s.img,''); }
 }
 var dots=$('#tut-dots'); dots.innerHTML='';
 tutSteps.forEach(function(_,i){ var d=document.createElement('i'); if(i===tutStep) d.className='on'; dots.appendChild(d); });
-$('#tut-next').textContent=(tutStep===tutSteps.length-1)?'Начать смену! 🏭':'Далее ➜';
+$('#tut-next').textContent=(tutStep===tutSteps.length-1)?'Начать смену! 🏭':'Далее ';
 $('#tut-skip').style.display=(tutStep===0&&s.startOnly)?'none':'inline';
 positionSpot(s.startOnly?null:s.target);
 placeCard(s.startOnly?null:s.target);
@@ -1939,7 +1984,7 @@ row.appendChild(art); row.appendChild(info); row.appendChild(qty);
 var side=document.createElement('div'); side.className='o-side';
 var ex2=document.createElement('button'); ex2.className='o-exp2'; ex2.title='Подробнее о заказе';
 var h2=document.createElement('span'); h2.className='exp-ico'; ex2.appendChild(h2);
-fillArt(h2,'icon_expand','⌃⌃');
+fillArt(h2,'icon_expand','⌃');
 ex2.addEventListener('click',function(e){ e.stopPropagation(); openOrderSheet(i); });
 var qw2=document.createElement('span'); qw2.className='o-qwrap';
 var q3=document.createElement('span'); q3.className='o-qty2'; q3.textContent=o.done?'✓':'×'+o.need;
@@ -1986,7 +2031,7 @@ w.innerHTML=
 '<div style="flex:1;min-width:0"><b>'+orderName(t)+'</b><span>'+(o.express?'⚡ экспресс · ':'')+'Заказчик: '+o.client+'</span></div>'+
 '<div class="o-qty">'+(o.done?'✓':'×'+o.need)+'</div></div>'+
 '<div class="od-row"><span class="o-reward" style="display:inline">'+coinHTML(o.reward)+'</span><span class="o-pips"></span>'+
-(o.express&&!o.done?'<span class="o-timer">⏱ '+fmtTime(o.deadline-Date.now())+'</span>':'')+'</div>'+
+(o.express&&!o.done?'<span class="o-timer"> '+fmtTime(o.deadline-Date.now())+'</span>':'')+'</div>'+
 '<p class="od-hint">Перетащи готовый продукт на карточку заказа на доске – или нажми на продукт дважды.</p>';
 body.appendChild(w);
 fillArt(w.querySelector('.o-art'),t.key,t.emoji);
@@ -2063,7 +2108,7 @@ b.className='plant'+(isUn?'':' locked'); b.dataset.chain=c.id;
 b.style.setProperty('--pc',c.color);
 var art=document.createElement('span'); art.className='p-art'; fillArt(art,c.spawner.key,c.spawner.emoji);
 b.appendChild(art);
-if(!isUn){ var lk=document.createElement('span'); lk.className='p-lock'; lk.textContent='🔒'; b.appendChild(lk); }
+if(!isUn){ var lk=document.createElement('span'); lk.className='p-lock'; lk.textContent=''; b.appendChild(lk); }
 b.addEventListener('click',function(){
 if(!isUnlocked(c.id)){ toast('Линия «'+c.lineName+'» закрыта – открой её в списке площадок',true); sfx('err'); return; }
 spawn(c.id); });
@@ -2147,8 +2192,8 @@ function back(){ row('←','Назад','','в магазин',function(){ shopM
 if(shopMode==='wh'){
 CHAINS.forEach(function(c){
 if(hasWh(c.id)) row(icoHTML('icon_box',''),c.lineName,'опт активен: 2 сырья за ⚡'+WH_COST,'✓',null,'owned');
-else if(!isUnlocked(c.id)) row('🔒',c.lineName,'сначала открой линию','—',null,null,true);
-else row(icoHTML('icon_box','📦'),c.lineName,'2 сырья за '+WH_COST+' ⚡ вместо 1 за '+SPAWN_COST,coinHTML(c.wholesale),function(){
+else if(!isUnlocked(c.id)) row('',c.lineName,'сначала открой линию','—',null,null,true);
+else row(icoHTML('icon_box',''),c.lineName,'2 сырья за '+WH_COST+' ⚡ вместо 1 за '+SPAWN_COST,coinHTML(c.wholesale),function(){
 tryWh(c); shopMode='main'; renderShop();
 });
 });
@@ -2162,13 +2207,13 @@ replaceOrder(i);
 });
 back(); return;
 }
-row(icoHTML('icon_battery','🔋'),'Батарея','+10 ⚡ сразу',coinHTML(BATT_COST),function(){
+row(icoHTML('icon_battery','🔋'),'Батарея','+10  сразу',coinHTML(BATT_COST),function(){
 if(coins<BATT_COST){ toast('Нужно 💰 '+BATT_COST,true); sfx('err'); return; }
 coins-=BATT_COST; energy=Math.min(E_MAX,energy+10);
 $('#coins').textContent=coins; updEnergy(); bump('#chip-coins');
 toast('⚡ +10 энергии'); sfx('buy'); save(); renderShop();
 });
-if(eu>=EU_COSTS.length) row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' ','MAX',null,'owned');
+if(eu>=EU_COSTS.length) row(icoHTML('icon_energy',''),'Энергия +5','максимум: '+E_MAX+' ','MAX',null,'owned');
 else row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' → '+(E_MAX+5)+' ⚡',coinHTML(EU_COSTS[eu]),buyEnergy);
 if(turboActive()) row(icoHTML('icon_turbo','⚡'),'Турбо-смена','пузыри можно лопать бесплатно','⚡ '+fmtTime(turboUntil-Date.now()),null,'owned');
 else row(icoHTML('icon_turbo',''),'Турбо-смена','5 мин: пузыри с предметами можно лопать бесплатно',coinHTML(TURBO_COST),function(){
@@ -2237,7 +2282,7 @@ b.classList.toggle('dim',energy<cost);
 }
 function updEnergyShop(){
 var b=$('#chip-energy-up');
-if(eu>=EU_COSTS.length){ b.innerHTML=icoHTML('icon_energy','⚡')+' MAX'; b.classList.add('maxed'); }
+if(eu>=EU_COSTS.length){ b.innerHTML=icoHTML('icon_energy','')+' MAX'; b.classList.add('maxed'); }
 else b.innerHTML=icoHTML('icon_energy','⚡')+'+5 · '+icoHTML('icon_coin','')+EU_COSTS[eu];
 $('#emax').textContent='/'+E_MAX;
 }
@@ -2393,7 +2438,6 @@ var had=load();
 buildLines(); buildPlants(); buildChainHelp();
 placeControls();
 checkArt();
-fitFactory();
 initMusic();
 var mo=$('#snd-music-on'); if(mo) mo.checked=musicOn;
 var so=$('#snd-sfx-on'); if(so) so.checked=sfxOn;
@@ -2402,10 +2446,9 @@ var sv=$('#snd-sfx-vol'); if(sv) sv.value=Math.round(volSfx*100);
 if(BGM) BGM.volume=volMusic;
 updSoundIcon();
 renderAvatarButton();
-/* ИСПРАВЛЕНИЕ: правильный селектор для иконки фабрики */
 var fabIco = document.querySelector('#btn-factory .fab-ico');
 if(fabIco) fillArt(fabIco,'icon_factory','🏭');
-fillArt($('#bur-ico'),'bureau','🎴');
+fillArt($('#bur-ico'),'bureau','');
 fillArt($('#bur-ico-m'),'bureau','🎴');
 fillArt($('#coin-ico'),'icon_coin','💰');
 fillArt($('#energy-ico'),'icon_energy','⚡');
@@ -2432,7 +2475,6 @@ setInterval(save,6000);
 addEventListener('beforeunload',save);
 if('ResizeObserver' in window) new ResizeObserver(function(){ requestAnimationFrame(sizeBoard); }).observe(wrap);
 addEventListener('resize',sizeBoard);
-addEventListener('resize',fitFactory);
 addEventListener('load',function(){ sizeBoard(); });
 requestAnimationFrame(function(){ sizeBoard(); });
 if(board.children.length<COLS*ROWS) throw new Error('Доска не построилась');
