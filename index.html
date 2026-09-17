@@ -73,8 +73,6 @@ button{touch-action:manipulation;font-family:var(--body);cursor:pointer}
 #coin-ico,#energy-ico{display:inline-grid;place-items:center;width:16px;height:16px}
 #coin-ico img,#energy-ico img{width:16px;height:16px;object-fit:contain;display:block}
 .coin{display:inline-flex;align-items:center;gap:3px}
-.ico-close,.ico-help,.ico-sound,.ico-sound-mute{display:inline-block;width:18px;height:18px;
-background:center/contain no-repeat;pointer-events:none;vertical-align:middle}
 .ico-close,.ico-help,.ico-sound,.ico-sound-mute{display:inline-block;width:18px;height:18px;object-fit:contain;pointer-events:none;vertical-align:middle}
 .ico-fb{display:inline-block;width:18px;height:18px;font-size:15px;line-height:18px;text-align:center}
 #sound-pop h4 .ico-sound,#sound-pop h4 .ico-sound-mute{width:14px;height:14px}
@@ -156,7 +154,8 @@ align-items:center;justify-content:center;background:var(--bg);pointer-events:au
 .lf-box{position:relative;width:150px;height:150px;margin-bottom:26px;background:var(--bg);overflow:hidden;z-index:10000;outline:1px solid var(--bg)}
 .lf-ico{position:relative;z-index:10001;display:grid;place-items:center;width:100%;height:100%;font-size:0!important;color:transparent!important;line-height:0!important;overflow:hidden;background:var(--bg)}
 .lf-ico img{width:100%;height:100%;object-fit:contain;display:block;background:var(--bg)}
-.hazard,.gear,.glow{z-index:-1!important}
+.gear,.glow{z-index:-1!important}
+.hazard{z-index:3!important}
 .lf-barwrap{width:280px;height:24px;background:var(--panel);border:3px solid var(--brand2);border-radius:999px;overflow:hidden;box-shadow:4px 4px 0 var(--shadowc)}
 #loading-bar{width:0%;height:100%;background:linear-gradient(90deg,var(--amber),var(--amber2));transition:width .3s ease-out}
 #loading-percent{margin-top:12px;font-family:var(--disp);font-weight:700;font-size:18px;color:var(--head)}
