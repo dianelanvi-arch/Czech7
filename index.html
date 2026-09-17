@@ -1235,12 +1235,12 @@ try{ p=BGM.play(); }catch(e){}
 if(p&&p.catch) p.catch(function(){});
 }
 function updSoundIcon(){
-  var b=$('#btn-sound'); if(!b) return;
-  var on=(musicOn||sfxOn);
-  setIco(b, on?'ico-sound':'ico-sound-mute', on?'🔊':'');
-  b.title=on?'Звук включён':'Звук выключен';
-  var h4=document.querySelector('#sound-pop h4');
-  if(h4){ h4.innerHTML=''; h4.appendChild(icoEl(on?'ico-sound':'ico-sound-mute', on?'🔊':'')); h4.appendChild(document.createTextNode(' Звук')); }
+var b=$('#btn-sound'); if(!b) return;
+var on=(musicOn||sfxOn);
+setIco(b, on?'ico-sound':'ico-sound-mute', on?'🔊':'');
+b.title=on?'Звук включён':'Звук выключен';
+var h4=document.querySelector('#sound-pop h4');
+if(h4){ h4.innerHTML=''; h4.appendChild(icoEl(on?'ico-sound':'ico-sound-mute', on?'🔊':'')); h4.appendChild(document.createTextNode(' Звук')); }
 }
 function eventName(ev){
 if(ev==='line_bonus'){ var ln=GE&&GE.line&&CHAIN[GE.line]?CHAIN[GE.line].lineName:''; return 'Бонус линии +10%'+(ln?': «'+ln+'»':''); }
