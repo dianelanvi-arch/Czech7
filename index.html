@@ -593,6 +593,7 @@ background:var(--amber2);border:none;border-radius:999px;padding:10px 24px;curso
 box-shadow:4px 4px 0 var(--shadowc)}
 .profile-save-btn:hover{transform:translateY(-1px);box-shadow:5px 5px 0 var(--shadowc)}
 .profile-save-btn:active{transform:scale(.96)}
+#profile-share{background:var(--violet);margin-top:8px}
 .profile-close{position:absolute;top:10px;right:10px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--mut)}
 #stamp{position:fixed;left:50%;top:42%;z-index:70;transform:translate(-50%,-50%) rotate(-8deg) scale(0);opacity:0;pointer-events:none;
 font-family:var(--disp);font-weight:900;font-size:clamp(18px,4.2vw,34px);letter-spacing:.06em;text-transform:uppercase;
@@ -899,6 +900,7 @@ box-shadow:0 0 0 3px rgba(255,197,49,.6), 4px 4px 0 var(--shadowc);
 <div class="av-grid" id="avatar-selector"></div>
 <div class="profile-lvl-info">Уровень: <b id="profile-lvl-val">1</b>. Аватары открываются каждые 5 уровней.</div>
 <button class="profile-save-btn" id="profile-save">Сохранить</button>
+<button class="profile-save-btn" id="profile-share">📣 Поделиться</button>
 </div>
 </div>
 <div id="tut-back"></div>
@@ -1237,10 +1239,10 @@ if(p&&p.catch) p.catch(function(){});
 function updSoundIcon(){
 var b=$('#btn-sound'); if(!b) return;
 var on=(musicOn||sfxOn);
-setIco(b, on?'ico-sound':'ico-sound-mute', on?'🔊':'');
+setIco(b, on?'ico-sound':'ico-sound-mute', on?'🔊':'🔇');
 b.title=on?'Звук включён':'Звук выключен';
 var h4=document.querySelector('#sound-pop h4');
-if(h4){ h4.innerHTML=''; h4.appendChild(icoEl(on?'ico-sound':'ico-sound-mute', on?'🔊':'')); h4.appendChild(document.createTextNode(' Звук')); }
+if(h4){ h4.innerHTML=''; h4.appendChild(icoEl(on?'ico-sound':'ico-sound-mute', on?'🔊':'🔇')); h4.appendChild(document.createTextNode(' Звук')); }
 }
 function eventName(ev){
 if(ev==='line_bonus'){ var ln=GE&&GE.line&&CHAIN[GE.line]?CHAIN[GE.line].lineName:''; return 'Бонус линии +10%'+(ln?': «'+ln+'»':''); }
@@ -1659,6 +1661,49 @@ host.innerHTML=
 '<div class="od-row"><span class="sh-ico"></span><span class="sh-txt"><b>Карточки коллекции</b>'+cardsCount()+'/'+TOTAL_CARDS+'</span></div>'+
 '<div class="od-row"><span class="sh-ico"></span><span class="sh-txt"><b>Уровень фабрики</b>'+lvl+'</span></div>'+
 '<div class="od-row"><span class="sh-ico">👤</span><span class="sh-txt"><b>Директор</b>'+directorName+' '+(AVATARS[directorAvatar]||AVATARS[0]).icon+'</span></div>';
+}
+function shareMessages(){
+  var link=location.origin+location.pathname;   // чистый адрес игры, без vk-параметров
+  return [
+    {t:'Я развиваю свою фабрику и она уже достигла '+lvl+' уровня! Сможешь повторить?', l:link},
+    {t:'Я завершаю '+(done+1)+'-й заказ на фабрике!', l:link}   // done+1 = заказ, который завершается сейчас; если хочешь «сколько уже завершено» — поставь просто done
+  ];
+}
+function copyText(s){
+  if(navigator.clipboard&&navigator.clipboard.writeText) return navigator.clipboard.writeText(s);
+  return new Promise(function(res,rej){
+    var ta=document.createElement('textarea'); ta.value=s; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); res(); }catch(e){ rej(e); } finally { ta.remove(); }
+  });
+}
+function doShare(m){
+  var full=m.t+' '+m.l;
+  if(vkEnv()){
+    vkSend('VKWebAppShowWallPostBox',{message:full}).catch(function(e){
+      if(e&&e.error_type==='cancelled') return;              // игрок сам передумал — не дёргаем ничего
+      return vkSend('VKWebAppShare',{link:m.l}).catch(function(){});
+    });
+    closeSheet();
+  } else {
+    copyText(full).then(
+      function(){ toast('📋 Скопировано! Вставь в пост или сообщение'); },
+      function(){ toast('Не удалось скопировать 😿',true); }
+    );
+  }
+}
+function openShare(){
+  openSheet('share','Рассказать о фабрике',function(h){
+    var hint=document.createElement('p'); hint.className='od-hint';
+    hint.textContent='Выберите сообщение — откроется окно публикации ВК.';
+    h.appendChild(hint);
+    shareMessages().forEach(function(m,i){
+      var row=document.createElement('div'); row.className='od-row'; row.style.cursor='pointer';
+      row.innerHTML='<span class="sh-ico">'+(i?'📦':'🏭')+'</span><span class="sh-txt"><b>'+m.t+'</b>нажмите, чтобы поделиться</span>';
+      row.addEventListener('click',function(){ doShare(m); });
+      h.appendChild(row);
+    });
+  });
 }
 function rebuildGrid(){ for(var i=0;i<grid.length;i++) grid[i]=null; for(var j=0;j<items.length;j++) grid[items[j].idx]=items[j]; }
 function rebuildCellEls(){
@@ -2577,6 +2622,7 @@ setTimeout(boot,6000);
 $('#btn-profile').onclick=function(e){ e.stopPropagation(); openProfile(); };
 $('#profile-close').onclick=closeProfile;
 $('#profile-save').onclick=saveDirectorName;
+$('#profile-share').onclick=function(){ closeProfile(); setTimeout(openShare,250); };
 $('#profile-ov').addEventListener('click',function(e){ if(e.target===this) closeProfile(); });
 $('#btn-sound').onclick=function(e){ e.stopPropagation(); $('#sound-pop').classList.toggle('open'); updSoundIcon(); };
 $('#snd-music-on').onchange=function(){ musicOn=this.checked; if(musicOn) tryPlayMusic(); else if(BGM) BGM.pause(); updSoundIcon(); save(); };
