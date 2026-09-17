@@ -1042,9 +1042,10 @@ function computeGlobalEvent(){
   var w=evWeek(), rnd=mulberry32(w*747796405+2891336453);
   var type=EVENT_PATTERN[((w%EVENT_PATTERN.length)+EVENT_PATTERN.length)%EVENT_PATTERN.length];
   var ev={week:w,start:EV_EPOCH+w*EV_PERIOD,end:EV_EPOCH+(w+1)*EV_PERIOD,type:type,line:null,rate:0};
-  if(type==='line'){ var ids=CHAINS.map(function(c){return c.id;}); ev.type='line_bonus'; ev.line=ids[Math.floor(rnd()*ids.length)]; ev.rate=0.10; }
-  else if(type==='bubble'){ ev.type='bubble_rate'; ev.rate=0.7; }
-  return ev;
+if(type==='line'){ var ids=CHAINS.map(function(c){return c.id;}); ev.type='line_bonus'; ev.line=ids[Math.floor(rnd()*ids.length)]; ev.rate=0.10; }
+else if(type==='bubble'){ ev.type='bubble_rate'; ev.rate=0.7; }
+else { ev.type='express_rate'; ev.line=null; ev.rate=0; }
+return ev;
 }
 var musicOn=true, sfxOn=true, volMusic=.5, volSfx=1;
 var BGM=null, bgmOk=false;
