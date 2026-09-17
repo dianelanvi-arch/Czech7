@@ -2,16 +2,15 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
 <meta name="theme-color" content="#f6f4ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <title>ЦЕХ·7 – фабрика соусов и молока</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'></text></svg>">
-<script>
-window.addEventListener('error', function(e){
-var d=document.getElementById('debug');
-if(d){ d.textContent=' Ошибка: '+e.message+(e.lineno?' (строка '+e.lineno+')':''); d.className='on'; }
-});
-</script>
+<!-- VK Bridge (мини-приложения) -->
+<script src="https://unpkg.com/@vkontakte/vk-bridge@2/dist/browser.min.js"></script>
+<!-- Шрифты - загрузите локально для VK -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -66,13 +65,21 @@ scrollbar-width:thin;scrollbar-color:var(--line2) transparent}
 ::-webkit-scrollbar-thumb:hover{background:var(--brand)}
 html,body{height:100%}
 body{font-family:var(--body);background:var(--bg);color:var(--ink);overflow:hidden;overscroll-behavior:none;
--webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
-button{touch-action:manipulation;font-family:var(--body)}
+-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;
+-webkit-touch-callout:none;touch-action:manipulation}
+button{touch-action:manipulation;font-family:var(--body);cursor:pointer}
 .ico-inline{width:13px;height:13px;object-fit:contain;display:inline-block;vertical-align:-2px}
 .sh-ico .ico-inline{width:20px;height:20px}
 #coin-ico,#energy-ico{display:inline-grid;place-items:center;width:16px;height:16px}
 #coin-ico img,#energy-ico img{width:16px;height:16px;object-fit:contain;display:block}
 .coin{display:inline-flex;align-items:center;gap:3px}
+.ico-close,.ico-help,.ico-sound,.ico-sound-mute{display:inline-block;width:18px;height:18px;
+background:center/contain no-repeat;pointer-events:none;vertical-align:middle}
+.ico-close,.ico-help,.ico-sound,.ico-sound-mute{display:inline-block;width:18px;height:18px;object-fit:contain;pointer-events:none;vertical-align:middle}
+.ico-fb{display:inline-block;width:18px;height:18px;font-size:15px;line-height:18px;text-align:center}
+#sound-pop h4 .ico-sound,#sound-pop h4 .ico-sound-mute{width:14px;height:14px}
+#sound-pop h4 .ico-fb{width:14px;height:14px;font-size:12px;line-height:14px}
+@media (max-width:360px){.ico-close,.ico-help,.ico-sound,.ico-sound-mute,.ico-fb{width:14px;height:14px}}
 body.lowfx .glow{display:none}
 body.lowfx .gear,body.lowfx .brand .bg-gear,body.lowfx .ln-gear{animation:none}
 body.lowfx .hazard{animation:none}
@@ -164,7 +171,7 @@ box-shadow:0 4px 16px var(--shadowc), 0 2px 4px var(--shadowc2)}
 .dir-name{font-family:var(--disp);font-weight:700;font-size:12px;color:var(--head);
 max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .brand{display:flex;align-items:center;gap:9px;min-width:0;flex:0 0 auto}
-.brand .bg-gear{width:26px;height:26px;display:inline-block;color:var(--brand);animation:spin 9s linear infinite;vertical-align:middle}
+.brand .bg-gear{font-size:26px;display:inline-block;color:var(--brand);animation:spin 9s linear infinite}
 .brand-t b{font-family:var(--disp);font-weight:900;font-size:16px;letter-spacing:.04em;color:var(--head);display:block;line-height:1}
 .brand-t i{font-style:normal;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--mut);display:block}
 .stats{margin-left:auto;display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}
@@ -487,7 +494,7 @@ box-shadow:5px 5px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.06);cursor:poi
 @keyframes freshglow{0%,55%{box-shadow:0 0 0 3px var(--acc),6px 6px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.06)}100%{box-shadow:6px 6px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.06)}}
 .order-card.express{border-color:var(--violet);border-left-color:var(--violet);box-shadow:0 0 14px rgba(122,92,255,.25), 5px 5px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.06)}
 .order-card.express.fresh{animation:cardin .4s ease, xpulse 1.2s ease 2}
-@keyframes xpulse{0%{box-shadow:0 0 0 0 rgba(122,92,255,.5), 5px 5px 0 var(--shadowc)}50%{box-shadow:0 0 0 12px rgba(122,92,255,0), 6px 6px 0 var(--shadowc)}100%{box-shadow:0 0 0 0 rgba(122,92,255,0), 5px 5px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.06)}}
+@keyframes xpulse{0%{box-shadow:0 0 0 0 rgba(122,92,255,.5),5px 5px 0 var(--shadowc)}50%{box-shadow:0 0 0 12px rgba(122,92,255,0),6px 6px 0 var(--shadowc)}100%{box-shadow:0 0 0 0 rgba(122,92,255,0),5px 5px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.06)}}
 .order-card.empty{align-items:center;justify-content:center;min-height:74px;color:var(--mut);font-size:12px;cursor:default}
 .order-card.empty .g{display:inline-block;animation:spin 2.2s linear infinite}
 .o-row{display:flex;align-items:center;gap:9px}
@@ -711,27 +718,13 @@ transition:.28s cubic-bezier(.2,.9,.3,1.3);max-width:88vw;text-align:center}
 padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wrap;max-height:40vh;overflow:auto;display:none}
 #debug.on{display:block}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
-
-/* Стили для SVG-иконок */
-.icon-svg {
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.15em;
-  fill: currentColor;
-  display: inline-block;
+.factory-btn.highlight{
+animation:factoryPulse 1.6s ease-in-out 2;
+box-shadow:0 0 0 3px rgba(255,197,49,.6), 4px 4px 0 var(--shadowc);
 }
-.icobtn .icon-svg {
-  width: 20px;
-  height: 20px;
-  vertical-align: middle;
-}
-.brand .bg-gear {
-  width: 26px;
-  height: 26px;
-  display: inline-block;
-  color: var(--brand);
-  animation: spin 9s linear infinite;
-  vertical-align: middle;
+@keyframes factoryPulse{
+0%,100%{box-shadow:0 0 0 3px rgba(255,197,49,.6), 4px 4px 0 var(--shadowc)}
+50%{box-shadow:0 0 0 8px rgba(255,197,49,0), 4px 4px 0 var(--shadowc); transform:scale(1.08)}
 }
 </style>
 </head>
@@ -805,17 +798,12 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <g class="tree" transform="translate(1300,520)"><line class="trunk" x1="0" y1="0" x2="0" y2="-20"/><circle class="crown" cx="0" cy="-36" r="18"/><circle class="crown2" cx="-12" cy="-26" r="11"/><circle class="crown2" cx="12" cy="-26" r="11"/></g>
 <text class="truck" x="60" y="514" font-size="34">🚚</text>
 <text class="truck" x="60" y="514" font-size="34" style="animation-delay:-9s">🚚</text>
-<text class="truck" x="60" y="514" font-size="34" style="animation-delay:-18s">🚗</text>
+<text class="truck" x="60" y="514" font-size="34" style="animation-delay:-18s"></text>
 <line class="neon" x1="0" y1="520" x2="1440" y2="520"/>
 </g>
 </svg>
 <div class="hazard hz-t"></div><div class="hazard hz-b"></div>
-<div class="gear gr1">
-  <svg class="icon-svg" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L3.16 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.04.64.09.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
-</div>
-<div class="gear gr2">
-  <svg class="icon-svg" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L3.16 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.04.64.09.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
-</div>
+<div class="gear gr1">⚙</div><div class="gear gr2"></div>
 <div id="loading-screen" onclick="tryPlayMusic();">
 <div class="lf-box">
 <span class="lf-ico" id="loading-factory-ico">🏭</span>
@@ -826,16 +814,11 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 </div>
 <div id="app">
 <header id="topbar">
-<button class="icobtn avatar-btn" id="btn-profile" title="Профиль директора">
-  <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
-</button>
+<button class="icobtn avatar-btn" id="btn-profile" title="Профиль директора">👤</button>
 <div class="tb-mid">
 <div class="tb-namerow">
 <span class="dir-name" id="dir-name">Директор</span>
-<span class="brand">
-  <svg class="bg-gear" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L3.16 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.04.64.09.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
-  <span class="brand-t"><b>ЦЕХ·7</b><i>фабрика соусов и молока</i></span>
-</span>
+<span class="brand"><span class="bg-gear">⚙</span><span class="brand-t"><b>ЦЕХ·7</b><i>фабрика соусов и молока</i></span></span>
 </div>
 <div class="stats" id="stats">
 <div class="lvl-badge" id="lvl-badge"><span class="lvl-num" id="lvl">1</span><span class="lvl-tip" id="lvl-tip"></span></div>
@@ -850,12 +833,8 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 </div>
 <button class="icobtn factory-btn" id="btn-factory" title="Линии производства"><span class="fab-ico"></span><span id="factory-ev-badge"></span></button>
 <div class="tb-sndcol">
-<button class="icobtn" id="btn-sound" title="Настройки звука">
-  <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-</button>
-<button class="icobtn chains-btn" id="btn-chains" title="Цепочки и обучалка">
-  <svg class="icon-svg" viewBox="0 0 24 24"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
-</button>
+<button class="icobtn" id="btn-sound" title="Настройки звука">🔊</button>
+<button class="icobtn chains-btn" id="btn-chains" title="Справочная информация"></button>
 </div>
 </header>
 <main id="layout">
@@ -870,25 +849,16 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 </section>
 <aside id="orders">
 <div class="orders-side">
-<button class="icobtn" id="btn-orders-icon" title="Статистика заказов">
-  <svg class="icon-svg" viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-</button>
+<button class="icobtn" id="btn-orders-icon" title="Статистика заказов">📋</button>
 <button class="bureau-m" id="btn-bureau-m" title="Коллекционное бюро">
-<span class="bur-ico" id="bur-ico-m">
-  <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
-</span>
+<span class="bur-ico" id="bur-ico-m"></span>
 <span class="pend" hidden>+1</span>
 </button>
 </div>
 <div class="orders-main">
 <div class="orders-head">
 <h2>ЗАКАЗЫ</h2>
-<button class="chip shop" id="btn-bureau" title="Коллекционное бюро">
-  <span class="bur-ico" id="bur-ico">
-    <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>
-  </span> 
-  Бюро <b class="cards-count">0/20</b><span class="pend" hidden>+1</span>
-</button>
+<button class="chip shop" id="btn-bureau" title="Коллекционное бюро"><span class="bur-ico" id="bur-ico"></span> Бюро <b class="cards-count">0/20</b><span class="pend" hidden>+1</span></button>
 </div>
 <div id="order-cards"></div>
 <button class="tut-btn" id="btn-tutorial"> Пройти обучение</button>
@@ -905,20 +875,20 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 </div>
 <div class="sheet-back" id="sheet-back"></div>
 <div class="sheet" id="sheet">
-<div class="sheet-head"><b id="sheet-title"></b><button class="icobtn" id="sheet-close" title="Закрыть">✕</button></div>
+<div class="sheet-head"><b id="sheet-title"></b><button class="icobtn" id="sheet-close" title="Закрыть"></button></div>
 <div class="sheet-body" id="sheet-body"></div>
 </div>
 <div id="bureau-back"></div>
 <div id="bureau">
-<div class="bur-head"><b id="bur-title"> Коллекционное бюро</b><button class="icobtn" id="bur-close" title="Закрыть">✕</button></div>
+<div class="bur-head"><b id="bur-title"> Коллекционное бюро</b><button class="icobtn" id="bur-close" title="Закрыть"></button></div>
 <div class="bur-body" id="bur-body"></div>
 </div>
 <div id="confirm-ov"></div>
 <div id="card-ov"></div>
 <div id="profile-ov">
 <div class="profile-box">
-<button class="profile-close" id="profile-close" title="Закрыть">✕</button>
-<div class="profile-head">🏭 Профиль директора</div>
+<button class="profile-close" id="profile-close" title="Закрыть"></button>
+<div class="profile-head"> Профиль директора</div>
 <div class="profile-avatar-row">
 <div class="avatar-display" id="profile-avatar-display"><img src="" alt="" id="profile-avatar-img"></div>
 <div class="avatar-label">Ваш аватар</div>
@@ -941,13 +911,14 @@ padding:10px 14px;border-radius:12px;font:12px/1.5 monospace;white-space:pre-wra
 <div class="tut-foot">
 <div id="tut-dots"></div>
 <button id="tut-skip">Пропустить</button>
-<button id="tut-next">Далее ➜</button>
+<button id="tut-next">Далее </button>
 </div>
 </div>
 <div id="fx"></div>
 <div id="stamp"></div>
 <div id="toast"></div>
 <div id="debug"></div>
+<!-- Основной скрипт игры -->
 <script>
 'use strict';
 var ART = {
@@ -962,6 +933,8 @@ icon_battery:'art/img/icon_battery.png', icon_turbo:'art/img/icon_turbo.png',
 icon_reroll:'art/img/icon_reroll.png', icon_pr:'art/img/icon_pr.png',
 icon_box:'art/img/icon_box.png', icon_expand:'art/img/icon_expand.png',
 icon_factory:'art/img/icon_factory.png',
+ico_close:'art/img/ico_close.png', ico_help:'art/img/ico_help.png',
+ico_sound:'art/img/ico_sound.png', ico_sound_mute:'art/img/ico_sound_mute.png',
 loading_factory:'art/img/loading_factory.png',
 tut_intro:'art/img/tut_intro.png',
 start_v:'art/img/start_v.png', start_h:'art/img/start_h.png',
@@ -972,12 +945,12 @@ card_mayo_1:'art/img/card_mayo_1.png', card_mayo_2:'art/img/card_mayo_2.png', ca
 card_ketchup_1:'art/img/card_ketchup_1.png', card_ketchup_2:'art/img/card_ketchup_2.png', card_ketchup_3:'art/img/card_ketchup_3.png', card_ketchup_4:'art/img/card_ketchup_4.png', card_ketchup_5:'art/img/card_ketchup_5.png',
 card_milk_1:'art/img/card_milk_1.png', card_milk_2:'art/img/card_milk_2.png', card_milk_3:'art/img/card_milk_3.png', card_milk_4:'art/img/card_milk_4.png', card_milk_5:'art/img/card_milk_5.png'
 };
-var CLIENTS_RETAIL=['Супермаркет «Ромашка»','Сеть ресторанов «Вилка и Ложка»','Кафе «Уют»','Гипермаркет «Полюс»','Бистро «Быстро»','Сеть пекарен «Колос»','Ресторан «Астория»','Маркет «У дома»','Суши-бар «Киото»','Пиццерия «Томато»','Кофейня «Бодрое утро»','Столовая «Домашняя»'];
+var CLIENTS_RETAIL=['Супермаркет «Ромашка','Сеть ресторанов «Вилка и Ложка»','Кафе «Уют»','Гипермаркет «Полюс»','Бистро «Быстро»','Сеть пекарен «Колос»','Ресторан «Астория»','Маркет «У дома»','Суши-бар «Киото»','Пиццерия «Томато»','Кофейня «Бодрое утро»','Столовая «Домашняя»'];
 var CLIENTS_FACTORY=['Кондитерская фабрика «Медовая»','Хлебозавод №3','Фабрика мороженого «Пломбир»','Завод снеков «Хруст»','Молочный комбинат «Заря»','Комбинат питания «Школьный»','Пекарня «Тёплый хлеб»','Завод соусов «Южный»','Фабрика чипсов «Хрум»','Консервный завод «Лето»'];
 var CHAINS = [
 { id:'oil', color:'#ff8a00', soft:'rgba(255,138,0,.15)', lineName:'Подсолнечное масло', unlock:0, wholesale:350,
 catName:'Загадка подсолнечного масла', catEmoji:'🌻',
-spawner:{key:'sp_oil', emoji:'🌻', name:'Подсолнечное поле'},
+spawner:{key:'sp_oil', emoji:'', name:'Подсолнечное поле'},
 tiers:[
 {key:'oil_1', emoji:'', name:'Семена подсолнуха', fact:'Родина подсолнечника – Северная Америка. В 100 граммах ядер содержится более 50г жиров, 20г белков и 3г углеводов.'},
 {key:'oil_2', emoji:'🥜', name:'Обрушивание', fact:'Это процесс очистки ядра от мусора и лузги, при котором семечко теряет до 35% своей массы.'},
@@ -988,16 +961,16 @@ tiers:[
 catName:'Особые тайны майонеза', catEmoji:'🥚',
 spawner:{key:'sp_mayo', emoji:'🐔', name:'Курятник'},
 tiers:[
-{key:'mayo_1', emoji:'🥚', name:'Яйцо', fact:'Несушка даёт около 300 яиц в год. Одно яйцо весит примерно 60 г, а желток занимает почти половину веса.'},
+{key:'mayo_1', emoji:'', name:'Яйцо', fact:'Несушка даёт около 300 яиц в год. Одно яйцо весит примерно 60 г, а желток занимает почти половину веса.'},
 {key:'mayo_2', emoji:'', name:'Желток', fact:'Желток – природный эмульгатор. Благодаря ему капли масла равномерно распределяются в воде и не расслаиваются.'},
 {key:'mayo_3', emoji:'🥄', name:'Майонезная эмульсия', fact:'В состав майонеза входят растительное масло, вода, яичный желток, уксус, соль, сахар и специи.'},
 {key:'mayo_4', emoji:'🍶', name:'Гомогенизация', oname:'Соус-база', fact:'Настоящий майонез – это эмульсия. Миллионы крошечных капелек масла, взбитых в жидкости.'},
 {key:'mayo_5', emoji:'🍯', name:'Майонез «Провансаль»', fact:'В XIX веке майонез считали деликатесом и подавали в лучших ресторанах Европы.'} ]},
 { id:'ketchup', color:'#e0452c', soft:'rgba(224,69,44,.13)', lineName:'Кетчупы', unlock:650, wholesale:550,
 catName:'Все секреты кетчупа', catEmoji:'',
-spawner:{key:'sp_ketchup', emoji:'🍅', name:'Теплица'},
+spawner:{key:'sp_ketchup', emoji:'', name:'Теплица'},
 tiers:[
-{key:'ketchup_1', emoji:'🍅', name:'Помидор', fact:'Томат – ягода по ботанике, а в некоторых странах официально признан фруктом.'},
+{key:'ketchup_1', emoji:'', name:'Помидор', fact:'Томат – ягода по ботанике, а в некоторых странах официально признан фруктом.'},
 {key:'ketchup_2', emoji:'🔪', name:'Измельчение', fact:'Томатную массу дробят, затем пропускают через протирочные машины (сито-машины), чтобы отделить кожицу и семена.'},
 {key:'ketchup_3', emoji:'', name:'Термическая обработка', fact:'Уваривание происходит в вакууме. За счёт низкого давления вода испаряется быстрее, и кетчуп сохраняет яркий красный цвет и натуральный вкус.'},
 {key:'ketchup_4', emoji:'❄️', name:'Охлаждение', oname:'Томатная паста', fact:'После пастеризации кетчуп выходит из пастеризатора ещё горячим – с температурой около 115–120 °C. Прежде чем он попадёт в фасовочную машину, продукт должен быть охлаждён до 43 °C.'},
@@ -1007,7 +980,7 @@ catName:'Молоко из растений?', catEmoji:'🌾',
 spawner:{key:'sp_milk', emoji:'🌾', name:'Овсяное поле'},
 tiers:[
 {key:'milk_1', emoji:'🌾', name:'Овсяное зерно', fact:'Овёс возделывают уже более 4 тысяч лет. Злаки легко выдерживают лёгкие заморозки и универсальны в приготовлении.'},
-{key:'milk_2', emoji:'🧺', name:'Очищенное зерно', fact:'Зёрна очищают от примесей и шелухи, а после замачивают с ферментами, чтобы крахмал превратился в простые сахара и появилась натуральная сладость.'},
+{key:'milk_2', emoji:'', name:'Очищенное зерно', fact:'Зёрна очищают от примесей и шелухи, а после замачивают с ферментами, чтобы крахмал превратился в простые сахара и появилась натуральная сладость.'},
 {key:'milk_3', emoji:'🌀', name:'Измельчение', fact:'Массу дробят, затем фильтруют или сепарируют, чтобы отделить овсяную основу от жмыха.'},
 {key:'milk_4', emoji:'', name:'Гомогенизация', oname:'Овсяная основа', fact:'В смесь добавляют масла, витамины, стабилизаторы, а затем обрабатывают под высоким давлением для однородной текстуры.'},
 {key:'milk_5', emoji:'🧃', name:'Овсяное молоко', fact:'Овсяное молоко было изобретено в 1990-х в Швеции, на его производство уходит в 15 раз меньше воды, а остатки жмыха после фильтрации можно использовать в производстве гранолы и корма для животных.'} ]}
@@ -1024,9 +997,9 @@ var TUT_KEY='ceh7.tut.v1';
 var START_KEY='ceh7.start.v1';
 var AVATARS = [
 {lvl:1, icon:'👤', name:'Новичок'},
-{lvl:5, icon:'🧑‍🌾', name:'Фермер'},
-{lvl:10, icon:'👨‍🍳', name:'Повар'},
-{lvl:15, icon:'🧑‍', name:'Технолог'},
+{lvl:5, icon:'🌾', name:'Фермер'},
+{lvl:10, icon:'‍', name:'Повар'},
+{lvl:15, icon:'‍', name:'Технолог'},
 {lvl:20, icon:'👩‍💼', name:'Менеджер'},
 {lvl:25, icon:'🤴', name:'Директор'},
 {lvl:30, icon:'👑', name:'Магнат'},
@@ -1038,7 +1011,7 @@ function irand(a,b){ return a+Math.floor(Math.random()*(b-a+1)); }
 function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
 function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
 function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=irand(0,i),t=a[i];a[i]=a[j];a[j]=t; } return a; }
-function showDebug(m){ var d=$('#debug'); if(d){ d.textContent='⛔ '+m; d.className='on'; } }
+function showDebug(m){ var d=$('#debug'); if(d){ d.textContent=' '+m; d.className='on'; } }
 function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
 function lsSet(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
 var board=$('#board'), wrap=$('#board-wrap'), fx=$('#fx'), cardsBox=$('#order-cards');
@@ -1059,9 +1032,19 @@ var shopMode='main';
 var sheetType=null;
 var bureauView='home';
 var EVENT_PATTERN=['line','bubble','line','line','express'];
-var evPatternIdx=0, lineRot=null, lineRotIdx=0, lastLineEvent=null;
-var currentEvent=null, eventEnd=0, EVENT_DURATION=48*60*60*1000;
-var currentEventLine=null, currentEventBubbleRate=0;
+var EV_EPOCH=Date.UTC(2025,0,6,0,0,0);      // понедельник — начало недели событий
+var EV_PERIOD=7*24*60*60*1000;              // событие живёт ровно неделю у всех
+var GE=null;                                // глобальное событие недели
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+function evWeek(){ return Math.floor((Date.now()-EV_EPOCH)/EV_PERIOD); }
+function computeGlobalEvent(){
+  var w=evWeek(), rnd=mulberry32(w*747796405+2891336453);
+  var type=EVENT_PATTERN[((w%EVENT_PATTERN.length)+EVENT_PATTERN.length)%EVENT_PATTERN.length];
+  var ev={week:w,start:EV_EPOCH+w*EV_PERIOD,end:EV_EPOCH+(w+1)*EV_PERIOD,type:type,line:null,rate:0};
+  if(type==='line'){ var ids=CHAINS.map(function(c){return c.id;}); ev.type='line_bonus'; ev.line=ids[Math.floor(rnd()*ids.length)]; ev.rate=0.10; }
+  else if(type==='bubble'){ ev.type='bubble_rate'; ev.rate=0.7; }
+  return ev;
+}
 var musicOn=true, sfxOn=true, volMusic=.5, volSfx=1;
 var BGM=null, bgmOk=false;
 var MUSIC_TRACKS=['music_main.mp3','music_main2.mp3','music_main3.mp3'];
@@ -1073,7 +1056,7 @@ function hasWh(id){ return whOwned.indexOf(id)>=0; }
 function unlockedChains(){ return CHAINS.filter(function(c){ return isUnlocked(c.id); }); }
 function turboActive(){ return Date.now()<turboUntil; }
 function bubblePrice(t){ return 10*Math.pow(2,t-1); }
-function getBubbleChance(){ return currentEvent==='bubble_rate' ? BUBBLE_CHANCE*(1+(currentEventBubbleRate||0)) : BUBBLE_CHANCE; }
+function getBubbleChance(){ return GE.type==='bubble_rate' ? BUBBLE_CHANCE*(1+GE.rate) : BUBBLE_CHANCE; }
 function xpNeed(){ return 150+(lvl-1)*75; }
 function cardsCount(){ var n=0; for(var k in cards) if(cards[k]) n++; return n; }
 function ownedIn(line){ var n=0; CHAIN[line].tiers.forEach(function(t){ if(cards[t.key]) n++; }); return n; }
@@ -1106,6 +1089,23 @@ im.src=s;
 function fillCardArt(holder,key,emoji){
 if(ART['card_'+key]) fillArt(holder,'card_'+key,emoji);
 else fillArt(holder,key,emoji);
+}
+function icoEl(cls,fb){
+  var src=ART[cls.replace(/-/g,'_')];
+  if(!src){ var s0=document.createElement('span'); s0.className=cls+' ico-fb'; s0.textContent=fb; return s0; }
+  var im=document.createElement('img');
+  im.className=cls; im.alt=''; im.draggable=false;
+  im.onerror=function(){
+    var s=document.createElement('span'); s.className=cls+' ico-fb'; s.textContent=fb;
+    if(im.parentNode) im.parentNode.replaceChild(s,im);
+  };
+  im.src=src;
+  return im;
+}
+function setIco(el,cls,fb){
+  if(!el) return;
+  el.innerHTML='';
+  el.appendChild(icoEl(cls,fb));
 }
 function icoHTML(key,fb){
 var s=ART[key];
@@ -1173,7 +1173,7 @@ requestAnimationFrame(loop);
 requestAnimationFrame(loop);
 }
 function apply(on){
-if(on&&!lowFX){ lowFX=true; document.body.classList.add('lowfx'); toast('⚙ Включён режим экономии эффектов'); }
+if(on&&!lowFX){ lowFX=true; document.body.classList.add('lowfx'); toast(' Д включён режим экономии эффектов'); }
 else if(!on&&lowFX){ lowFX=false; document.body.classList.remove('lowfx'); toast('✨ Эффекты возвращены'); }
 }
 setTimeout(function(){ measure(function(avg){ if(avg!=null&&avg<30) apply(true); }); },2000);
@@ -1235,28 +1235,16 @@ var p=null;
 try{ p=BGM.play(); }catch(e){}
 if(p&&p.catch) p.catch(function(){});
 }
-function updSoundIcon(){ var b=$('#btn-sound'); if(b) b.textContent=(musicOn||sfxOn)?'🔊':'🔇'; }
-function pickNewEvent(){
-var type=EVENT_PATTERN[evPatternIdx % EVENT_PATTERN.length]; evPatternIdx++;
-if(type==='line'){
-var ids=unlockedChains().map(function(c){ return c.id; });
-if(!lineRot||lineRotIdx>=lineRot.length){ lineRot=shuffle(ids.slice()); lineRotIdx=0; }
-var ln=lineRot.length?lineRot[lineRotIdx++]:null;
-if(ln===lastLineEvent&&lineRot.length>1){ ln=lineRot[lineRotIdx++ % lineRot.length]; }
-lastLineEvent=ln; currentEventLine=ln;
-currentEvent='line_bonus'; currentEventBubbleRate=0;
-} else if(type==='bubble'){
-currentEvent='bubble_rate'; currentEventLine=null; currentEventBubbleRate=0.7;
-} else {
-currentEvent='express_rate'; currentEventLine=null; currentEventBubbleRate=0;
-}
-eventEnd=Date.now()+EVENT_DURATION;
-refreshEventUI();
-toast(eventName(currentEvent));
-save();
+function updSoundIcon(){
+  var b=$('#btn-sound'); if(!b) return;
+  var on=(musicOn||sfxOn);
+  setIco(b, on?'ico-sound':'ico-sound-mute', on?'🔊':'');
+  b.title=on?'Звук включён':'Звук выключен';
+  var h4=document.querySelector('#sound-pop h4');
+  if(h4){ h4.innerHTML=''; h4.appendChild(icoEl(on?'ico-sound':'ico-sound-mute', on?'🔊':'')); h4.appendChild(document.createTextNode(' Звук')); }
 }
 function eventName(ev){
-if(ev==='line_bonus'){ var ln=currentEventLine&&CHAIN[currentEventLine]?CHAIN[currentEventLine].lineName:''; return 'Бонус линии +10%'+(ln?': «'+ln+'»':''); }
+if(ev==='line_bonus'){ var ln=GE&&GE.line&&CHAIN[GE.line]?CHAIN[GE.line].lineName:''; return 'Бонус линии +10%'+(ln?': «'+ln+'»':''); }
 if(ev==='express_rate') return 'Экспресс-заказы поступают чаще';
 if(ev==='bubble_rate') return 'Увеличена частота появления копий';
 return '';
@@ -1270,12 +1258,12 @@ return null;
 function eventEmoji(ev){
 if(ev==='line_bonus') return '';
 if(ev==='express_rate') return '⚡';
-if(ev==='bubble_rate') return '🫧';
+if(ev==='bubble_rate') return '';
 return '🎉';
 }
 function eventTimeLeft(){
-if(!currentEvent||!eventEnd) return 0;
-var ms=eventEnd-Date.now();
+if(!GE) return 0;
+var ms=GE.end-Date.now();
 return ms>0?ms:0;
 }
 function formatEventTime(ms){
@@ -1290,22 +1278,22 @@ return m+'м';
 function renderEventCardInto(host){
 if(!host) return;
 var old=host.querySelector('.ev-card'); if(old) old.remove();
-if(!currentEvent||eventEnd<=Date.now()) return;
+if(!GE||GE.end<=Date.now()) return;
 var card=document.createElement('div'); card.className='ev-card';
 var img=document.createElement('div'); img.className='ev-img';
-var key=eventArtKey(currentEvent);
-if(key) fillArt(img,key,eventEmoji(currentEvent));
-else img.textContent=eventEmoji(currentEvent);
+var key=eventArtKey(GE.type);
+if(key) fillArt(img,key,eventEmoji(GE.type));
+else img.textContent=eventEmoji(GE.type);
 var cd=document.createElement('span'); cd.className='ev-cd'; cd.textContent=formatEventTime(eventTimeLeft());
 img.appendChild(cd);
 var info=document.createElement('div'); info.className='ev-info';
-info.innerHTML='<b>'+eventName(currentEvent)+'</b><span class="ev-left">осталось: '+formatEventTime(eventTimeLeft())+'</span>';
+info.innerHTML='<b>'+eventName(GE.type)+'</b><span class="ev-left">осталось: '+formatEventTime(eventTimeLeft())+'</span>';
 card.appendChild(img); card.appendChild(info);
 host.appendChild(card);
 }
 function updateEvBadge(){
 var b=$('#factory-ev-badge'); if(!b) return;
-if(currentEvent&&eventEnd>Date.now()){ b.style.display=''; b.textContent=formatEventTime(eventTimeLeft()); }
+if(GE&&GE.end>Date.now()){ b.style.display=''; b.textContent=formatEventTime(eventTimeLeft()); }
 else b.style.display='none';
 }
 function refreshEventUI(){
@@ -1352,7 +1340,7 @@ pity[line]=0; grantCard(t.key,fromRect);
 } else if(missing.length&&p>=3){
 pity[line]=0; grantCard(missing[0].key,fromRect);
 } else if(missing.length===0&&isExpress){
-coins+=20; $('#coins').textContent=coins; toast('🎴 Коллекция «'+L.catName+'» полна: +20💰');
+coins+=20; $('#coins').textContent=coins; toast(' Коллекция «'+L.catName+'» полна: +20💰');
 pity[line]=0;
 } else {
 var owned=L.tiers.filter(function(t){ return cards[t.key]; });
@@ -1360,7 +1348,7 @@ var dup=owned.length?owned[irand(0,owned.length-1)]:L.tiers[0];
 var val=15*dup.tier;
 coins+=val; $('#coins').textContent=coins; bump('#chip-coins');
 pity[line]=p+1;
-toast('🎴 Копия «'+dup.name+'» → +'+val+'💰');
+toast(' Копия «'+dup.name+'» → +'+val+'💰');
 }
 save();
 }
@@ -1518,9 +1506,9 @@ var t=document.createElement('div'); t.className='coll-tile'; t.style.setPropert
 function renderBureau(){
 var body=$('#bur-body'); body.innerHTML='';
 if(bureauView==='home'){
-$('#bur-title').textContent='🎴 Коллекционное бюро';
+$('#bur-title').textContent=' Коллекционное бюро';
 var sub=document.createElement('div'); sub.className='bur-sub';
-sub.textContent='Собери все карточки категории – получи +150💰. Редкие (★4–★5) выпадают с экспресс-заказов. Собери всё – и фабрика оживёт!';
+sub.textContent='Собери все карточки категории – получи +150. Редкие (★4–★5) выпадают с экспресс-заказов. Собери всё – и фабрика оживёт!';
 body.appendChild(sub);
 var g=document.createElement('div'); g.className='cat-grid';
 CHAINS.forEach(function(c){
@@ -1615,7 +1603,7 @@ var head=$('#tut-card .tut-head'), txt=$('#tut-text');
 if(s.startOnly){
 head.style.display='none'; txt.style.display='none';
 imgBox.classList.add('start'); imgBox.style.display='';
-var key=(window.innerHeight>window.innerWidth)?'start_v':'start_h'; // ИСПРАВЛЕНО: корректное определение ориентации
+var key=(window.innerHeight>window.innerWidth)?'start_h':'start_v';
 fillArt(imgBox,key,'🎉');
 lsSet(START_KEY,'1');
 } else {
@@ -1626,7 +1614,7 @@ if(s.img){ imgBox.style.display=''; fillArt(imgBox,s.img,''); }
 }
 var dots=$('#tut-dots'); dots.innerHTML='';
 tutSteps.forEach(function(_,i){ var d=document.createElement('i'); if(i===tutStep) d.className='on'; dots.appendChild(d); });
-$('#tut-next').textContent=(tutStep===tutSteps.length-1)?'Начать смену! 🏭':'Далее ➜';
+$('#tut-next').textContent=(tutStep===tutSteps.length-1)?'Начать смену! ':'Далее ➜';
 $('#tut-skip').style.display=(tutStep===0&&s.startOnly)?'none':'inline';
 positionSpot(s.startOnly?null:s.target);
 placeCard(s.startOnly?null:s.target);
@@ -1634,7 +1622,7 @@ placeCard(s.startOnly?null:s.target);
 function startTutorial(){
 tutSteps=TUT_BASE.slice();
 var portrait=window.innerHeight>window.innerWidth;
-if(!lsGet(START_KEY)&&(portrait?startImgs.v:startImgs.h)) tutSteps.unshift({startOnly:true});
+if(!lsGet(START_KEY)&&(portrait?startImgs.h:startImgs.v)) tutSteps.unshift({startOnly:true});
 tutStep=0; tutActive=true;
 $('#tut-back').classList.add('open');
 $('#tut-card').classList.add('open');
@@ -1647,7 +1635,7 @@ $('#tut-card').classList.remove('open');
 $('#tut-spot').classList.remove('open');
 lsSet(TUT_KEY,'1');
 confetti(window.innerWidth/2,window.innerHeight/2);
-toast('Смена началась! Удачи! 🏭');
+toast('Смена началась! Удачи! ');
 }
 addEventListener('resize',function(){ if(tutActive) showTutStep(); });
 function openSheet(type,title,fill){
@@ -1668,7 +1656,7 @@ host.innerHTML='';
 var active=orders.filter(function(o){ return o&&!o.done; }).length;
 host.innerHTML=
 '<div class="od-row"><span class="sh-ico">✅</span><span class="sh-txt"><b>Выполнено заказов</b>'+done+'</span></div>'+
-'<div class="od-row"><span class="sh-ico">📦</span><span class="sh-txt"><b>Сейчас в работе</b>'+active+'</span></div>'+
+'<div class="od-row"><span class="sh-ico"></span><span class="sh-txt"><b>Сейчас в работе</b>'+active+'</span></div>'+
 '<div class="od-row"><span class="sh-ico"></span><span class="sh-txt"><b>Карточки коллекции</b>'+cardsCount()+'/'+TOTAL_CARDS+'</span></div>'+
 '<div class="od-row"><span class="sh-ico"></span><span class="sh-txt"><b>Уровень фабрики</b>'+lvl+'</span></div>'+
 '<div class="od-row"><span class="sh-ico">👤</span><span class="sh-txt"><b>Директор</b>'+directorName+' '+(AVATARS[directorAvatar]||AVATARS[0]).icon+'</span></div>';
@@ -1748,7 +1736,7 @@ if(!free){ coins-=price; $('#coins').textContent=coins; bump('#chip-coins'); }
 killBubble(b,true);
 makeItem(idx,b.chain,b.tier,'pop');
 var r=board.getBoundingClientRect(), p=cellXY(idx);
-floaty(r.left+p.x+STEP/2,r.top+p.y, free?'⚡ копия!':'копия! −'+price+'💰','#2f9fd6');
+floaty(r.left+p.x+STEP/2,r.top+p.y, free?' копия!':'копия! −'+price+'💰','#2f9fd6');
 sfx('buy'); save();
 }
 function killBubble(b,fast){
@@ -1867,7 +1855,7 @@ avoid=avoid||[]; var pool=unlockedChains(), c=pick(pool), g=0;
 while(avoid.indexOf(c.id)>=0&&g++<10) c=pick(pool);
 var qty=Math.random()<(lvl>=3?.4:.25)?2:1;
 var reward=qty*(60+irand(0,3)*5)+(lvl-1)*5;
-if(currentEvent==='line_bonus'&&currentEventLine===c.id) reward=Math.round(reward*1.1);
+if(GE.type==='line_bonus'&&GE.line===c.id) reward=Math.round(reward*1.1);
 return {chain:c.id,tier:MAXT,qty:qty,need:qty,
 reward:reward,done:false,express:false,deadline:0,client:pick(CLIENTS_RETAIL)};
 }
@@ -1889,7 +1877,7 @@ sfx('new'); save();
 function tickExpressCounter(){
 sinceExpress++;
 var baseTarget=prOwned?3+irand(0,1):5+irand(0,1);
-if(currentEvent==='express_rate') baseTarget=Math.max(2,baseTarget-2);
+if(GE.type==='express_rate') baseTarget=Math.max(2,baseTarget-2);
 if(!orders[2]&&sinceExpress>=baseTarget){ sinceExpress=0; setTimeout(spawnExpress,1200); }
 }
 function fmtTime(ms){ var s=Math.max(0,Math.ceil(ms/1000)); return Math.floor(s/60)+':'+(s%60<10?'0':'')+(s%60); }
@@ -1897,18 +1885,18 @@ function updateTimers(){
 var o=orders[2];
 if(o&&!o.done){
 var left=o.deadline-Date.now();
-if(left<=0){ orders[2]=null; renderOrders(); toast('⏰ Экспресс-заказ истёк – поезд уехал'); sfx('err'); save(); }
+if(left<=0){ orders[2]=null; renderOrders(); toast(' Экспресс-заказ истёк – поезд уехал'); sfx('err'); save(); }
 else {
 var els=cardsBox.querySelectorAll('[data-slot="2"] .o-timer');
 Array.prototype.forEach.call(els,function(el){
-el.textContent='⏱ '+fmtTime(left);
+el.textContent=' '+fmtTime(left);
 el.classList.toggle('hurry',left<10000);
 });
 }
 }
 var tb=$('#turbo-badge');
 if(tb){ if(turboActive()){ tb.style.display=''; tb.textContent='⚡ '+fmtTime(turboUntil-Date.now()); } else tb.style.display='none'; }
-if(currentEvent&&Date.now()>eventEnd){ currentEvent=null; eventEnd=0; currentEventBubbleRate=0; pickNewEvent(); }
+if(evWeek()!==GE.week){ GE=computeGlobalEvent(); refreshEventUI(); toast(eventName(GE.type)); sfx('new'); }
 var tl=formatEventTime(eventTimeLeft());
 document.querySelectorAll('.ev-cd').forEach(function(el){ el.textContent=tl; });
 document.querySelectorAll('.ev-left').forEach(function(el){ el.textContent='осталось: '+tl; });
@@ -1952,7 +1940,7 @@ burst(r.left+r.width/2,r.top+r.height/2,o.express?'#7a5cff':CHAIN[o.chain].color
 if(o.need<=0){
 o.done=true; addCoins(o.reward); addXp(15); done++; updDone();
 confetti(r.left+r.width/2,r.top+r.height/2);
-showStamp(o.express?'Экспресс выполнен!':'Заказ выполнен!','+'+o.reward+' 💰',o.express?'violet':null);
+showStamp(o.express?'Экспресс выполнен!':'Заказ выполнен!','+'+o.reward+' ',o.express?'violet':null);
 sfx('order');
 dropCard(o.chain,!!o.express,r);
 if(!o.express) tickExpressCounter();
@@ -1987,7 +1975,7 @@ row.appendChild(art); row.appendChild(info); row.appendChild(qty);
 var side=document.createElement('div'); side.className='o-side';
 var ex2=document.createElement('button'); ex2.className='o-exp2'; ex2.title='Подробнее о заказе';
 var h2=document.createElement('span'); h2.className='exp-ico'; ex2.appendChild(h2);
-fillArt(h2,'icon_expand','⌃⌃');
+fillArt(h2,'icon_expand','⌃');
 ex2.addEventListener('click',function(e){ e.stopPropagation(); openOrderSheet(i); });
 var qw2=document.createElement('span'); qw2.className='o-qwrap';
 var q3=document.createElement('span'); q3.className='o-qty2'; q3.textContent=o.done?'✓':'×'+o.need;
@@ -1999,7 +1987,7 @@ pr2.innerHTML=coinHTML(o.reward);
 side.appendChild(ex2); side.appendChild(qw2); side.appendChild(pr2);
 if(o.express&&!o.done){
 var tm2=document.createElement('span'); tm2.className='o-timer o-timer-m';
-tm2.textContent='⏱ '+fmtTime(o.deadline-Date.now());
+tm2.textContent=' '+fmtTime(o.deadline-Date.now());
 side.appendChild(tm2);
 }
 row.appendChild(side);
@@ -2013,7 +2001,7 @@ rew.innerHTML=coinHTML(o.reward);
 foot.appendChild(ex); foot.appendChild(rew);
 if(o.express&&!o.done){
 var tm=document.createElement('span'); tm.className='o-timer';
-tm.textContent='⏱ '+fmtTime(o.deadline-Date.now());
+tm.textContent=' '+fmtTime(o.deadline-Date.now());
 foot.appendChild(tm);
 }
 var pips=document.createElement('div'); pips.className='o-pips';
@@ -2031,7 +2019,7 @@ var c=CHAIN[o.chain], t=c.tiers[o.tier-1];
 var w=document.createElement('div');
 w.innerHTML=
 '<div class="od-row"><span class="o-art"></span>'+
-'<div style="flex:1;min-width:0"><b>'+orderName(t)+'</b><span>'+(o.express?'⚡ экспресс · ':'')+'Заказчик: '+o.client+'</span></div>'+
+'<div style="flex:1;min-width:0"><b>'+orderName(t)+'</b><span>'+(o.express?' экспресс · ':'')+'Заказчик: '+o.client+'</span></div>'+
 '<div class="o-qty">'+(o.done?'✓':'×'+o.need)+'</div></div>'+
 '<div class="od-row"><span class="o-reward" style="display:inline">'+coinHTML(o.reward)+'</span><span class="o-pips"></span>'+
 (o.express&&!o.done?'<span class="o-timer">⏱ '+fmtTime(o.deadline-Date.now())+'</span>':'')+'</div>'+
@@ -2059,7 +2047,7 @@ var txt=document.createElement('span'); txt.className='ln-txt';
 txt.innerHTML='<b>Линия «'+c.lineName+'»</b>';
 row.appendChild(art); row.appendChild(txt);
 if(isUn){
-var g=document.createElement('span'); g.className='ln-gear'; g.textContent='⚙'; g.title='Линия активна';
+var g=document.createElement('span'); g.className='ln-gear'; g.textContent=''; g.title='Линия активна';
 row.appendChild(g);
 } else {
 var btn=document.createElement('button'); btn.className='ln-btn';
@@ -2073,7 +2061,7 @@ renderEventCardInto(host);
 }
 function buildLines(){ renderLines($('#lines-list')); }
 function tryUnlock(c){
-if(coins<c.unlock){ toast('Нужно 💰 '+c.unlock+' для линии «'+c.lineName+'»',true); sfx('err'); bump('#chip-coins'); return; }
+if(coins<c.unlock){ toast('Нужно  '+c.unlock+' для линии «'+c.lineName+'»',true); sfx('err'); bump('#chip-coins'); return; }
 coins-=c.unlock; $('#coins').textContent=coins; bump('#chip-coins');
 unlocked.push(c.id);
 buildLines(); buildPlants(); buildChainHelp();
@@ -2111,7 +2099,7 @@ b.className='plant'+(isUn?'':' locked'); b.dataset.chain=c.id;
 b.style.setProperty('--pc',c.color);
 var art=document.createElement('span'); art.className='p-art'; fillArt(art,c.spawner.key,c.spawner.emoji);
 b.appendChild(art);
-if(!isUn){ var lk=document.createElement('span'); lk.className='p-lock'; lk.textContent='🔒'; b.appendChild(lk); }
+if(!isUn){ var lk=document.createElement('span'); lk.className='p-lock'; lk.textContent=''; b.appendChild(lk); }
 b.addEventListener('click',function(){
 if(!isUnlocked(c.id)){
 toast('Линия «'+c.lineName+'» закрыта – открой её в списке площадок',true);
@@ -2151,7 +2139,7 @@ var empties=[]; grid.forEach(function(v,i){ if(!v&&!bubbleGrid[i]) empties.push(
 if(!empties.length){ toast('Склад переполнен – нет свободных ячеек!',true); sfx('err'); return; }
 var n=Math.min(want,empties.length);
 var cost=(wh&&n===2)?WH_COST:SPAWN_COST;
-if(energy<cost){ toast('Не хватает энергии ⚡ – подожди чуть-чуть',true); sfx('err'); bump('#chip-energy'); return; }
+if(energy<cost){ toast('Не хватает энергии  – подожди чуть-чуть',true); sfx('err'); bump('#chip-energy'); return; }
 energy-=cost; updEnergy(); shuffle(empties);
 for(var i=0;i<n;i++){
 var tier=Math.random()<RARE_CHANCE?2:1;
@@ -2166,7 +2154,7 @@ if(hasWh(c.id)){ toast('Опт «'+c.lineName+'» уже активен'); retur
 if(coins<c.wholesale){ toast('Нужно  '+c.wholesale+' для опта «'+c.lineName+'»',true); sfx('err'); bump('#chip-coins'); return; }
 coins-=c.wholesale; $('#coins').textContent=coins; bump('#chip-coins');
 whOwned.push(c.id);
-toast('Опт «'+c.lineName+'» активен: 2 сырья за '+WH_COST+' 📦'); sfx('buy'); save();
+toast('Опт «'+c.lineName+'» активен: 2 сырья за '+WH_COST+' '); sfx('buy'); save();
 }
 function toggleShop(){
 var pop=$('#shop-pop'), sw=$('#shopwrap');
@@ -2194,7 +2182,7 @@ function renderShop(){
 var pop=$('#shop-pop'); if(!pop) return;
 pop.innerHTML='';
 var h=document.createElement('h4');
-h.innerHTML=icoHTML('icon_shop','🛒')+' Магазин фабрики';
+h.innerHTML=icoHTML('icon_shop','')+' Магазин фабрики';
 pop.appendChild(h);
 function row(ico,name,desc,btn,cb,cls,mute){
 var r=document.createElement('div'); r.className='sh-row'+(mute?' mute':'');
@@ -2207,8 +2195,8 @@ function back(){ row('←','Назад','','в магазин',function(){ shopM
 if(shopMode==='wh'){
 CHAINS.forEach(function(c){
 if(hasWh(c.id)) row(icoHTML('icon_box',''),c.lineName,'опт активен: 2 сырья за ⚡'+WH_COST,'✓',null,'owned');
-else if(!isUnlocked(c.id)) row('🔒',c.lineName,'сначала открой линию','—',null,null,true);
-else row(icoHTML('icon_box','📦'),c.lineName,'2 сырья за '+WH_COST+' ⚡ вместо 1 за '+SPAWN_COST,coinHTML(c.wholesale),function(){
+else if(!isUnlocked(c.id)) row('',c.lineName,'сначала открой линию','—',null,null,true);
+else row(icoHTML('icon_box','📦'),c.lineName,'2 сырья за '+WH_COST+'  вместо 1 за '+SPAWN_COST,coinHTML(c.wholesale),function(){
 tryWh(c); shopMode='main'; renderShop();
 });
 });
@@ -2226,9 +2214,9 @@ row(icoHTML('icon_battery','🔋'),'Батарея','+10 ⚡ сразу',coinHTM
 if(coins<BATT_COST){ toast('Нужно 💰 '+BATT_COST,true); sfx('err'); return; }
 coins-=BATT_COST; energy=Math.min(E_MAX,energy+10);
 $('#coins').textContent=coins; updEnergy(); bump('#chip-coins');
-toast('⚡ +10 энергии'); sfx('buy'); save(); renderShop();
+toast(' +10 энергии'); sfx('buy'); save(); renderShop();
 });
-if(eu>=EU_COSTS.length) row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' ','MAX',null,'owned');
+if(eu>=EU_COSTS.length) row(icoHTML('icon_energy',''),'Энергия +5','максимум: '+E_MAX+' ','MAX',null,'owned');
 else row(icoHTML('icon_energy','⚡'),'Энергия +5','максимум: '+E_MAX+' → '+(E_MAX+5)+' ⚡',coinHTML(EU_COSTS[eu]),buyEnergy);
 if(turboActive()) row(icoHTML('icon_turbo','⚡'),'Турбо-смена','пузыри можно лопать бесплатно','⚡ '+fmtTime(turboUntil-Date.now()),null,'owned');
 else row(icoHTML('icon_turbo',''),'Турбо-смена','5 мин: пузыри с предметами можно лопать бесплатно',coinHTML(TURBO_COST),function(){
@@ -2240,7 +2228,7 @@ toast('Турбо-смена! Ломай пузыри бесплатно ⚡ (5 
 if(CHAINS.some(function(c){ return isUnlocked(c.id)&&!hasWh(c.id); }))
 row(icoHTML('icon_box','📦'),'Оптовая поставка','больше сырья за меньшую стоимость','выбрать',function(){ shopMode='wh'; renderShop(); });
 if(orders.some(function(o){ return o&&!o.done&&!o.express; }))
-row(icoHTML('icon_reroll','🌀'),'Заменить заказ','',coinHTML(REROLL_COST),function(){ shopMode='reroll'; renderShop(); });
+row(icoHTML('icon_reroll',''),'Заменить заказ','',coinHTML(REROLL_COST),function(){ shopMode='reroll'; renderShop(); });
 if(prOwned) row(icoHTML('icon_pr','📣'),'PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них','✓',null,'owned');
 else row(icoHTML('icon_pr',''),'PR-менеджер','увеличивает шанс на появление экспресс-заказов и награду за них',coinHTML(PR_COST),function(){
 if(coins<PR_COST){ toast('Нужно 💰 '+PR_COST,true); sfx('err'); return; }
@@ -2374,20 +2362,88 @@ else if(k==='buy'){ tone(987,.08,'sine',.06); tone(1318,.12,'sine',.06,.09); }
 else if(k==='card'){ tone(880,.12,'sine',.06); tone(1320,.16,'sine',.05,.1); }
 else if(k==='lvl') [523,659,784,1047].forEach(function(f,i){ tone(f,.13,'triangle',.06,i*.1); });
 }
-function save(){
-try{
-localStorage.setItem(SKEY,JSON.stringify({
-v:4,coins:coins,energy:energy,ts:Date.now(),lvl:lvl,xp:xp,done:done,
-dn:directorName,da:directorAvatar,
-mon:musicOn,son:sfxOn,vm:volMusic,vs:volSfx,
-un:unlocked,wh:whOwned,eu:eu,ws:0,pr:prOwned,tb:turboUntil,cols:6,rows:6,
-cd:cards,pd:pending,py:pity,pz:prized,
-items:items.map(function(it){ return {i:it.idx,c:it.chain,t:it.tier}; }),
-orders:orders.map(function(o){ return o?{c:o.chain,q:o.qty,n:o.need,r:o.reward,d:!!o.done,t:o.tier,e:!!o.express,dl:o.deadline||0,cl:o.client||''}:0; }),
-ev:currentEvent,evend:eventEnd,evp:evPatternIdx
-}));
-}catch(e){}
+function buildSaveObj(){
+  return {
+    v:4,coins:coins,energy:energy,ts:Date.now(),lvl:lvl,xp:xp,done:done,
+    dn:directorName,da:directorAvatar,
+    mon:musicOn,son:sfxOn,vm:volMusic,vs:volSfx,
+    un:unlocked,wh:whOwned,eu:eu,ws:0,pr:prOwned,tb:turboUntil,cols:6,rows:6,
+    cd:cards,pd:pending,py:pity,pz:prized,
+    items:items.map(function(it){ return {i:it.idx,c:it.chain,t:it.tier}; }),
+    orders:orders.map(function(o){ return o?{c:o.chain,q:o.qty,n:o.need,r:o.reward,d:!!o.done,t:o.tier,e:!!o.express,dl:o.deadline||0,cl:o.client||''}:0; })
+  };
 }
+function save(){
+  try{ localStorage.setItem(SKEY,JSON.stringify(buildSaveObj())); }catch(e){}
+  cloudSchedule(false);
+}
+/* ===== Облачное сохранение ВК ===== */
+var CK='ceh7.cloud.v1';
+var VKB=window.vkBridge||null;
+var CLOUD={ok:false,dirty:false,pushing:false,lastPush:0};
+function vkSend(m,p){
+  if(!VKB) return Promise.reject(new Error('no-bridge'));
+  try{ var r=VKB.send(m,p||{}); return (r&&r.then)?r:Promise.resolve(r); }
+  catch(e){ return Promise.reject(e); }
+}
+function vkEnv(){
+  if(!VKB) return false;
+  try{ if(VKB.isWebView && VKB.isWebView()) return true; }catch(e){}
+  return /[?&]vk_app_id=/.test(location.search||'');
+}
+function cloudInit(){
+  if(!vkEnv()) return Promise.resolve(false);   // локально даже не дёргаем мост
+  return vkSend('VKWebAppInit',{}).then(function(){ CLOUD.ok=true; return true; })
+    .catch(function(){ CLOUD.ok=false; return false; });
+}
+function saveScore(o){
+  if(!o) return -1;
+  var n=0; for(var k in (o.cd||{})) if(o.cd[k]) n++;
+  return (o.lvl||1)*1000000+(o.done||0)*10000+n*100+Math.min(Math.floor((o.coins||0)/10),99);
+}
+function cloudSchedule(force){
+  if(!CLOUD.ok) return;
+  if(force||Date.now()-CLOUD.lastPush>20000) cloudPush();
+  else CLOUD.dirty=true;
+}
+function cloudPush(){
+  if(!CLOUD.ok||CLOUD.pushing){ CLOUD.dirty=true; return; }
+  CLOUD.pushing=true; CLOUD.dirty=false; CLOUD.lastPush=Date.now();
+  var s=JSON.stringify(buildSaveObj()), CH=3800, n=Math.ceil(s.length/CH)||1;
+  var keys=[{key:CK+'.meta',value:JSON.stringify({n:n,ts:Date.now(),score:saveScore(buildSaveObj())})}];
+  for(var i=0;i<n;i++) keys.push({key:CK+'.'+i,value:s.substr(i*CH,CH)});
+  vkSend('VKWebAppStorageSet',{keys:keys}).then(function(){
+    CLOUD.pushing=false; if(CLOUD.dirty) setTimeout(cloudPush,800);
+  }).catch(function(){ CLOUD.pushing=false; });
+}
+function cloudPull(){
+  if(!CLOUD.ok) return Promise.resolve(null);
+  return vkSend('VKWebAppStorageGet',{keys:[CK+'.meta']}).then(function(r){
+    var mv=r&&r.keys&&r.keys[0]?r.keys[0].value:''; if(!mv) return null;
+    var meta; try{ meta=JSON.parse(mv); }catch(e){ return null; }
+    var ks=[]; for(var i=0;i<(meta.n||0);i++) ks.push(CK+'.'+i);
+    if(!ks.length) return null;
+    return vkSend('VKWebAppStorageGet',{keys:ks}).then(function(r2){
+     var s=''; (r2.keys||[]).forEach(function(k){ s+=(k.value||''); });
+      var o; try{ o=JSON.parse(s); }catch(e){ return null; }
+      o._meta=meta; return o;
+    });
+  }).catch(function(){ return null; });
+}
+function mergeCloud(){
+  return cloudPull().then(function(co){
+    if(!co) return false;
+    var lo=null, raw=lsGet(SKEY);
+    if(raw){ try{ lo=JSON.parse(raw); }catch(e){} }
+    if(!lo){ try{ localStorage.setItem(SKEY,JSON.stringify(co)); }catch(e){} return true; }
+    var lm=lo.ts||0, cm=(co._meta&&co._meta.ts)||co.ts||0;
+    var ls=saveScore(lo), cs=(co._meta&&co._meta.score!=null)?co._meta.score:saveScore(co);
+    var useCloud=Math.abs(cm-lm)>5000 ? cm>lm : cs>ls;   // свежее побеждает, при равенстве — прогресс
+    if(useCloud){ try{ localStorage.setItem(SKEY,JSON.stringify(co)); }catch(e){} return true; }
+    return false;
+  });
+}
+function withTimeout(p,ms){ return Promise.race([p,new Promise(function(res){ setTimeout(function(){res(false);},ms); })]); }
 function load(){
 try{
 var raw=localStorage.getItem(SKEY); if(!raw) return false;
@@ -2399,7 +2455,6 @@ directorName=def(s.dn,'Директор'); directorAvatar=clamp(def(s.da,0),0,AV
 musicOn=def(s.mon,true); sfxOn=def(s.son,true);
 volMusic=clamp(def(s.vm,.5),0,1); volSfx=clamp(def(s.vs,1),0,1);
 cards=s.cd||{}; pending=s.pd||[]; pity=s.py||{}; prized=s.pz||{};
-currentEvent=s.ev||null; eventEnd=s.evend||0; evPatternIdx=def(s.evp,0);
 var un=(s.un&&s.un.length)?s.un.slice():['oil'];
 if(un.indexOf('oil')<0) un.push('oil');
 unlocked=un.filter(function(id){ return CHAIN[id]; });
@@ -2442,13 +2497,14 @@ var startImgs={v:false,h:false};
 var v=new Image(); v.onload=function(){startImgs.v=true;}; v.src=ART.start_v;
 var h=new Image(); h.onload=function(){startImgs.h=true;}; h.src=ART.start_h;
 })();
-fillArt($('#loading-factory-ico'),'loading_factory','🏭');
+fillArt($('#loading-factory-ico'),'loading_factory','');
 var initDone=false;
 function init(){
 if(initDone) return; initDone=true;
 grid=new Array(COLS*ROWS).fill(null);
 bubbleGrid=new Array(COLS*ROWS).fill(null);
 rebuildCellEls(); sizeBoard();
+GE=computeGlobalEvent();
 var had=load();
 buildLines(); buildPlants(); buildChainHelp();
 placeControls();
@@ -2462,12 +2518,17 @@ var sv=$('#snd-sfx-vol'); if(sv) sv.value=Math.round(volSfx*100);
 if(BGM) BGM.volume=volMusic;
 updSoundIcon();
 renderAvatarButton();
+/* ИСПРАВЛЕНИЕ: правильный селектор для иконки фабрики */
 var fabIco = document.querySelector('#btn-factory .fab-ico');
 if(fabIco) fillArt(fabIco,'icon_factory','🏭');
-fillArt($('#bur-ico'),'bureau','🎴');
+fillArt($('#bur-ico'),'bureau','');
 fillArt($('#bur-ico-m'),'bureau','🎴');
 fillArt($('#coin-ico'),'icon_coin','💰');
-fillArt($('#energy-ico'),'icon_energy','⚡');
+fillArt($('#energy-ico'),'icon_energy','');
+setIco($('#sheet-close'),'ico-close','✕');
+setIco($('#bur-close'),'ico-close','✕');
+setIco($('#profile-close'),'ico-close','✕');
+setIco($('#btn-chains'),'ico-help','❓');
 updEnergyShop();
 if(!had){
 var starters=[['oil',1],['oil',1],['oil',2]];
@@ -2486,7 +2547,9 @@ if(add>0){ energy=clamp(energy+add,0,E_MAX); lastRegen=now-(now-lastRegen)%E_REG
 else lastRegen=Date.now();
 },1000);
 setInterval(updateTimers,500);
-if(!currentEvent) pickNewEvent();
+GE=computeGlobalEvent();
+var _lw=lsGet('ceh7.evweek');
+if(_lw!==String(GE.week)){ lsSet('ceh7.evweek',String(GE.week)); toast(eventName(GE.type)); }
 setInterval(save,6000);
 addEventListener('beforeunload',save);
 if('ResizeObserver' in window) new ResizeObserver(function(){ requestAnimationFrame(sizeBoard); }).observe(wrap);
@@ -2499,10 +2562,17 @@ if(!lsGet(TUT_KEY)) setTimeout(startTutorial,700);
 window.__CEH_READY=true;
 }
 function boot(){
-if(window.__CEH_BOOTED) return; window.__CEH_BOOTED=true;
-hideLoading();
-try{ init(); }catch(err){ showDebug('Ошибка при запуске: '+(err&&err.message?err.message:err)); }
+  if(window.__CEH_BOOTED) return; window.__CEH_BOOTED=true;
+  hideLoading();
+  cloudInit().then(function(ok){
+    return ok ? withTimeout(mergeCloud(),2500) : false;
+  }).catch(function(){ return false; }).then(function(fromCloud){
+    try{ init(); }catch(err){ showDebug('Ошибка при запуске: '+(err&&err.message?err.message:err)); }
+    if(CLOUD.ok){ cloudPush(); if(fromCloud) toast('☁️ Прогресс загружен из аккаунта ВК'); }
+  });
 }
+window.addEventListener('pagehide',function(){ if(CLOUD.ok) cloudPush(); });
+document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='hidden'&&CLOUD.ok) cloudPush(); });
 preloadAllAssets(function(){ setTimeout(boot,300); });
 setTimeout(boot,6000);
 $('#btn-profile').onclick=function(e){ e.stopPropagation(); openProfile(); };
@@ -2534,7 +2604,7 @@ if(night){ document.documentElement.removeAttribute('data-theme'); localStorage.
 else { document.documentElement.setAttribute('data-theme','night'); localStorage.setItem('ceh7.theme','night'); }
 }catch(e){}
 };
-$('#btn-chains').onclick=function(){ openSheet('chains','Цепочки и обучалка',function(h){ renderChains(h,true); }); };
+$('#btn-chains').onclick=function(){ openSheet('chains','Справочная информация',function(h){ renderChains(h,true); }); };
 $('#sheet-close').onclick=closeSheet;
 $('#sheet-back').onclick=closeSheet;
 $('#chip-energy-up').onclick=buyEnergy;
