@@ -1667,11 +1667,12 @@ host.innerHTML=
 '<div class="od-row"><span class="sh-ico">👤</span><span class="sh-txt"><b>Директор</b>'+directorName+' '+(AVATARS[directorAvatar]||AVATARS[0]).icon+'</span></div>';
 }
 function shareMessages(){
-  var link=location.origin+location.pathname;   // чистый адрес игры, без vk-параметров
-  return [
-    {t:'Я развиваю свою фабрику и она уже достигла '+lvl+' уровня! Сможешь повторить?', l:link},
-    {t:'Я завершаю '+(done+1)+'-й заказ на фабрике!', l:link}   // done+1 = заказ, который завершается сейчас; если хочешь «сколько уже завершено» — поставь просто done
-  ];
+    // Прямая ссылка на приложение ВК (ВК сам подтянет иконку игры из каталога)
+    var VK_APP_LINK = 'https://vk.com/app54772924'; 
+    return [
+        {t:'Я развиваю свою фабрику и она уже достигла '+lvl+' уровня! Сможешь повторить?', l:VK_APP_LINK},
+        {t:'Я завершаю '+(done+1)+'-й заказ на фабрике!', l:VK_APP_LINK}
+    ];
 }
 function copyText(s){
   if(navigator.clipboard&&navigator.clipboard.writeText) return navigator.clipboard.writeText(s);
@@ -1682,19 +1683,29 @@ function copyText(s){
   });
 }
 function doShare(m){
-  var full=m.t+' '+m.l;
-  if(vkEnv()){
-    vkSend('VKWebAppShowWallPostBox',{message:full}).catch(function(e){
-      if(e&&e.error_type==='cancelled') return;              // игрок сам передумал — не дёргаем ничего
-      return vkSend('VKWebAppShare',{link:m.l}).catch(function(){});
-    });
-    closeSheet();
-  } else {
-    copyText(full).then(
-      function(){ toast('📋 Скопировано! Вставь в пост или сообщение'); },
-      function(){ toast('Не удалось скопировать 😿',true); }
-    );
-  }
+    if(vkEnv()){
+        // Копируем текст в буфер обмена, чтобы игрок мог вставить его в сообщение
+        copyText(m.t).then(function(){
+            toast('📋 Текст скопирован! Вставь его в окно отправки');
+        }).catch(function(){});
+        
+        // Пытаемся открыть окно поста на стену (оно поддерживает кастомный текст)
+        vkSend('VKWebAppShowWallPostBox', {
+            message: m.t + '\n' + m.l
+        }).catch(function(e){
+            if(e && e.error_type === 'cancelled') return;
+            // Если не получилось на стену, открываем стандартное меню "Поделиться"
+            return vkSend('VKWebAppShare', { link: m.l }).catch(function(){});
+        });
+        closeSheet();
+    } else {
+        var full = m.t + '\n' + m.l;
+        copyText(full).then(
+            function(){ toast('📋 Скопировано! Вставь в пост или сообщение'); },
+            function(){ toast('Не удалось скопировать 😿', true); }
+        );
+        closeSheet();
+    }
 }
 function openShare(){
   openSheet('share','Рассказать о фабрике',function(h){
@@ -2435,9 +2446,13 @@ function vkSend(m,p){
   catch(e){ return Promise.reject(e); }
 }
 function vkEnv(){
-  if(!VKB) return false;
-  try{ if(VKB.isWebView && VKB.isWebView()) return true; }catch(e){}
-  return /[?&]vk_app_id=/.test(location.search||'');
+    if(!window.vkBridge) return false;
+    try {
+        // isWebView - самый надежный способ определить, что мы внутри ВК
+        return window.vkBridge.isWebView();
+    } catch(e) {
+        return false;
+    }
 }
 function cloudInit(){
   if(!vkEnv()) return Promise.resolve(false);   // локально даже не дёргаем мост
@@ -2457,7 +2472,7 @@ function cloudSchedule(force){
 function cloudPush(){
   if(!CLOUD.ok||CLOUD.pushing){ CLOUD.dirty=true; return; }
   CLOUD.pushing=true; CLOUD.dirty=false; CLOUD.lastPush=Date.now();
-  var s=JSON.stringify(buildSaveObj()), CH=3800, n=Math.ceil(s.length/CH)||1;
+  var s=JSON.stringify(buildSaveObj()), CH=1000, n=Math.ceil(s.length/CH)||1;
   var keys=[{key:CK+'.meta',value:JSON.stringify({n:n,ts:Date.now(),score:saveScore(buildSaveObj())})}];
   for(var i=0;i<n;i++) keys.push({key:CK+'.'+i,value:s.substr(i*CH,CH)});
   vkSend('VKWebAppStorageSet',{keys:keys}).then(function(){
@@ -2619,8 +2634,20 @@ function boot(){
     if(CLOUD.ok){ cloudPush(); if(fromCloud) toast('☁️ Прогресс загружен из аккаунта ВК'); }
   });
 }
-window.addEventListener('pagehide',function(){ if(CLOUD.ok) cloudPush(); });
-document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='hidden'&&CLOUD.ok) cloudPush(); });
+window.addEventListener('pagehide',function(){ 
+    if(BGM) BGM.pause(); // Останавливаем музыку при закрытии
+    if(CLOUD.ok) cloudPush(); 
+});
+
+document.addEventListener('visibilitychange',function(){ 
+    if(document.visibilityState==='hidden'){
+        if(BGM) BGM.pause(); // Останавливаем при сворачивании
+        if(CLOUD.ok) cloudPush(); 
+    } else {
+        // Возобновляем музыку, если игрок вернулся и она была включена
+        if(musicOn && BGM && BGM.paused) BGM.play().catch(function(){});
+    }
+});
 preloadAllAssets(function(){ setTimeout(boot,300); });
 setTimeout(boot,6000);
 $('#btn-profile').onclick=function(e){ e.stopPropagation(); openProfile(); };
