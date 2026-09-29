@@ -2441,19 +2441,23 @@ function vkSend(m,p){
   catch(e){ return Promise.reject(e); }
 }
 function vkEnv(){
-    if(!window.vkBridge) return false;
-    try {
-        // isWebView - самый надежный способ определить, что мы внутри ВК
-        return window.vkBridge.isWebView();
-    } catch(e) {
-        return false;
-    }
+if(!window.vkBridge) return false;
+try{ if(window.vkBridge.isWebView && window.vkBridge.isWebView()) return true; }catch(e){}
+if(/[?&]vk_app_id=/.test(location.search||'')) return true;
+try{ return window.self!==window.top; }catch(e){ return true; }
+}
+var VK_INIT_DONE=null;
+function vkInitOnce(){
+if(VK_INIT_DONE) return VK_INIT_DONE;
+VK_INIT_DONE=vkSend('VKWebAppInit',{}).then(function(){ CLOUD.ok=true; return true; })
+.catch(function(){ CLOUD.ok=false; return false; });
+return VK_INIT_DONE;
 }
 function cloudInit(){
-  if(!vkEnv()) return Promise.resolve(false);   // локально даже не дёргаем мост
-  return vkSend('VKWebAppInit',{}).then(function(){ CLOUD.ok=true; return true; })
-    .catch(function(){ CLOUD.ok=false; return false; });
+if(!vkEnv()) return Promise.resolve(false);
+return vkInitOnce();
 }
+if(vkEnv()) vkInitOnce();   // сообщаем ВК «мы готовы» сразу, а не после прелоада
 function saveScore(o){
   if(!o) return -1;
   var n=0; for(var k in (o.cd||{})) if(o.cd[k]) n++;
@@ -2622,7 +2626,7 @@ window.__CEH_READY=true;
 function boot(){
   if(window.__CEH_BOOTED) return; window.__CEH_BOOTED=true;
   hideLoading();
-  cloudInit().then(function(ok){
+  withTimeout(cloudInit(),2500).then(function(ok){
     return ok ? withTimeout(mergeCloud(),2500) : false;
   }).catch(function(){ return false; }).then(function(fromCloud){
     try{ init(); }catch(err){ showDebug('Ошибка при запуске: '+(err&&err.message?err.message:err)); }
