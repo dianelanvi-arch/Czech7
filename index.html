@@ -1683,29 +1683,24 @@ function copyText(s){
   });
 }
 function doShare(m){
-    if(vkEnv()){
-        // Копируем текст в буфер обмена, чтобы игрок мог вставить его в сообщение
-        copyText(m.t).then(function(){
-            toast('📋 Текст скопирован! Вставь его в окно отправки');
-        }).catch(function(){});
-        
-        // Пытаемся открыть окно поста на стену (оно поддерживает кастомный текст)
-        vkSend('VKWebAppShowWallPostBox', {
-            message: m.t + '\n' + m.l
-        }).catch(function(e){
-            if(e && e.error_type === 'cancelled') return;
-            // Если не получилось на стену, открываем стандартное меню "Поделиться"
-            return vkSend('VKWebAppShare', { link: m.l }).catch(function(){});
-        });
-        closeSheet();
-    } else {
-        var full = m.t + '\n' + m.l;
-        copyText(full).then(
-            function(){ toast('📋 Скопировано! Вставь в пост или сообщение'); },
-            function(){ toast('Не удалось скопировать 😿', true); }
-        );
-        closeSheet();
-    }
+var NL=String.fromCharCode(10);
+if(vkEnv()){
+copyText(m.t).then(function(){
+toast('📋 Текст скопирован! Вставь его в окно отправки');
+}).catch(function(){});
+vkSend('VKWebAppShowWallPostBox',{message:m.t+NL+m.l}).catch(function(e){
+if(e&&e.error_type==='cancelled') return;
+return vkSend('VKWebAppShare',{link:m.l}).catch(function(){});
+});
+closeSheet();
+} else {
+var full=m.t+NL+m.l;
+copyText(full).then(
+function(){ toast('📋 Скопировано! Вставь в пост или сообщение'); },
+function(){ toast("Не удалось скопировать 😿",true); }
+);
+closeSheet();
+}
 }
 function openShare(){
   openSheet('share','Рассказать о фабрике',function(h){
