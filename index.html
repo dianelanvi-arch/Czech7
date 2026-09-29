@@ -1129,7 +1129,10 @@ var im=new Image(); im.src=ART[k];
 }
 function preloadAllAssets(callback){
 var items=[];
-Object.keys(ART).forEach(function(k){ if(ART[k]) items.push(ART[k]); });
+Object.keys(ART).forEach(function(k){
+if(!ART[k]) return;
+if(/^(icon_|ico_|loading_|sp_)/.test(k)||k==='shop'||k==='bureau') items.push(ART[k]);
+});
 var loaded=0, total=items.length, finished=false;
 function finish(){ if(finished)return; finished=true; if(callback) callback(); }
 function upd(){
@@ -2500,12 +2503,12 @@ function mergeCloud(){
     if(!lo){ try{ localStorage.setItem(SKEY,JSON.stringify(co)); }catch(e){} return true; }
     var lm=lo.ts||0, cm=(co._meta&&co._meta.ts)||co.ts||0;
     var ls=saveScore(lo), cs=(co._meta&&co._meta.score!=null)?co._meta.score:saveScore(co);
-    var useCloud=Math.abs(cm-lm)>5000 ? cm>lm : cs>ls;   // свежее побеждает, при равенстве — прогресс
+    var useCloud=(cs!==ls) ? cs>ls : cm>lm;   // сначала вес прогресса, время — только при равенстве
     if(useCloud){ try{ localStorage.setItem(SKEY,JSON.stringify(co)); }catch(e){} return true; }
     return false;
   });
 }
-function withTimeout(p,ms){ return Promise.race([p,new Promise(function(res){ setTimeout(function(){res(false);},ms); })]); }
+function withTimeout(p,ms){ return Promise.race([p,new Promise(function(res){ setTimeout(function(){res('timeout');},ms); })]); }
 function load(){
 try{
 var raw=localStorage.getItem(SKEY); if(!raw) return false;
@@ -2570,7 +2573,6 @@ GE=computeGlobalEvent();
 var had=load();
 buildLines(); buildPlants(); buildChainHelp();
 placeControls();
-checkArt();
 fitFactory();
 initMusic();
 var mo=$('#snd-music-on'); if(mo) mo.checked=musicOn;
@@ -2624,14 +2626,24 @@ if(!lsGet(TUT_KEY)) setTimeout(startTutorial,700);
 window.__CEH_READY=true;
 }
 function boot(){
-  if(window.__CEH_BOOTED) return; window.__CEH_BOOTED=true;
-  hideLoading();
-  withTimeout(cloudInit(),2500).then(function(ok){
-    return ok ? withTimeout(mergeCloud(),2500) : false;
-  }).catch(function(){ return false; }).then(function(fromCloud){
-    try{ init(); }catch(err){ showDebug('Ошибка при запуске: '+(err&&err.message?err.message:err)); }
-    if(CLOUD.ok){ cloudPush(); if(fromCloud) toast('☁️ Прогресс загружен из аккаунта ВК'); }
-  });
+if(window.__CEH_BOOTED) return; window.__CEH_BOOTED=true;
+hideLoading();
+withTimeout(cloudInit(),2000).then(function(ok){
+if(ok!==true) return 'nocloud';
+return withTimeout(mergeCloud(),6000).then(function(r){
+if(r==='timeout') return 'timeout';
+return r===true?'merged':'empty';
+});
+}).catch(function(){ return 'nocloud'; }).then(function(res){
+if(res==='timeout'){
+CLOUD.ok=false;
+toast('⚠️ Облако не ответило — сеанс локальный, облако не перезаписано');
+try{ init(); }catch(err){ showDebug('Ошибка при запуске: '+(err&&err.message?err.message:err)); }
+return;
+}
+try{ init(); }catch(err){ showDebug('Ошибка при запуске: '+(err&&err.message?err.message:err)); }
+if(CLOUD.ok){ cloudPush(); if(res==='merged') toast('☁️ Прогресс загружен из аккаунта ВК'); }
+});
 }
 window.addEventListener('pagehide',function(){ 
     if(BGM) BGM.pause(); // Останавливаем музыку при закрытии
