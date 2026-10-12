@@ -9,7 +9,7 @@
 <title>ЦЕХ·7 – фабрика соусов и молока</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'></text></svg>">
 <!-- VK Bridge (мини-приложения) -->
-<script src="vk-bridge.js"></script>
+<script src="https://unpkg.com/@vkontakte/vk-bridge/dist/browser.min.js"></script>
 <!-- Шрифты - загрузите локально для VK -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2435,9 +2435,9 @@ function save(){
   cloudSchedule(false);
 }
 /* ===== Облачное сохранение ВК ===== */
-var CK='ceh7.cloud.v1';
+var CK='ceh7_cloud_v1';
 var VKB=window.vkBridge||null;
-var CLOUD={ok:false,dirty:false,pushing:false,lastPush:0};
+var CLOUD={ok:false,dirty:false,pushing:false,lastPush:0,slot:null};
 function vkSend(m,p){
   if(!VKB) return Promise.reject(new Error('no-bridge'));
   try{ var r=VKB.send(m,p||{}); return (r&&r.then)?r:Promise.resolve(r); }
@@ -2474,30 +2474,42 @@ function cloudSchedule(force){
 function cloudPush(){
   if(!CLOUD.ok||CLOUD.pushing){ CLOUD.dirty=true; return; }
   CLOUD.pushing=true; CLOUD.dirty=false; CLOUD.lastPush=Date.now();
-  var s=JSON.stringify(buildSaveObj()), CH=1000, n=Math.ceil(s.length/CH)||1;
-  var keys=[{key:CK+'.meta',value:JSON.stringify({n:n,ts:Date.now(),score:saveScore(buildSaveObj())})}];
-  for(var i=0;i<n;i++) keys.push({key:CK+'.'+i,value:s.substr(i*CH,CH)});
-  vkSend('VKWebAppStorageSet',{keys:keys}).then(function(){
-    CLOUD.pushing=false; if(CLOUD.dirty) setTimeout(cloudPush,800);
-  }).catch(function(){ CLOUD.pushing=false; });
+  var obj=buildSaveObj(), s=JSON.stringify(obj), CH=1000, n=Math.ceil(s.length/CH)||1;
+  // Два слота: новый прогресс пишется отдельно, метаданные переключаются только после успеха.
+  var slot=CLOUD.slot==='a'?'b':'a', prefix=CK+'_'+slot;
+  var writes=[];
+  for(var i=0;i<n;i++) writes.push({key:prefix+'_'+i,value:s.substr(i*CH,CH)});
+  var meta={slot:slot,n:n,ts:Date.now(),score:saveScore(obj)};
+  var chain=Promise.resolve();
+  writes.forEach(function(item){ chain=chain.then(function(){ return vkSend('VKWebAppStorageSet',item); }); });
+  chain.then(function(){ return vkSend('VKWebAppStorageSet',{key:CK+'_meta',value:JSON.stringify(meta)}); })
+  .then(function(){
+    CLOUD.slot=slot; CLOUD.pushing=false;
+    if(CLOUD.dirty) setTimeout(cloudPush,800);
+  }).catch(function(e){
+    CLOUD.pushing=false; CLOUD.ok=false;
+    showDebug('Облачное сохранение не удалось. Локальный прогресс сохранён.');
+  });
 }
 function cloudPull(){
   if(!CLOUD.ok) return Promise.resolve(null);
-  return vkSend('VKWebAppStorageGet',{keys:[CK+'.meta']}).then(function(r){
+  return vkSend('VKWebAppStorageGet',{keys:[CK+'_meta']}).then(function(r){
     var mv=r&&r.keys&&r.keys[0]?r.keys[0].value:''; if(!mv) return null;
-    var meta; try{ meta=JSON.parse(mv); }catch(e){ return null; }
-    var ks=[]; for(var i=0;i<(meta.n||0);i++) ks.push(CK+'.'+i);
-    if(!ks.length) return null;
+    var meta; try{ meta=JSON.parse(mv); }catch(e){ throw new Error('cloud-meta-invalid'); }
+    if((meta.slot!=='a'&&meta.slot!=='b')||!Number.isInteger(meta.n)||meta.n<1||meta.n>1000) throw new Error('cloud-meta-invalid');
+    var prefix=CK+'_'+meta.slot, ks=[]; for(var i=0;i<meta.n;i++) ks.push(prefix+'_'+i);
     return vkSend('VKWebAppStorageGet',{keys:ks}).then(function(r2){
-     var s=''; (r2.keys||[]).forEach(function(k){ s+=(k.value||''); });
-      var o; try{ o=JSON.parse(s); }catch(e){ return null; }
+      var vals={}; (r2.keys||[]).forEach(function(k){ vals[k.key]=k.value||''; });
+      var s=''; ks.forEach(function(k){ if(typeof vals[k]!=='string'||!vals[k]) throw new Error('cloud-chunk-missing'); s+=vals[k]; });
+      var o; try{ o=JSON.parse(s); }catch(e){ throw new Error('cloud-data-invalid'); }
       o._meta=meta; return o;
     });
-  }).catch(function(){ return null; });
+  });
 }
 function mergeCloud(){
   return cloudPull().then(function(co){
-    if(!co) return false;
+    if(!co) { CLOUD.slot=null; return false; }
+    CLOUD.slot=co._meta&&co._meta.slot||null;
     var lo=null, raw=lsGet(SKEY);
     if(raw){ try{ lo=JSON.parse(raw); }catch(e){} }
     if(!lo){ try{ localStorage.setItem(SKEY,JSON.stringify(co)); }catch(e){} return true; }
@@ -2635,9 +2647,10 @@ if(r==='timeout') return 'timeout';
 return r===true?'merged':'empty';
 });
 }).catch(function(){ return 'nocloud'; }).then(function(res){
-if(res==='timeout'){
-CLOUD.ok=false;
-toast('⚠️ Облако не ответило — сеанс локальный, облако не перезаписано');
+if(res==='timeout'||res==='nocloud'){
+CLOUD.ok=false; // При ошибке чтения нельзя отправлять пустой локальный прогресс поверх облака.
+if(res==='timeout') toast('⚠️ Облако не ответило — сеанс локальный, облако не перезаписано');
+else toast('⚠️ Не удалось проверить облачное сохранение — прогресс не отправлен в облако');
 try{ init(); }catch(err){ showDebug('Ошибка при запуске: '+(err&&err.message?err.message:err)); }
 return;
 }
