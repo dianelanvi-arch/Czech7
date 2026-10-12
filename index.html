@@ -1062,7 +1062,13 @@ function unlockedChains(){ return CHAINS.filter(function(c){ return isUnlocked(c
 function turboActive(){ return Date.now()<turboUntil; }
 function bubblePrice(t){ return 10*Math.pow(2,t-1); }
 function getBubbleChance(){ return GE.type==='bubble_rate' ? BUBBLE_CHANCE*(1+GE.rate) : BUBBLE_CHANCE; }
-function xpNeed(){ return 150+(lvl-1)*75; }
+function xpNeed(){ 
+    // Базовый порог снижен, шаг уменьшен. 
+    // После 5 уровня каждое следующее требует на 10 XP меньше, чем по прямой.
+    var base = 120 + (lvl-1)*55; 
+    if(lvl > 5) base -= (lvl-5)*10; 
+    return Math.max(100, base); 
+}
 function cardsCount(){ var n=0; for(var k in cards) if(cards[k]) n++; return n; }
 function ownedIn(line){ var n=0; CHAIN[line].tiers.forEach(function(t){ if(cards[t.key]) n++; }); return n; }
 function stars(tier){ var s=''; for(var i=0;i<tier;i++) s+='★'; return s; }
@@ -1995,7 +2001,7 @@ o.need--; removeItem(it); sfx('ship');
 var r=cardEl.getBoundingClientRect();
 burst(r.left+r.width/2,r.top+r.height/2,o.express?'#7a5cff':CHAIN[o.chain].color,10);
 if(o.need<=0){
-o.done=true; addCoins(o.reward); addXp(15); done++; updDone();
+o.done=true; addCoins(o.reward); addXp(o.express ? 25 : 18); done++; updDone();
 confetti(r.left+r.width/2,r.top+r.height/2);
 showStamp(o.express?'Экспресс выполнен!':'Заказ выполнен!','+'+o.reward+' ',o.express?'violet':null);
 sfx('order');
