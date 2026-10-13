@@ -497,7 +497,7 @@ box-shadow:5px 5px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.06);cursor:poi
 .order-card.express{border-color:var(--violet);border-left-color:var(--violet);box-shadow:0 0 14px rgba(122,92,255,.25), 5px 5px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.06)}
 .order-card.express.fresh{animation:cardin .4s ease, xpulse 1.2s ease 2}
 @keyframes xpulse{0%{box-shadow:0 0 0 0 rgba(122,92,255,.5),5px 5px 0 var(--shadowc)}50%{box-shadow:0 0 0 12px rgba(122,92,255,0),6px 6px 0 var(--shadowc)}100%{box-shadow:0 0 0 0 rgba(122,92,255,0),5px 5px 0 var(--shadowc), inset 0 -2px 4px rgba(0,0,0,.06)}}
-.order-card.empty{align-items:center;justify-content:center;min-height:74px;color:var(--mut);font-size:12px;cursor:default}
+.order-card.empty{color:var(--mut);cursor:default}
 .order-card.empty .g{display:inline-block;animation:spin 2.2s linear infinite}
 .o-row{display:flex;align-items:center;gap:9px}
 .o-art{width:44px;height:44px;flex:0 0 auto;display:grid;place-items:center;font-size:29px;border-radius:10px;background:var(--surf2);border:1px solid var(--line);position:relative;box-shadow:2px 2px 0 var(--shadowc)}
@@ -2001,7 +2001,11 @@ orderIdx.forEach(function(i){
 var o=orders[i];
 if(!o){ if(i===2) return;
 var e=document.createElement('div'); e.className='order-card empty';
-e.innerHTML='<span class="g">⚙</span>&nbsp;формируем заказ…'; cardsBox.appendChild(e); return; }
+e.innerHTML='<div class="o-row"><div class="o-art"><span class="g">⚙</span></div>'+
+'<div class="o-info"><b>Формируем заказ…</b><span>подбираем заказчика</span></div>'+
+'<div class="o-side"><span class="o-qwrap"><span class="o-qty2">…</span></span><span class="o-side-price">&nbsp;</span></div></div>'+
+'<div class="o-foot"><span class="o-reward">'+coinHTML('')+'</span></div>';
+cardsBox.appendChild(e); return; }
 var c=CHAIN[o.chain], t=c.tiers[o.tier-1];
 var e2=document.createElement('div');
 e2.className='order-card'+(o.done?' done':'')+(o.express?' express':'');
