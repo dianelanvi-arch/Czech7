@@ -1677,11 +1677,9 @@ host.innerHTML=
 }
 function shareMessages(){
     // Прямая ссылка на приложение ВК (ВК сам подтянет иконку игры из каталога)
-    var VK_APP_LINK = 'https://vk.com/app54772924'; 
-    return [
-        {t:'Я развиваю свою фабрику и она уже достигла '+lvl+' уровня! Сможешь повторить?', l:VK_APP_LINK},
-        {t:'Я завершаю '+(done+1)+'-й заказ на фабрике!', l:VK_APP_LINK}
-    ];
+var VK_APP_LINK='https://vk.com/app54772924';
+function shareText(){
+return 'Я развиваю свою фабрику и она уже достигла '+lvl+' уровня! Сможешь повторить?';
 }
 function copyText(s){
   if(navigator.clipboard&&navigator.clipboard.writeText) return navigator.clipboard.writeText(s);
@@ -1691,38 +1689,19 @@ function copyText(s){
     try{ document.execCommand('copy'); res(); }catch(e){ rej(e); } finally { ta.remove(); }
   });
 }
-function doShare(m){
+function doShare(){
 var NL=String.fromCharCode(10);
 if(vkEnv()){
-copyText(m.t).then(function(){
-toast('📋 Текст скопирован! Вставь его в окно отправки');
-}).catch(function(){});
-vkSend('VKWebAppShowWallPostBox',{message:m.t+NL+m.l}).catch(function(e){
+vkSend('VKWebAppShare',{link:VK_APP_LINK}).catch(function(e){
 if(e&&e.error_type==='cancelled') return;
-return vkSend('VKWebAppShare',{link:m.l}).catch(function(){});
+return vkSend('VKWebAppShowWallPostBox',{message:shareText()+NL+VK_APP_LINK}).catch(function(){});
 });
-closeSheet();
 } else {
-var full=m.t+NL+m.l;
-copyText(full).then(
+copyText(shareText()+NL+VK_APP_LINK).then(
 function(){ toast('📋 Скопировано! Вставь в пост или сообщение'); },
 function(){ toast("Не удалось скопировать 😿",true); }
 );
-closeSheet();
 }
-}
-function openShare(){
-  openSheet('share','Рассказать о фабрике',function(h){
-    var hint=document.createElement('p'); hint.className='od-hint';
-    hint.textContent='Выберите сообщение — откроется окно публикации ВК.';
-    h.appendChild(hint);
-    shareMessages().forEach(function(m,i){
-      var row=document.createElement('div'); row.className='od-row'; row.style.cursor='pointer';
-      row.innerHTML='<span class="sh-ico">'+(i?'📦':'🏭')+'</span><span class="sh-txt"><b>'+m.t+'</b>нажмите, чтобы поделиться</span>';
-      row.addEventListener('click',function(){ doShare(m); });
-      h.appendChild(row);
-    });
-  });
 }
 function rebuildGrid(){ for(var i=0;i<grid.length;i++) grid[i]=null; for(var j=0;j<items.length;j++) grid[items[j].idx]=items[j]; }
 function rebuildCellEls(){
@@ -2683,7 +2662,7 @@ setTimeout(boot,6000);
 $('#btn-profile').onclick=function(e){ e.stopPropagation(); openProfile(); };
 $('#profile-close').onclick=closeProfile;
 $('#profile-save').onclick=saveDirectorName;
-$('#profile-share').onclick=function(){ closeProfile(); setTimeout(openShare,250); };
+$('#profile-share').onclick=function(){ closeProfile(); setTimeout(doShare,250); };
 $('#profile-ov').addEventListener('click',function(e){ if(e.target===this) closeProfile(); });
 $('#btn-sound').onclick=function(e){ e.stopPropagation(); $('#sound-pop').classList.toggle('open'); updSoundIcon(); };
 $('#snd-music-on').onchange=function(){ musicOn=this.checked; if(musicOn) tryPlayMusic(); else if(BGM) BGM.pause(); updSoundIcon(); save(); };
